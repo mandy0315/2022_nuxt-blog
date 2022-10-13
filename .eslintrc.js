@@ -10,6 +10,7 @@ module.exports = {
   },
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'vue/multi-word-component-names': 'off',
   },
 }
