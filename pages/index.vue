@@ -6,6 +6,7 @@
     <button @click.prevent="changeTitle()">修改title</button>
     <p>{{ count }}</p>
     <Icon name="uil:github" />
+    <input type="text" class="form-input" placeholder="請輸入" />
   </div>
 </template>
 
