@@ -4,6 +4,7 @@
       <p>{{ title }}</p>
     </client-only>
     <button @click.prevent="changeTitle()">修改title</button>
+    <p>{{ count }}</p>
   </div>
 </template>
 
@@ -14,6 +15,8 @@ import { storeToRefs } from 'pinia';
 const $mainStore = useMainStore();
 const { title } = storeToRefs($mainStore);
 const { changeTitle } = $mainStore;
+
+const count = useCount();
 </script>
 
 <style lang="scss" scoped></style>
