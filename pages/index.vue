@@ -5,6 +5,7 @@
     </client-only>
     <button @click.prevent="changeTitle()">修改title</button>
     <p>{{ count }}</p>
+    <Icon name="uil:github" />
   </div>
 </template>
 
