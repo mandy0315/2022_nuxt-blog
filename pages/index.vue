@@ -1,12 +1,19 @@
 <template>
   <div class="bg-white py-24">
-    <div class="flex flex-col items-center">
-      <h1 class="font-semibold p-2 text-6xl text-blue-600">2022 Nuxt3 Practice</h1>
-    </div>
-    <a href="">test</a>
+    <client-only>
+      <p>{{ title }}</p>
+    </client-only>
+    <button @click.prevent="changeTitle()">修改title</button>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useMainStore } from '@/stores/index';
+import { storeToRefs } from 'pinia';
+
+const $mainStore = useMainStore();
+const { title } = storeToRefs($mainStore);
+const { changeTitle } = $mainStore;
+</script>
 
 <style lang="scss" scoped></style>
