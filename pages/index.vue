@@ -9,6 +9,8 @@
     <input type="text" class="form-input" placeholder="請輸入" />
 
     <pre>{{ serverData }}</pre>
+
+    <p>theme.darkMode:{{ theme.darkMode }}</p>
   </div>
 </template>
 
@@ -30,6 +32,9 @@ useFetch('/api/auth', {
     password: 12356
   }
 });
+
+const appConfig = useAppConfig();
+const { theme } = appConfig;
 </script>
 
 <style lang="scss" scoped></style>
