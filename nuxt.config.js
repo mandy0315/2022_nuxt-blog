@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   '@': '/<rootDir>', // 別名
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'nuxt-icon'],
   css: ['@/assets/style/base.scss'],
+  runtimeConfig: {}, // 環境變數
   imports: {
     dirs: [
       // 掃描 composables 目錄頂層
