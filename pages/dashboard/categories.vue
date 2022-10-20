@@ -1,10 +1,13 @@
 <template>
-  <div>Hello</div>
+  <main class="c-container">Hello</main>
 </template>
 
 <script setup>
 useHead({
   title: '分類管理'
+});
+definePageMeta({
+  layout: 'dashboard'
 });
 </script>
 

@@ -15,7 +15,10 @@
 
 <script setup>
 useHead({
-  title: '文章編輯'
+  title: '文章管理'
+});
+definePageMeta({
+  layout: 'dashboard'
 });
 </script>
 
