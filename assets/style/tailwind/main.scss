@@ -4,4 +4,7 @@
 
 /* components 新增元件 */
 @layer components{
+  .c-container{
+    @apply w-full max-w-[960px] mx-auto;
+  }
 }

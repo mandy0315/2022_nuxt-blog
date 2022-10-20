@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 const customColors = {
   // Configure your color palette here
   'c-gray-800': '#323232',
@@ -20,19 +22,17 @@ module.exports = {
   ],
   theme: {
     extend: {
-      textColor: theme => ({
-        ...theme('colors'),
+      // 留下預設
+      textColor: {
         ...customColors
-      }),
-      backgroundColor: theme => ({
-        ...theme('colors'),
+      },
+      backgroundColor: {
         ...customColors
-      }),
-      borderColor: theme => ({
-        ...theme('colors'),
+      },
+      borderColor: {
         ...customColors
-      })
+      }
     }
   },
-  plugins: [require('@tailwindcss/forms')]
+  plugins: [require('@tailwindcss/forms'), plugin(addComponents => {})]
 };

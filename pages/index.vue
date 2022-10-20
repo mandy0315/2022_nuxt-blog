@@ -10,7 +10,7 @@
 
     <pre>{{ serverData }}</pre>
 
-    <p>theme.darkMode:{{ theme.darkMode }}</p>
+    <p class="text-center">theme.darkMode:{{ theme.darkMode }}</p>
   </div>
 </template>
 

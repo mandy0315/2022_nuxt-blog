@@ -2,6 +2,10 @@
   <nuxt-page />
 </template>
 
-<script setup></script>
+<script setup>
+definePageMeta({
+  layout: 'dashboard'
+});
+</script>
 
 <style lang="scss" scoped></style>
