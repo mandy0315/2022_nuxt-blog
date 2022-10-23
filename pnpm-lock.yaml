@@ -5,6 +5,7 @@ specifiers:
   '@nuxtjs/tailwindcss': ^5.3.5
   '@pinia/nuxt': ^0.4.3
   '@tailwindcss/forms': ^0.5.3
+  '@tailwindcss/line-clamp': ^0.4.2
   eslint: ^8.25.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.2.1
@@ -24,6 +25,7 @@ devDependencies:
   '@nuxtjs/tailwindcss': 5.3.5
   '@pinia/nuxt': 0.4.3
   '@tailwindcss/forms': 0.5.3
+  '@tailwindcss/line-clamp': 0.4.2
   eslint: 8.25.0
   eslint-config-prettier: 8.5.0_eslint@8.25.0
   eslint-plugin-prettier: 4.2.1_3d430c1653672911bd9e295f62a81c27
@@ -1486,6 +1488,12 @@ packages:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
+    dev: true
+
+  /@tailwindcss/line-clamp/0.4.2:
+    resolution: {integrity: sha512-HFzAQuqYCjyy/SX9sLGB1lroPzmcnWv1FHkIpmypte10hptf4oPUfucryMKovZh2u0uiS9U5Ty3GghWfEJGwVw==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dev: true
 
   /@tootallnate/once/2.0.0:

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-screen bg-gray-100">
     <app-deshboard-header />
     <slot />
     <app-footer />
