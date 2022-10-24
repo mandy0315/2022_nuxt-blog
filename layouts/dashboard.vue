@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen bg-gray-100">
-    <app-deshboard-header />
+    <dashboard-header />
     <slot />
     <app-footer />
   </div>
