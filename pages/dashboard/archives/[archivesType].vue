@@ -12,8 +12,8 @@
           <td scope="col" class="p-4 text-c-gray-600">
             <h2 class="pb-2 text-lg text-c-gray-800">文章標題</h2>
             <div class="pb-2 text-sm">
-              <span class="pr-2"><Icon name="ic:outline-access-time" class="mr-1" />2022/10/23</span>
-              <span><Icon name="material-symbols:folder-open-outline" class="mr-1" />Nuxt</span>
+              <span class="inline-block pr-2"><Icon icon="ic:outline-access-time" class="mr-1" />2022/10/23</span>
+              <span><Icon icon="material-symbols:folder-open-outline" class="mr-1 inline-block" />Nuxt</span>
             </div>
             <p class="line-clamp-3">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae inventore fugit expedita voluptatem ea

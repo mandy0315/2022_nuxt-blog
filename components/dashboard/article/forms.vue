@@ -30,8 +30,8 @@
           :class="submit === '刪除文章' ? 'c-rounded-button-red' : 'c-rounded-button-gray'"
           @click.prevent="isOpenSelectSubmit = !isOpenSelectSubmit"
         >
-          <Icon v-if="isOpenSelectSubmit" name="material-symbols:arrow-drop-down" />
-          <Icon v-else name="material-symbols:arrow-drop-up" />
+          <Icon v-if="isOpenSelectSubmit" icon="material-symbols:arrow-drop-down" class="inline-block" />
+          <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />
         </button>
         <div
           v-if="isOpenSelectSubmit"
