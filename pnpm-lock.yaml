@@ -12,6 +12,7 @@ specifiers:
   eslint-plugin-vue: ^9.6.0
   firebase: ^9.12.1
   firebase-admin: ^11.2.0
+  md-editor-v3: ^2.3.0
   nuxt: 3.0.0-rc.11
   nuxt-icon: ^0.1.6
   pinia: ^2.0.23
@@ -32,6 +33,7 @@ devDependencies:
   eslint-plugin-vue: 9.6.0_eslint@8.25.0
   firebase: 9.12.1
   firebase-admin: 11.2.0
+  md-editor-v3: 2.3.0
   nuxt: 3.0.0-rc.11_eslint@8.25.0+sass@1.55.0
   nuxt-icon: 0.1.6
   pinia: 2.0.23
@@ -1575,6 +1577,10 @@ packages:
       '@types/mdurl': 1.0.2
     dev: true
     optional: true
+
+  /@types/marked/4.0.7:
+    resolution: {integrity: sha512-eEAhnz21CwvKVW+YvRvcTuFKNU9CV1qH+opcgVK3pIMI6YZzDm6gc8o2vHjldFk6MGKt5pueSB7IOpvpx5Qekw==}
+    dev: true
 
   /@types/mdurl/1.0.2:
     resolution: {integrity: sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==}
@@ -5209,6 +5215,13 @@ packages:
     hasBin: true
     dev: true
     optional: true
+
+  /md-editor-v3/2.3.0:
+    resolution: {integrity: sha512-HZiOSwOct3YsuTtsTucEg5o9mSRkgnazVn2sTInjG+d+zlMQE6iCMmDyGICBoh5Im0kmX2Pf6Sxhz6qp/0XngQ==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      '@types/marked': 4.0.7
+    dev: true
 
   /mdn-data/2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}

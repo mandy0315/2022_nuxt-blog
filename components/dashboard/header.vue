@@ -8,12 +8,7 @@
         <span class="relative top-1 text-xl">部落格後台</span>
       </nuxt-link>
       <nav>
-        <nuxt-link
-          v-for="item in topBarNav"
-          :to="`/dashboard${item.link}`"
-          :key="item.link"
-          class="px-2 hover:text-c-orange-800"
-        >
+        <nuxt-link v-for="item in topBarNav" :to="item.link" :key="item.link" class="px-2 hover:text-c-orange-800">
           {{ item.name }}
         </nuxt-link>
       </nav>
@@ -28,11 +23,11 @@
 <script setup>
 const topBarNav = [
   {
-    link: '/archives',
+    link: '/dashboard/archives/public',
     name: '文章管理'
   },
   {
-    link: '/categories',
+    link: '/dashboard/categories',
     name: '分類管理'
   }
 ];

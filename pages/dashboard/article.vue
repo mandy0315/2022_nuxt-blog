@@ -1,11 +1,10 @@
 <template>
-  <main class="c-container">Hello</main>
+  <main class="c-container pt-6 pb-10">
+    <nuxt-page />
+  </main>
 </template>
 
 <script setup>
-useHead({
-  title: '文章編輯'
-});
 definePageMeta({
   layout: 'dashboard'
 });
