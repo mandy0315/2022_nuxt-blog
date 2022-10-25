@@ -12,7 +12,7 @@
           {{ item.name }}
         </nuxt-link>
       </nav>
-      <div>
+      <div v-show="false">
         <span class="pr-2 text-c-orange-800">mandy 您好</span>
         <button class="text-sm hover:text-c-orange-800">登出</button>
       </div>
