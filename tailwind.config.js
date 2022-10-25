@@ -9,7 +9,8 @@ const customColors = {
   'c-orange-800': '#FF870A',
   'c-orange-600': '#F7B168',
   'c-orange-200': '#FDF8F2',
-  'c-brown-800': '#7A6A56'
+  'c-brown-800': '#4d3224',
+  'c-brown-400': '#7A6A56'
 };
 module.exports = {
   content: [
@@ -20,6 +21,7 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     './app.{js,ts,vue}'
   ],
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       // 留下預設

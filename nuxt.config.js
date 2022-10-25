@@ -2,7 +2,10 @@
 
 export default defineNuxtConfig({
   '@': '/<rootDir>', // 別名
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/color-mode'],
+  colorMode: {
+    classSuffix: ''
+  },
   css: ['@/assets/style/base.scss'],
   runtimeConfig: {}, // 環境變數
   imports: {
