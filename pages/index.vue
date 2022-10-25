@@ -4,7 +4,6 @@
       <p>{{ title }}</p>
     </client-only>
     <button @click.prevent="changeTitle()">修改title</button>
-    <p>{{ count }}</p>
     <Icon name="uil:github" />
     <input type="text" class="form-input" placeholder="請輸入" />
 
@@ -21,8 +20,6 @@ import { storeToRefs } from 'pinia';
 const $mainStore = useMainStore();
 const { title } = storeToRefs($mainStore);
 const { changeTitle } = $mainStore;
-
-const count = useCount();
 
 const { data: serverData } = useFetch('/api/animal');
 useFetch('/api/auth', {

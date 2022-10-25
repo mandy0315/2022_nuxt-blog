@@ -25,28 +25,30 @@
         >
           {{ submit }}
         </button>
-        <button
+        <div
+          ref="container_el"
+          @click="toggleList"
           class="c-rounded-button rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
           :class="submit === '刪除文章' ? 'c-rounded-button-red' : 'c-rounded-button-gray'"
-          @click.prevent="isOpenSelectSubmit = !isOpenSelectSubmit"
         >
-          <Icon v-if="isOpenSelectSubmit" icon="material-symbols:arrow-drop-down" class="inline-block" />
+          <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="inline-block" />
           <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />
-        </button>
-        <div
-          v-if="isOpenSelectSubmit"
-          class="absolute bottom-[36px] w-full rounded border border-c-gray-400 bg-white p-2 text-center shadow-lg"
-        >
-          <template v-for="item in submitList" :key="item.name">
-            <button
-              v-if="item.isShow"
-              class="block w-full py-1 hover:opacity-50"
-              :class="item.name === '刪除文章' ? 'text-red-700' : 'text-c-gray-800'"
-              @click.prevent="selectSubmit = item.name"
-            >
-              {{ item.name }}
-            </button>
-          </template>
+
+          <div
+            v-if="isOpen"
+            class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-400 bg-white p-2 text-center shadow-lg"
+          >
+            <template v-for="item in submitList" :key="item.name">
+              <button
+                v-if="item.isShow"
+                class="block w-full py-1 hover:opacity-50"
+                :class="item.name === '刪除文章' ? 'text-red-700' : 'text-c-gray-800'"
+                @click.prevent="selectSubmit = item.name"
+              >
+                {{ item.name }}
+              </button>
+            </template>
+          </div>
         </div>
       </div>
     </div>
@@ -58,6 +60,7 @@ import mdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 
 const route = useRoute();
+const { isOpen, toggleList, setContainer } = useToggle();
 
 const submitList = [
   {
@@ -73,16 +76,19 @@ const submitList = [
     isShow: route.path !== '/dashboard/article/create'
   }
 ];
-const content = useState(() => '# Hello Editor!');
-const isOpenSelectSubmit = useState(() => false);
+const content = ref('# Hello Editor!');
+const container_el = ref(null);
 
-const submit = useState(() => '儲存草稿');
+const submit = ref('儲存草稿');
 const selectSubmit = computed({
   get: () => submit.value,
   set: val => {
     submit.value = val;
-    isOpenSelectSubmit.value = false;
   }
+});
+
+onMounted(() => {
+  setContainer(container_el.value);
 });
 </script>
 
