@@ -1,5 +1,5 @@
 <template>
-  <section class="text-center text-2xl">目前正在努力建置中</section>
+  <section class="py-20 text-center text-2xl">目前正在建置中</section>
 </template>
 
 <script setup></script>

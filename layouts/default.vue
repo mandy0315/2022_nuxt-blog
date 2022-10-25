@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <header class="bg-red-200"><div class="c-container">header</div></header>
+  <div class="h-screen bg-white text-c-gray-800 dark:bg-c-gray-800 dark:text-c-gray-400">
+    <app-header />
     <slot />
-    <app-footer />
+    <app-footer class="dark:text-c-gray-400" />
   </div>
 </template>
 <script setup>

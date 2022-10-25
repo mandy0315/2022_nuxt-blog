@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-white py-24">
+  <main class="c-container">
+    <app-build />
     <client-only>
       <p>{{ title }}</p>
     </client-only>
@@ -8,9 +9,7 @@
     <input type="text" class="form-input" placeholder="請輸入" />
 
     <pre>{{ serverData }}</pre>
-
-    <p class="text-center">theme.darkMode:{{ theme.darkMode }}</p>
-  </div>
+  </main>
 </template>
 
 <script setup>
@@ -29,9 +28,6 @@ useFetch('/api/auth', {
     password: 12356
   }
 });
-
-const appConfig = useAppConfig();
-const { theme } = appConfig;
 </script>
 
 <style lang="scss" scoped></style>
