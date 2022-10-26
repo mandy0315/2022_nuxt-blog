@@ -40,7 +40,6 @@
 definePageMeta({
   middleware: [
     (to, form) => {
-      console.log(to.params.archivesType);
       if (!['public', 'draft'].includes(to.params.archivesType)) {
         return navigateTo('/dashboard/archives/public');
       }
