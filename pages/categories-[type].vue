@@ -1,5 +1,12 @@
 <template>
-  <div>分類列表</div>
+  <div class="flex">
+    <div class="w-8/12">
+      <div><ui-post-item /></div>
+    </div>
+    <div class="w-4/12 pl-6">
+      <ui-sidebar />
+    </div>
+  </div>
 </template>
 
 <script setup></script>
