@@ -15,6 +15,9 @@
     &-gray{
       @apply bg-c-gray-800 text-white hover:bg-c-gray-600;
     }
+    &-orange{
+      @apply bg-c-orange-800 text-white hover:bg-c-orange-600;
+    }
     &-red{
       @apply bg-red-700 text-white hover:bg-red-600;
     }
