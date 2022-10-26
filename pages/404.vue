@@ -23,7 +23,7 @@ definePageMeta({
   layout: false,
   middleware: [
     (to, form) => {
-      to.meta.layout = /^\/[dashboard]{1}/g.test(to.path) ? 'dashboard' : 'default';
+      to.meta.layout = /^\/dashboard/g.test(to.path) ? 'dashboard' : 'default';
     }
   ]
 });

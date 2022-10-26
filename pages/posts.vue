@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-8/12">
-      <ui-post-item />
+      <nuxt-page />
     </div>
     <div class="w-4/12 pl-6">
       <ui-sidebar />

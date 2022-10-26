@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen bg-gray-50 text-c-gray-800 dark:bg-c-gray-800 dark:text-c-gray-400">
     <app-header />
-    <main class="c-container px-4 py-6 lg:px-0">
+    <main class="c-container px-4 pt-6 pb-20 lg:px-0">
       <slot />
     </main>
     <app-footer class="dark:text-c-gray-400" />

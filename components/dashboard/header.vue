@@ -7,12 +7,12 @@
         </div>
         <span class="relative top-1 text-xl">部落格後台</span>
       </nuxt-link>
-      <nav class="mx-auto">
+      <nav class="pl-6">
         <nuxt-link v-for="item in topBarNav" :to="item.link" :key="item.link" class="px-2 hover:text-c-orange-800">
           {{ item.name }}
         </nuxt-link>
       </nav>
-      <div>
+      <div class="ml-auto">
         <span class="pr-2 text-c-orange-800">mandy 您好</span>
         <button class="text-sm hover:text-c-orange-800">登出</button>
       </div>

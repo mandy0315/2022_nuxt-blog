@@ -10,7 +10,7 @@
       <tbody>
         <tr class="border-b border-solid border-c-gray-400">
           <td scope="col" class="p-4 text-c-gray-600">
-            <ul-post-item />
+            <ui-post-item />
           </td>
           <td class="p-4">
             <button class="c-border-button c-border-button-gray my-1 w-full">編輯</button>

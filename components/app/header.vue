@@ -8,13 +8,13 @@
         <span class="relative top-1 text-xl font-medium dark:text-white">Mandy Blog</span>
       </nuxt-link>
 
-      <nav class="relative -left-4 mx-auto">
+      <nav class="pl-5">
         <nuxt-link v-for="item in topBarNav" :to="item.link" :key="item.link" class="px-2 hover:text-c-orange-800">
           {{ item.name }}
         </nuxt-link>
       </nav>
 
-      <div>
+      <div class="ml-auto">
         <ui-color-mode-toggle />
       </div>
     </div>
@@ -24,12 +24,12 @@
 <script setup>
 const topBarNav = [
   {
-    link: '/posts',
-    name: '文章列表'
+    link: '/about',
+    name: '關於我'
   },
   {
-    link: '/categories',
-    name: '分類列表'
+    link: '/posts',
+    name: '文章'
   }
 ];
 </script>

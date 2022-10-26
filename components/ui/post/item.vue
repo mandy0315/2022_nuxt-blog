@@ -16,9 +16,8 @@
         suscipit sit quae hic ipsum nesciunt blanditiis quibusdam!
       </p>
     </div>
-    <div class="relative h-[130px] w-[220px] overflow-hidden rounded-lg">
-      <ui-post-image />
-    </div>
+
+    <ui-post-image class="w-[230px]" />
   </div>
 </template>
 
