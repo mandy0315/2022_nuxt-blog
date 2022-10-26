@@ -1,13 +1,16 @@
 <template>
-  <section>
+  <main class="c-container pt-6 pb-10">
     <h1 class="c-dashboard-title">新增文章</h1>
     <dashboard-article-forms />
-  </section>
+  </main>
 </template>
 
 <script setup>
 useHead({
   title: '新增文章'
+});
+definePageMeta({
+  layout: 'dashboard'
 });
 </script>
 

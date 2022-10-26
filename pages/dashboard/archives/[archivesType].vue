@@ -11,10 +11,10 @@
         <tr class="border-b border-solid border-c-gray-400">
           <td scope="col" class="p-4 text-c-gray-600">
             <h2 class="pb-2 text-lg text-c-gray-800">文章標題</h2>
-            <div class="pb-2 text-sm">
+            <!-- <div class="pb-2 text-sm">
               <span class="inline-block pr-2"><Icon icon="ic:outline-access-time" class="mr-1" />2022/10/23</span>
               <span><Icon icon="material-symbols:folder-open-outline" class="mr-1 inline-block" />Nuxt</span>
-            </div>
+            </div> -->
             <p class="line-clamp-3">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae inventore fugit expedita voluptatem ea
               blanditiis odit, facere, eos fuga nisi ratione rerum maxime. Blanditiis nemo aliquam vel eligendi quod
@@ -36,6 +36,17 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+definePageMeta({
+  middleware: [
+    (to, form) => {
+      console.log(to.params.archivesType);
+      if (!['public', 'draft'].includes(to.params.archivesType)) {
+        return navigateTo('/dashboard/archives/public');
+      }
+    }
+  ]
+});
+</script>
 
 <style lang="scss" scoped></style>
