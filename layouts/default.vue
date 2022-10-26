@@ -1,7 +1,9 @@
 <template>
-  <div class="h-screen bg-white text-c-gray-800 dark:bg-c-gray-800 dark:text-c-gray-400">
+  <div class="h-screen bg-gray-50 text-c-gray-800 dark:bg-c-gray-800 dark:text-c-gray-400">
     <app-header />
-    <slot />
+    <main class="c-container px-4 py-6 lg:px-0">
+      <slot />
+    </main>
     <app-footer class="dark:text-c-gray-400" />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div>文章列表</div>
+  <ui-post-list />
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-  <main class="c-container">
+  <div>
     <app-build />
     <client-only>
       <p>{{ title }}</p>
@@ -9,7 +9,7 @@
     <input type="text" class="form-input" placeholder="請輸入" />
 
     <pre>{{ serverData }}</pre>
-  </main>
+  </div>
 </template>
 
 <script setup>

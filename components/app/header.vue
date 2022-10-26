@@ -15,7 +15,7 @@
       </nav>
 
       <div>
-        <ul-color-mode-toggle />
+        <ui-color-mode-toggle />
       </div>
     </div>
   </header>
