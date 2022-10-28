@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100">
     <dashboard-header />
     <slot />
     <app-footer />
