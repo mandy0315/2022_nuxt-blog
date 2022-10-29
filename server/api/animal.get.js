@@ -1,8 +1,16 @@
-import { firebase } from '../utils/firebaseAdmin';
+import { db } from '../utils/firebaseInit';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default defineEventHandler(async event => {
-  const ref = firebase.collection('lists').doc('B5NIsSDzdjcalkqe5z7Y');
-  const snapshot = await ref.get();
-  const data = snapshot.data();
-  return data;
+  const ref = doc(db, 'lists', 'B5NIsSDzdjcalkqe5z7Y');
+  const docSnap = await getDoc(ref);
+  console.log(docSnap.data());
+  // if (docSnap.exists()) {
+  //   console.log('Document data:', docSnap.data());
+  // } else {
+  //   // doc.data() will be undefined in this case
+  //   console.log('No such document!');
+  // }
+
+  return '122';
 });

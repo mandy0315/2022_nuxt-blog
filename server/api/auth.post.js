@@ -1,7 +1,8 @@
-import { firebaseAuth } from '../utils/firebaseClient';
+import { auth } from '../utils/firebaseInit';
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default defineEventHandler(async event => {
   const body = await useBody(event);
   console.log(body);
-  // console.log(firebaseAuth);
+  console.log('auth', auth);
 });
