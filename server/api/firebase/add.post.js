@@ -1,4 +1,4 @@
-import { collection, addDoc, doc } from 'firebase/firestore';
+import { collection, setDoc, doc } from 'firebase/firestore';
 import { db } from '@/server/libs/firebase';
 
 export default defineEventHandler(async event => {
@@ -9,10 +9,10 @@ export default defineEventHandler(async event => {
     const ref = collection(db, query.col);
     const refId = doc(ref).id;
     body.id = refId;
-    await addDoc(ref, body);
+    await setDoc(doc(ref, refId), body);
 
-    return { success: true };
+    return { success: true, id: refId };
   } catch (error) {
-    return { success: false, error: error.message };
+    throw createError({ statusCode: 500, statusMessage: error.message });
   }
 });

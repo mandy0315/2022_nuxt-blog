@@ -1,4 +1,10 @@
 export default function () {
+  const getFirebaseDocData = async (col, id) => {
+    const { data } = await useFetch(`/api/firebase/docData?col=${col}&id=${id}`, {
+      initialCache: false
+    });
+    return data.value;
+  };
   const getFirebaseData = async col => {
     const { data } = await useFetch(`/api/firebase/data?col=${col}`, {
       initialCache: false
@@ -23,6 +29,7 @@ export default function () {
 
   return {
     getFirebaseData,
+    getFirebaseDocData,
     addFirebaseData,
     deleteFirebaseData
   };

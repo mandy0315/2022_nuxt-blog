@@ -8,6 +8,6 @@ export default defineEventHandler(async event => {
 
     return { success: true };
   } catch (error) {
-    return { success: false, error: error.message };
+    throw createError({ statusCode: 500, statusMessage: error.message });
   }
 });
