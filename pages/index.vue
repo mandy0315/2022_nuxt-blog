@@ -7,8 +7,6 @@
     <button @click.prevent="changeTitle()">修改title</button>
     <Icon name="uil:github" />
     <input type="text" class="form-input" placeholder="請輸入" />
-
-    <pre>{{ serverData }}</pre>
   </div>
 </template>
 
@@ -19,15 +17,7 @@ import { storeToRefs } from 'pinia';
 const $mainStore = useMainStore();
 const { title } = storeToRefs($mainStore);
 const { changeTitle } = $mainStore;
-
-const { data: serverData } = useFetch('/api/animal');
-useFetch('/api/auth', {
-  method: 'post',
-  body: {
-    email: 'windy@gamil.com',
-    password: 12356
-  }
-});
+console.log('test');
 </script>
 
 <style lang="scss" scoped></style>
