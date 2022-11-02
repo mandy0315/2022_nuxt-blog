@@ -20,7 +20,6 @@
           preview-theme="github"
           language="zh-tw"
           :toolbars="toolbars"
-          @onUploadImg="onUploadImg"
         ></md-editor>
       </section>
       <div class="text-right">
