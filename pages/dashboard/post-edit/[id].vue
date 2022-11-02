@@ -1,7 +1,7 @@
 <template>
   <main class="c-container pt-6 pb-10">
     <h1 class="c-dashboard-title">文章編輯</h1>
-    <dashboard-article-forms />
+    <dashboard-post-edit-forms />
   </main>
 </template>
 
