@@ -1,5 +1,5 @@
 import mainStore from './mainStore';
-import blogStore from './blogStore';
+import categoriesStore from './categoriesStore';
 
 export const useMainStore = mainStore;
-export const useBlogStore = blogStore;
+export const useCategoriesStore = categoriesStore;

@@ -73,14 +73,14 @@
 </template>
 
 <script setup>
-import { useBlogStore } from '@/stores/index';
+import { useCategoriesStore } from '@/stores/index';
 definePageMeta({
   layout: 'dashboard'
 });
 
 const { addFirebaseData, deleteFirebaseData } = useFirebase();
-const $blogStore = useBlogStore();
-const categorieList = computed(() => $blogStore.categorieList);
+const $categoriesStore = useCategoriesStore();
+const categorieList = computed(() => $categoriesStore.categorieList);
 const isSamePath = ref(false);
 const categorieInfo = reactive({});
 const fillCategorieName = computed({
@@ -99,7 +99,7 @@ const fillCategoriePath = computed({
 });
 
 const init = async () => {
-  await $blogStore.updateCategorieList();
+  await $categoriesStore.updateCategorieList();
 };
 init();
 
@@ -109,7 +109,7 @@ const addCategorie = async () => {
 
   const data = await addFirebaseData('categories', categorieInfo);
   if (data.success) {
-    await $blogStore.updateCategorieList();
+    await $categoriesStore.updateCategorieList();
   }
   fillCategorieName.value = '';
   fillCategoriePath.value = '';
@@ -118,7 +118,7 @@ const addCategorie = async () => {
 const deleteCategorie = async id => {
   const data = await deleteFirebaseData('categories', id);
   if (data.success) {
-    await $blogStore.updateCategorieList();
+    await $categoriesStore.updateCategorieList();
   }
 };
 </script>
