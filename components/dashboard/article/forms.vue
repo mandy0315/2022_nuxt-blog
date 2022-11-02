@@ -79,7 +79,7 @@ const submitList = [
   },
   {
     name: '刪除文章',
-    isShow: route.path !== '/dashboard/article/create'
+    isShow: route.path !== '/dashboard/article/post-edit'
   }
 ];
 const selectTypeSubmit = computed({
@@ -93,7 +93,7 @@ onMounted(() => {
 });
 
 // md-editor-v3
-const content = ref('# Hello Editor!');
+const content = ref('使用 Markdown 語法，開始填寫你的內容...');
 const toolbars = [
   '-',
   'title',
@@ -113,21 +113,6 @@ const toolbars = [
   '-',
   'preview'
 ];
-
-// const onUploadImg = async (files, callback) => {
-//   console.log(files);
-//   const form = new FormData();
-//   form.append('file', files);
-//   // console.log();
-//   await useFetch('/api/updateImages', {
-//     method: 'post',
-//     headers: {
-//       'Content-Type': 'multipart/form-data'
-//     },
-//     body: form
-//   });
-
-// };
 </script>
 
 <style lang="scss" scoped></style>

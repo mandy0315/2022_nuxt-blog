@@ -2,7 +2,7 @@
   <main class="c-container pt-6 pb-10">
     <div class="flex items-center justify-between">
       <h1 class="c-dashboard-title">文章管理</h1>
-      <nuxt-link to="/dashboard/article" class="c-rounded-button c-rounded-button-gray">+ 新增文章</nuxt-link>
+      <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-gray">+ 新增文章</nuxt-link>
     </div>
     <ul class="mt-6">
       <li
