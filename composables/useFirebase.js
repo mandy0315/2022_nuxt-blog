@@ -19,9 +19,17 @@ export default function () {
     });
     return data.value;
   };
+  const updateFirebaseData = async (col, id, doc) => {
+    const { data } = await useFetch(`/api/firebase/update?col=${col}&id=${id}`, {
+      method: 'post',
+      body: doc,
+      initialCache: false
+    });
+    return data.value;
+  };
   const deleteFirebaseData = async (col, id) => {
     const { data } = await useFetch(`/api/firebase/delete?col=${col}&id=${id}`, {
-      method: 'post',
+      method: 'delete',
       initialCache: false
     });
     return data.value;
@@ -31,6 +39,7 @@ export default function () {
     getFirebaseData,
     getFirebaseDocData,
     addFirebaseData,
+    updateFirebaseData,
     deleteFirebaseData
   };
 }

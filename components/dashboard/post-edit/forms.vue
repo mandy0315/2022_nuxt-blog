@@ -2,7 +2,7 @@
   <div>
     <form>
       <ClientOnly>
-        <section class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
+        <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
           <label class="pb-4">
             <p class="pb-1 pr-4 text-lg">標題</p>
             <input
@@ -32,21 +32,17 @@
             language="zh-tw"
             :toolbars="toolbars"
           ></md-editor>
-        </section>
+        </div>
+        <!-- button -->
         <div class="text-right">
           <div class="relative inline-block">
-            <button
-              @click.prevent="sendForm"
-              class="c-rounded-button rounded-r-none rounded-l"
-              :class="postInfo.status === 'delete' ? 'c-rounded-button-red' : 'c-rounded-button-gray'"
-            >
+            <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-gray rounded-r-none rounded-l">
               {{ currSubmitName }}
             </button>
-            <div
+            <button
               ref="container_el"
-              @click="toggleList"
-              class="c-rounded-button rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
-              :class="postInfo.status === 'delete' ? 'c-rounded-button-red' : 'c-rounded-button-gray'"
+              @click.prevent="toggleList"
+              class="c-rounded-button c-rounded-button-gray rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
             >
               <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="inline-block" />
               <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />
@@ -55,18 +51,16 @@
                 v-if="isOpen"
                 class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-400 bg-white p-2 text-center shadow-lg"
               >
-                <template v-for="item in submitList" :key="item.status">
-                  <button
-                    v-if="item.isShow"
-                    class="block w-full py-1 hover:opacity-50"
-                    :class="item.status === 'delete' ? 'text-red-700' : 'text-c-gray-800'"
-                    @click.prevent="selectSubmitStatus = item.status"
-                  >
-                    {{ item.name }}
-                  </button>
-                </template>
+                <button
+                  v-for="item in submitList"
+                  :key="item.status"
+                  class="block w-full py-1 text-c-gray-800 hover:opacity-50"
+                  @click.prevent="selectSubmitStatus = item.status"
+                >
+                  {{ item.name }}
+                </button>
               </div>
-            </div>
+            </button>
           </div>
         </div>
       </ClientOnly>
@@ -104,18 +98,11 @@ const container_el = ref(null);
 const submitList = [
   {
     name: '儲存草稿',
-    status: 'draft',
-    isShow: true
+    status: 'draft'
   },
   {
     name: '公開文章',
-    status: 'public',
-    isShow: true
-  },
-  {
-    name: '刪除文章',
-    status: 'delete',
-    isShow: routeName.value === 'dashboard-post-edit-id'
+    status: 'public'
   }
 ];
 const currSubmitName = computed(() => submitList.filter(item => item.status === postInfo.status)[0].name);
@@ -167,7 +154,7 @@ selectCategory.value = selectCategory.value || categorieList.value[0].name;
 
 // 送出
 const { nowToISO } = useDateTime();
-const { addFirebaseData, getFirebaseDocData } = useFirebase();
+const { addFirebaseData, getFirebaseDocData, updateFirebaseData } = useFirebase();
 
 const $router = useRouter();
 const sendForm = async () => {
@@ -175,18 +162,19 @@ const sendForm = async () => {
 
   switch (routeName.value) {
     case 'dashboard-post-edit':
-      const data = await addFirebaseData('posts', postInfo);
-
-      data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
+      const data1 = await addFirebaseData('posts', postInfo);
+      data1.success && $router.push({ path: `/dashboard/post-edit/${data1.id}` });
       break;
     default:
+      const data2 = await updateFirebaseData('posts', postInfo.id, postInfo);
+      data2.success && $router.push({ path: `/dashboard/post-edit/${data2.id}` });
       break;
   }
 };
 
 // 初始
 const initPage = async () => {
-  // id
+  // 判斷是文章編輯頁執行
   if (routeName.value === 'dashboard-post-edit-id') {
     postInfo.id = route.params.id;
 
