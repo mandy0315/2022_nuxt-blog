@@ -1,10 +1,12 @@
 <template>
   <div class="flex items-center">
     <div class="w-3/4 pr-6">
-      <h3 class="pb-2 text-xl text-c-orange-800">文章標題</h3>
+      <h3 class="pb-2 text-xl text-c-orange-800">{{ title }}</h3>
       <div class="pb-2 text-sm">
-        <span class="pr-3"><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />2022/10/23 </span>
-        <span><Icon icon="material-symbols:folder-open-outline" class="mr-1 inline-block" />Nuxt </span>
+        <span class="pr-3"
+          ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
+        >
+        <span><Icon icon="material-symbols:folder-open-outline" class="mr-1 inline-block" />{{ category }}</span>
       </div>
       <p class="line-clamp-3">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae inventore fugit expedita voluptatem ea
@@ -21,6 +23,27 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
+  },
+  category: {
+    type: String,
+    default: ''
+  },
+  content: {
+    type: String,
+    default: ''
+  },
+  update_time: {
+    type: String,
+    default: ''
+  }
+});
+const { dateFormat } = useDateTime();
+console.log(props.content);
+</script>
 
 <style lang="scss" scoped></style>

@@ -4,7 +4,9 @@ dayjs.locale('zh-tw');
 
 export default function () {
   const nowToISO = dayjs().toISOString();
+  const dateFormat = (date, formet = 'YYYY/MM/DD') => (date ? dayjs(date).format(formet) : null);
   return {
+    dateFormat,
     nowToISO
   };
 }

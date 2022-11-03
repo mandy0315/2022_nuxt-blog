@@ -6,12 +6,12 @@
     </div>
     <ul class="mt-6">
       <li
-        v-for="item in postsTypes"
-        :key="item.type"
+        v-for="item in postsStateList"
+        :key="item.state"
         class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
-        :class="currType === item.type ? 'opacity-100' : 'opacity-50'"
+        :class="currState === item.state ? 'opacity-100' : 'opacity-50'"
       >
-        <nuxt-link :to="`/dashboard/posts/${item.type}`">{{ item.name }}</nuxt-link>
+        <nuxt-link :to="`/dashboard/posts/${item.state}`">{{ item.name }}</nuxt-link>
       </li>
     </ul>
 
@@ -30,18 +30,18 @@ definePageMeta({
   ]
 });
 
-const postsTypes = [
+const postsStateList = [
   {
-    type: 'public',
+    state: 'public',
     name: '公開'
   },
   {
-    type: 'draft',
+    state: 'draft',
     name: '草稿'
   }
 ];
 const route = useRoute();
-const currType = computed(() => route.params.postsType || '');
+const currState = computed(() => route.params.postsState);
 </script>
 
 <style lang="scss" scoped></style>

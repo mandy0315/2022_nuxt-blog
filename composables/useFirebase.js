@@ -26,6 +26,20 @@ export default function () {
     return data.value;
   };
   // 文章
+  const getPostsPublicListAPI = async () => {
+    const { data } = await useFetch('/api/firebase/posts/publicList', {
+      method: 'get',
+      initialCache: false
+    });
+    return data.value;
+  };
+  const getPostsDraftListAPI = async () => {
+    const { data } = await useFetch('/api/firebase/posts/draftList', {
+      method: 'get',
+      initialCache: false
+    });
+    return data.value;
+  };
   const getPostsAPI = async id => {
     const { data } = await useFetch(`/api/firebase/posts/${id}`, {
       method: 'get',
@@ -54,6 +68,8 @@ export default function () {
     getCategoriesListAPI,
     addCategoriesAPI,
     deleteCategoriesAPI,
+    getPostsPublicListAPI,
+    getPostsDraftListAPI,
     getPostsAPI,
     addPostsAPI,
     updatePostsAPI

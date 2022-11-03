@@ -4,7 +4,7 @@ import { db } from '@/server/libs/firebase';
 export default defineEventHandler(async event => {
   try {
     const categoriesRef = collection(db, 'categories');
-    const q = query(categoriesRef, orderBy('update_time'));
+    const q = query(categoriesRef, orderBy('update_time', 'desc'));
     const snapshot = await getDocs(q);
     const data = Array.from(snapshot.docs).map(doc => {
       return {
@@ -12,7 +12,6 @@ export default defineEventHandler(async event => {
         id: doc.id
       };
     });
-    data.reverse(); // 最新在上方
 
     return { success: true, result: data };
   } catch (error) {
