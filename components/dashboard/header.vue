@@ -23,7 +23,7 @@
 <script setup>
 const topBarNav = [
   {
-    link: '/dashboard/archives/public',
+    link: '/dashboard/posts/public',
     name: '文章管理'
   },
   {

@@ -2,31 +2,35 @@
   <main class="c-container pt-6 pb-10">
     <div class="flex items-center justify-between">
       <h1 class="c-dashboard-title">文章管理</h1>
-      <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-gray">+ 新增文章</nuxt-link>
+      <nuxt-link to="/dashboard/posts/post-edit" class="c-rounded-button c-rounded-button-gray">+ 新增文章</nuxt-link>
     </div>
     <ul class="mt-6">
       <li
-        v-for="item in archivesTypes"
+        v-for="item in postsTypes"
         :key="item.type"
         class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
         :class="currType === item.type ? 'opacity-100' : 'opacity-50'"
       >
-        <nuxt-link :to="`/dashboard/archives/${item.type}`">{{ item.name }}</nuxt-link>
+        <nuxt-link :to="`/dashboard/posts/${item.type}`">{{ item.name }}</nuxt-link>
       </li>
     </ul>
+
     <nuxt-page />
   </main>
 </template>
 
 <script setup>
-useHead({
-  title: '文章管理'
-});
 definePageMeta({
-  layout: 'dashboard'
+  middleware: [
+    (to, form) => {
+      if (to.path === '/dashboard/posts') {
+        return navigateTo('/dashboard/posts/public');
+      }
+    }
+  ]
 });
 
-const archivesTypes = [
+const postsTypes = [
   {
     type: 'public',
     name: '公開'
@@ -37,7 +41,7 @@ const archivesTypes = [
   }
 ];
 const route = useRoute();
-const currType = computed(() => route.params.archivesType || '');
+const currType = computed(() => route.params.postsType || '');
 </script>
 
 <style lang="scss" scoped></style>

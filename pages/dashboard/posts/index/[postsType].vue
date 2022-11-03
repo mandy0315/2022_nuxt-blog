@@ -25,10 +25,11 @@
 
 <script setup>
 definePageMeta({
+  layout: 'dashboard',
   middleware: [
     (to, form) => {
-      if (!['public', 'draft'].includes(to.params.archivesType)) {
-        return navigateTo('/dashboard/archives/public');
+      if (!['public', 'draft'].includes(to.params.postsType)) {
+        return navigateTo('/dashboard/posts/public');
       }
     }
   ]

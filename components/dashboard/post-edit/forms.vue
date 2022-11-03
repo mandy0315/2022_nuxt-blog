@@ -163,11 +163,11 @@ const sendForm = async () => {
   switch (routeName.value) {
     case 'dashboard-post-edit':
       const data1 = await addFirebaseData('posts', postInfo);
-      data1.success && $router.push({ path: `/dashboard/post-edit/${data1.id}` });
+      data1.success && $router.push({ path: `/dashboard/posts/post-edit/${data1.id}` });
       break;
     default:
       const data2 = await updateFirebaseData('posts', postInfo.id, postInfo);
-      data2.success && $router.push({ path: `/dashboard/post-edit/${data2.id}` });
+      data2.success && $router.push({ path: `/dashboard/posts/post-edit/${data2.id}` });
       break;
   }
 };
@@ -182,7 +182,7 @@ const initPage = async () => {
     if (data.success) {
       Object.assign(postInfo, data.result);
     } else {
-      $router.push({ path: `/dashboard/archives/public` });
+      $router.push({ path: `/dashboard/posts/public` });
     }
   }
 };
