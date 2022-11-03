@@ -29,7 +29,7 @@
                 <td class="py-2 px-4">
                   <button
                     class="c-border-button c-border-button-red my-1 w-full"
-                    @click.prevent="deleteCategorie(categorie.id)"
+                    @click.prevent="deleteCategories(categorie.id)"
                   >
                     刪除
                   </button>
@@ -63,7 +63,7 @@
               placeholder="請輸入路徑"
             />
           </label>
-          <button @click.prevent="addCategorie" class="c-rounded-button c-rounded-button-gray ml-auto block rounded">
+          <button @click.prevent="addCategories" class="c-rounded-button c-rounded-button-gray ml-auto block rounded">
             新增
           </button>
         </form>
@@ -78,7 +78,7 @@ definePageMeta({
   layout: 'dashboard'
 });
 
-const { addFirebaseData, deleteFirebaseData } = useFirebase();
+const { addCategoriesAPI, deleteCategoriesAPI } = useFirebase();
 const $categoriesStore = useCategoriesStore();
 const categorieList = computed(() => $categoriesStore.categorieList);
 const isSamePath = ref(false);
@@ -99,26 +99,28 @@ const fillCategoriePath = computed({
 });
 
 const init = async () => {
-  await $categoriesStore.updateCategorieList();
+  await $categoriesStore.getCategoriesList();
 };
 init();
 
-const addCategorie = async () => {
+const { nowToISO } = useDateTime();
+const addCategories = async () => {
   isSamePath.value = categorieList.value.filter(item => item.path === categorieInfo.path).length > 0;
   if (isSamePath.value) return false;
 
-  const data = await addFirebaseData('categories', categorieInfo);
+  categorieInfo['update_time'] = nowToISO;
+  const data = await addCategoriesAPI(categorieInfo);
   if (data.success) {
-    await $categoriesStore.updateCategorieList();
+    await $categoriesStore.getCategoriesList();
   }
   fillCategorieName.value = '';
   fillCategoriePath.value = '';
 };
 
-const deleteCategorie = async id => {
-  const data = await deleteFirebaseData('categories', id);
+const deleteCategories = async id => {
+  const data = await deleteCategoriesAPI(id);
   if (data.success) {
-    await $categoriesStore.updateCategorieList();
+    await $categoriesStore.getCategoriesList();
   }
 };
 </script>

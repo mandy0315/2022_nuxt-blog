@@ -1,4 +1,29 @@
 export default function () {
+  const getCategoriesAPI = async () => {
+    const { data } = await useFetch('/api/firebase/categories', {
+      method: 'get',
+      initialCache: false
+    });
+    return data.value;
+  };
+  const addCategoriesAPI = async doc => {
+    const { data } = await useFetch('/api/firebase/categories', {
+      method: 'post',
+      body: doc,
+      initialCache: false
+    });
+    return data.value;
+  };
+  const deleteCategoriesAPI = async id => {
+    const { data } = await useFetch(`/api/firebase/categories`, {
+      method: 'delete',
+      body: {
+        id
+      },
+      initialCache: false
+    });
+    return data.value;
+  };
   const getFirebaseDocData = async (col, id) => {
     const { data } = await useFetch(`/api/firebase/docData?col=${col}&id=${id}`, {
       initialCache: false
@@ -36,6 +61,9 @@ export default function () {
   };
 
   return {
+    getCategoriesAPI,
+    addCategoriesAPI,
+    deleteCategoriesAPI,
     getFirebaseData,
     getFirebaseDocData,
     addFirebaseData,
