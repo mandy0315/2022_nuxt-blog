@@ -1,6 +1,7 @@
 export default function () {
-  const getCategoriesAPI = async () => {
-    const { data } = await useFetch('/api/firebase/categories', {
+  // 分類
+  const getCategoriesListAPI = async () => {
+    const { data } = await useFetch('/api/firebase/categories/list', {
       method: 'get',
       initialCache: false
     });
@@ -24,50 +25,73 @@ export default function () {
     });
     return data.value;
   };
-  const getFirebaseDocData = async (col, id) => {
-    const { data } = await useFetch(`/api/firebase/docData?col=${col}&id=${id}`, {
+  // 文章
+  const getPostsAPI = async id => {
+    const { data } = await useFetch(`/api/firebase/posts/${id}`, {
+      method: 'get',
       initialCache: false
     });
     return data.value;
   };
-  const getFirebaseData = async col => {
-    const { data } = await useFetch(`/api/firebase/data?col=${col}`, {
-      initialCache: false
-    });
-    return data.value;
-  };
-  const addFirebaseData = async (col, doc) => {
-    const { data } = await useFetch(`/api/firebase/add?col=${col}`, {
+  const addPostsAPI = async doc => {
+    const { data } = await useFetch('/api/firebase/posts', {
       method: 'post',
       body: doc,
       initialCache: false
     });
     return data.value;
   };
-  const updateFirebaseData = async (col, id, doc) => {
-    const { data } = await useFetch(`/api/firebase/update?col=${col}&id=${id}`, {
-      method: 'post',
+  const updatePostsAPI = async (id, doc) => {
+    const { data } = await useFetch(`/api/firebase/posts/${id}`, {
+      method: 'put',
       body: doc,
-      initialCache: false
-    });
-    return data.value;
-  };
-  const deleteFirebaseData = async (col, id) => {
-    const { data } = await useFetch(`/api/firebase/delete?col=${col}&id=${id}`, {
-      method: 'delete',
       initialCache: false
     });
     return data.value;
   };
 
+  // const getFirebaseDocData = async (col, id) => {
+  //   const { data } = await useFetch(`/api/firebase/docData?col=${col}&id=${id}`, {
+  //     initialCache: false
+  //   });
+  //   return data.value;
+  // };
+  // const getFirebaseData = async col => {
+  //   const { data } = await useFetch(`/api/firebase/data?col=${col}`, {
+  //     initialCache: false
+  //   });
+  //   return data.value;
+  // };
+  // const addFirebaseData = async (col, doc) => {
+  //   const { data } = await useFetch(`/api/firebase/add?col=${col}`, {
+  //     method: 'post',
+  //     body: doc,
+  //     initialCache: false
+  //   });
+  //   return data.value;
+  // };
+  // const updateFirebaseData = async (col, id, doc) => {
+  //   const { data } = await useFetch(`/api/firebase/update?col=${col}&id=${id}`, {
+  //     method: 'post',
+  //     body: doc,
+  //     initialCache: false
+  //   });
+  //   return data.value;
+  // };
+  // const deleteFirebaseData = async (col, id) => {
+  //   const { data } = await useFetch(`/api/firebase/delete?col=${col}&id=${id}`, {
+  //     method: 'delete',
+  //     initialCache: false
+  //   });
+  //   return data.value;
+  // };
+
   return {
-    getCategoriesAPI,
+    getCategoriesListAPI,
     addCategoriesAPI,
     deleteCategoriesAPI,
-    getFirebaseData,
-    getFirebaseDocData,
-    addFirebaseData,
-    updateFirebaseData,
-    deleteFirebaseData
+    getPostsAPI,
+    addPostsAPI,
+    updatePostsAPI
   };
 }

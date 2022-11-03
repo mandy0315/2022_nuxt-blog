@@ -146,15 +146,14 @@ const selectCategory = computed({
     postInfo.category = val;
   }
 });
-// 分類
 if (categorieList.value.length === 0) {
-  await $categoriesStore.updateCategorieList();
+  await $categoriesStore.getCategoriesList();
 }
 selectCategory.value = selectCategory.value || categorieList.value[0].name;
 
 // 送出
 const { nowToISO } = useDateTime();
-const { addFirebaseData, getFirebaseDocData, updateFirebaseData } = useFirebase();
+const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
 
 const $router = useRouter();
 const sendForm = async () => {
@@ -162,11 +161,11 @@ const sendForm = async () => {
 
   switch (routeName.value) {
     case 'dashboard-posts-post-edit':
-      const data1 = await addFirebaseData('posts', postInfo);
+      const data1 = await addPostsAPI(postInfo);
       data1.success && $router.push({ path: `/dashboard/posts/post-edit/${data1.id}` });
       break;
     default:
-      const data2 = await updateFirebaseData('posts', postInfo.id, postInfo);
+      const data2 = await updatePostsAPI(postInfo.id, postInfo);
       data2.success && $router.push({ path: `/dashboard/posts/post-edit/${data2.id}` });
       break;
   }
@@ -178,7 +177,7 @@ const initPage = async () => {
   if (routeName.value === 'dashboard-posts-post-edit-id') {
     postInfo.id = route.params.id;
 
-    const data = await getFirebaseDocData('posts', postInfo.id);
+    const data = await getPostsAPI(postInfo.id);
     if (data.success) {
       Object.assign(postInfo, data.result);
     } else {

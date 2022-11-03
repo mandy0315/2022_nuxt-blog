@@ -9,8 +9,8 @@ export default defineStore('mainStore', {
     async getCategoriesList() {
       const store = this;
 
-      const { getCategoriesAPI } = useFirebase();
-      const data = await getCategoriesAPI();
+      const { getCategoriesListAPI } = useFirebase();
+      const data = await getCategoriesListAPI();
       store.categorieList = data.result;
     }
   }
