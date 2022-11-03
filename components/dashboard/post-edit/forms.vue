@@ -161,7 +161,7 @@ const sendForm = async () => {
   postInfo['update_time'] = nowToISO;
 
   switch (routeName.value) {
-    case 'dashboard-post-edit':
+    case 'dashboard-posts-post-edit':
       const data1 = await addFirebaseData('posts', postInfo);
       data1.success && $router.push({ path: `/dashboard/posts/post-edit/${data1.id}` });
       break;
@@ -175,7 +175,7 @@ const sendForm = async () => {
 // 初始
 const initPage = async () => {
   // 判斷是文章編輯頁執行
-  if (routeName.value === 'dashboard-post-edit-id') {
+  if (routeName.value === 'dashboard-posts-post-edit-id') {
     postInfo.id = route.params.id;
 
     const data = await getFirebaseDocData('posts', postInfo.id);
