@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden rounded-lg">
+  <div class="overflow-hidden rounded-md">
     <img src="https://picsum.photos/seed/picsum/560/315" alt="假圖" class="h-full w-full object-cover" />
   </div>
 </template>

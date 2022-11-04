@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-8/12">
-      <div><ui-post-item /></div>
+      <div><ui-post-list /></div>
     </div>
     <div class="w-4/12 pl-6">
       <ui-sidebar />

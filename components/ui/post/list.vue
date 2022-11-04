@@ -21,19 +21,19 @@
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: '標題'
   },
   category: {
     type: String,
-    default: ''
+    default: '分類名稱'
   },
   content: {
     type: String,
-    default: ''
+    default: '輸入內容'
   },
   update_time: {
     type: String,
-    default: ''
+    default: '2022/11/04'
   }
 });
 const { dateFormat } = useDateTime();

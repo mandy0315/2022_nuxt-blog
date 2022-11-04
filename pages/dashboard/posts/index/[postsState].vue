@@ -10,7 +10,7 @@
       <tbody v-if="postsList.length > 0">
         <tr v-for="item in postsList" class="border-b border-solid border-c-gray-400">
           <td scope="col" class="p-4 text-c-gray-600">
-            <ui-post-item v-bind="item" />
+            <ui-post-list v-bind="item" />
           </td>
           <td class="p-4">
             <nuxt-link
@@ -19,7 +19,9 @@
             >
               編輯
             </nuxt-link>
-            <button class="c-border-button c-border-button-gray my-1 w-full">預覽</button>
+            <button @click.prevent="openPreviewPost(item.id)" class="c-border-button c-border-button-gray my-1 w-full">
+              預覽
+            </button>
             <button @click.prevent="deleteCase(item.id)" class="c-border-button c-border-button-red my-1 w-full">
               刪除
             </button>
@@ -31,6 +33,10 @@
 </template>
 
 <script setup>
+import { $vfm } from 'vue-final-modal';
+import CustomModal from '@/components/ui/customModal.vue';
+import UiPostContent from '@/components/ui/post/content.vue';
+
 definePageMeta({
   layout: 'dashboard',
   middleware: [
@@ -45,13 +51,9 @@ definePageMeta({
 const route = useRoute();
 const currState = computed(() => route.params.postsState);
 const postsList = useState(() => []);
-
-const deleteCase = id => {
-  console.log('caseId=>', id);
-};
+const { getPostsPublicListAPI, getPostsDraftListAPI, deletePostsAPI, getPostsAPI } = useFirebase();
 
 // 初始-取的資料
-const { getPostsPublicListAPI, getPostsDraftListAPI } = useFirebase();
 const getPostsListData = {
   public: async () => {
     const data = await getPostsPublicListAPI();
@@ -62,11 +64,40 @@ const getPostsListData = {
     return data.result;
   }
 };
-const init = async () => {
+const getPostsList = async () => {
   const data = await getPostsListData[currState.value]();
   postsList.value = data;
 };
-init();
+getPostsList();
+
+const deleteCase = async id => {
+  const data = await deletePostsAPI(id);
+  data.success && getPostsList();
+};
+
+const openPreviewPost = async id => {
+  const data = await getPostsAPI(id);
+  data.success &&
+    $vfm.show({
+      component: CustomModal,
+      bind: {
+        modalContainerClass: 'max-w-[960px]',
+        modalContentClass: 'p-6'
+      },
+      on: {},
+      slots: {
+        default: {
+          component: UiPostContent,
+          bind: {
+            title: data.result.title,
+            category: data.result.category,
+            content: data.result.content,
+            update_time: data.result.update_time
+          }
+        }
+      }
+    });
+};
 </script>
 
 <style lang="scss" scoped></style>

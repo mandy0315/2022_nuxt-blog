@@ -1,5 +1,5 @@
 <template>
-  <div><ui-post-item /></div>
+  <div><ui-post-list /></div>
 </template>
 
 <script setup>
