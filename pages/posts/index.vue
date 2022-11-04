@@ -1,5 +1,10 @@
 <template>
-  <div><ui-post-list /></div>
+  <div class="flex">
+    <div class="w-full">
+      <ui-post-list />
+    </div>
+    <ui-post-sidebar />
+  </div>
 </template>
 
 <script setup>

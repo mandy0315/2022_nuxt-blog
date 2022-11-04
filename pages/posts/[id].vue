@@ -8,7 +8,7 @@
 <script setup>
 const route = useRoute();
 useHead({
-  title: route.params.postId
+  title: route.params.id
 });
 </script>
 

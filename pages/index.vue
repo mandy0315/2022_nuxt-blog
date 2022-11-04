@@ -12,10 +12,9 @@
 
 <script setup>
 import { useMainStore } from '@/stores/index';
-import { storeToRefs } from 'pinia';
 
 const $mainStore = useMainStore();
-const { title } = storeToRefs($mainStore);
+const title = computed(() => $mainStore.title);
 const { changeTitle } = $mainStore;
 console.log('test');
 </script>

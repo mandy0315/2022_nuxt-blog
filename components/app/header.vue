@@ -1,5 +1,5 @@
 <template>
-  <header class="inline-block w-full bg-white shadow dark:bg-c-gray-800 dark:text-c-gray-400">
+  <header class="inline-block w-full bg-white shadow dark:bg-c-gray-600 dark:text-white">
     <div class="c-container flex items-center py-2">
       <nuxt-link to="/" class="inline-block">
         <div class="mr-2 inline-block w-10 align-middle">

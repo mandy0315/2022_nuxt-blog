@@ -1,11 +1,9 @@
 <template>
   <div class="flex">
-    <div class="w-8/12">
-      <div><ui-post-list /></div>
+    <div class="w-full">
+      <ui-post-list />
     </div>
-    <div class="w-4/12 pl-6">
-      <ui-sidebar />
-    </div>
+    <ui-post-sidebar />
   </div>
 </template>
 
