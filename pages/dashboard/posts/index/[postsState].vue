@@ -8,7 +8,7 @@
         </tr>
       </thead>
       <tbody v-if="postsList.length > 0">
-        <tr v-for="item in postsList" class="border-b border-solid border-c-gray-400">
+        <tr v-for="item in postsList" :key="item.id" class="border-b border-solid border-c-gray-400">
           <td scope="col" class="p-4 text-c-gray-600">
             <ui-post-list v-bind="item" />
           </td>
@@ -66,7 +66,7 @@ const getPostsListData = {
 };
 const getPostsList = async () => {
   const data = await getPostsListData[currState.value]();
-  postsList.value = data;
+  postsList.value = data || [];
 };
 getPostsList();
 
