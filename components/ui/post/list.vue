@@ -6,12 +6,11 @@
         <span class="pr-3"
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
-        <!-- <span><Icon icon="material-symbols:folder-open-outline" class="mr-1 inline-block" />{{ category }}</span> -->
       </div>
       <p class="line-clamp-3">
         {{ postContent }}
       </p>
-      <ui-categories v-if="category.length > 0" :categories="category" />
+      <ui-post-categories v-if="category.length > 0" :categories="category" />
     </div>
 
     <!-- <ui-post-image class="w-[230px]" /> -->

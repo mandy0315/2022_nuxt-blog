@@ -6,10 +6,9 @@
         <span class="pr-3"
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
-        <span><Icon icon="material-symbols:folder-open-outline" class="mr-1 inline-block" />{{ category }}</span>
       </div>
+      <ui-post-categories v-if="category.length > 0" :categories="category" />
     </div>
-    <ui-post-image class="mb-4" />
     <md-editor
       editor-id="my-editor"
       v-model="content"
@@ -29,8 +28,8 @@ const props = defineProps({
     default: '標題'
   },
   category: {
-    type: String,
-    default: '分類名稱'
+    type: Array,
+    default: ['']
   },
   content: {
     type: String,
