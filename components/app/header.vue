@@ -30,6 +30,10 @@ const topBarNav = [
   {
     link: '/posts',
     name: '文章'
+  },
+  {
+    link: '/categories',
+    name: '分類'
   }
 ];
 </script>

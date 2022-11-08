@@ -1,22 +1,23 @@
 <template>
-  <div>
-    <app-build />
-    <client-only>
-      <p>{{ title }}</p>
-    </client-only>
-    <button @click.prevent="changeTitle()">修改title</button>
-    <Icon name="uil:github" />
-    <input type="text" class="form-input" placeholder="請輸入" />
+  <div class="flex items-start">
+    <ul>
+      <template v-if="postsList.length > 0">
+        <li v-for="item in postsList" :key="item.id">
+          <nuxt-link :to="`/posts/${item.id}`" class="group block border-b border-c-gray-400 py-5">
+            <ui-post-list v-bind="item" />
+          </nuxt-link>
+        </li>
+      </template>
+    </ul>
   </div>
 </template>
 
 <script setup>
-import { useMainStore } from '@/stores/index';
+const { getPostsPublicListAPI } = useFirebase();
+const postsList = useState(() => []);
 
-const $mainStore = useMainStore();
-const title = computed(() => $mainStore.title);
-const { changeTitle } = $mainStore;
-console.log('test');
+const data = await getPostsPublicListAPI();
+postsList.value = data.result || [];
 </script>
 
 <style lang="scss" scoped></style>

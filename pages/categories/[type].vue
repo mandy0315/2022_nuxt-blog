@@ -3,7 +3,6 @@
     <div class="w-full">
       <ui-post-list />
     </div>
-    <ui-post-sidebar />
   </div>
 </template>
 
