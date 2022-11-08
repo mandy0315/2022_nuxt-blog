@@ -1,6 +1,5 @@
 <template>
   <div>
-    <ui-breadcrumb />
     <ui-post-content />
   </div>
 </template>
