@@ -10,8 +10,8 @@
       <p class="line-clamp-3">
         {{ postContent }}
       </p>
-      <template v-if="category.length > 0">
-        <div v-for="item in category" :key="item">
+      <template v-if="categories.length > 0">
+        <div v-for="item in categories" :key="item">
           <ui-tag :name="item" class="mt-1 -ml-1" />
         </div>
       </template>
@@ -27,7 +27,7 @@ const props = defineProps({
     type: String,
     default: '標題'
   },
-  category: {
+  categories: {
     type: Array,
     default: []
   },

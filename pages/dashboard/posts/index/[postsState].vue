@@ -90,7 +90,7 @@ const openPreviewPost = async id => {
           component: UiPostContent,
           bind: {
             title: data.result.title,
-            category: data.result.category,
+            categories: data.result.categories,
             content: data.result.content,
             update_time: data.result.update_time
           }

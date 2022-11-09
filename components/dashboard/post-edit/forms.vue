@@ -11,7 +11,11 @@
         />
       </label>
 
-      <ui-form-combobox :tags="['Vue', 'Nuxt3', 'SCSS']" class="col-span-2" />
+      <ui-form-combobox
+        v-model:selectedTags="postInfo.categories"
+        :tags="['Vue', 'Nuxt3', 'SCSS']"
+        class="col-span-2"
+      />
       <md-editor
         class="col-span-2"
         v-model="postInfo.content"
@@ -137,15 +141,14 @@ const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
 
 const $router = useRouter();
 const sendForm = async () => {
-  postInfo['update_time'] = nowToISO;
-
+  postInfo.value['update_time'] = nowToISO;
   switch (routeName.value) {
     case 'dashboard-posts-post-edit':
-      const data1 = await addPostsAPI(postInfo);
+      const data1 = await addPostsAPI(postInfo.value);
       data1.success && $router.push({ path: `/dashboard/posts/post-edit/${data1.id}` });
       break;
     default:
-      const data2 = await updatePostsAPI(postInfo.value.id, postInfo);
+      const data2 = await updatePostsAPI(postInfo.value.id, postInfo.value);
       data2.success && $router.push({ path: `/dashboard/posts/post-edit/${data2.id}` });
       break;
   }
@@ -167,7 +170,7 @@ const initPage = async () => {
     postInfo.value = {
       id: '',
       title: '',
-      category: [],
+      categories: [],
       content: '使用 Markdown 語法，填寫你的內容...',
       status: 'draft'
     };

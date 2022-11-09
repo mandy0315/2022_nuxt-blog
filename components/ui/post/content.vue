@@ -7,8 +7,8 @@
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
       </div>
-      <template v-if="category.length > 0">
-        <div v-for="item in category" :key="item">
+      <template v-if="categories.length > 0">
+        <div v-for="item in categories" :key="item">
           <ui-tag :name="item" class="mt-1 -ml-1" />
         </div>
       </template>
@@ -31,7 +31,7 @@ const props = defineProps({
     type: String,
     default: '標題'
   },
-  category: {
+  categories: {
     type: Array,
     default: []
   },

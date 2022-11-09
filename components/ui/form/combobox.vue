@@ -45,11 +45,15 @@
 <script setup>
 const combobox_el = ref(null);
 const { isOpen, setContainer, openList } = useToggle();
-const selectedTags = ref([]);
 const fillTag = ref('');
 
+const emit = defineEmits(['update:selectedTags']);
 const props = defineProps({
   tags: {
+    type: Array,
+    required: true
+  },
+  selectedTags: {
     type: Array,
     required: true
   }
@@ -75,17 +79,17 @@ const searchTags = computed(() => {
 
 const addTag = val => {
   const filterSameCategories = computed(() => {
-    return selectedTags.value.filter(tag => tag === val);
+    return props.selectedTags.filter(tag => tag === val);
   });
 
   if (filterSameCategories.value.length === 0) {
-    selectedTags.value.push(val);
+    props.selectedTags.push(val);
   }
   fillTag.value = '';
 };
 
 const deleteTag = val => {
-  selectedTags.value.splice(selectedTags.value.indexOf(val), 1);
+  props.selectedTags.splice(props.selectedTags.indexOf(val), 1);
 };
 </script>
 
