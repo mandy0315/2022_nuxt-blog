@@ -7,7 +7,11 @@
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
       </div>
-      <ui-post-categories v-if="category.length > 0" :categories="category" />
+      <template v-if="category.length > 0">
+        <div v-for="item in category" :key="item">
+          <ui-tag :name="item" class="mt-1 -ml-1" />
+        </div>
+      </template>
     </div>
     <md-editor
       editor-id="my-editor"
@@ -29,7 +33,7 @@ const props = defineProps({
   },
   category: {
     type: Array,
-    default: ['']
+    default: []
   },
   content: {
     type: String,
