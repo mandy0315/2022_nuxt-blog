@@ -26,12 +26,14 @@ export default function () {
   };
 
   const toggleList = e => {
+    console.log(isOpen.value);
     return isOpen.value ? closeList() : openList();
   };
 
   return {
     isOpen,
     toggleList,
-    setContainer
+    setContainer,
+    openList
   };
 }

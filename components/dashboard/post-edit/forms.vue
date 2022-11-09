@@ -1,70 +1,56 @@
 <template>
   <div>
-    <form>
-      <ClientOnly>
-        <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-          <label class="pb-4">
-            <p class="pb-1 pr-4 text-lg">標題</p>
-            <input
-              v-model.lazy="fillTitle"
-              type="text"
-              class="form-input w-full rounded border-c-gray-400"
-              placeholder="請輸入標題"
-            />
-          </label>
+    <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
+      <label class="col-span-2 pb-4">
+        <p class="pb-1 pr-4 text-lg">標題</p>
+        <input
+          v-model.lazy="fillTitle"
+          type="text"
+          class="form-input w-full rounded border-c-gray-400"
+          placeholder="請輸入標題"
+        />
+      </label>
 
-          <label class="inline-block pb-4">
-            <p class="pb-1 pr-4 text-lg">分類</p>
-            <template v-if="categorieList.length > 0">
-              <select v-model="selectCategory" class="form-select w-full rounded border-c-gray-400">
-                <option v-for="category in categorieList" :value="category.name">{{ category.name }}</option>
-              </select>
-            </template>
-            <template v-else>
-              <p>請先新增分類</p>
-            </template>
-          </label>
-          <md-editor
-            class="col-span-2"
-            v-model="postInfo.content"
-            code-theme="github"
-            preview-theme="github"
-            language="zh-tw"
-            :toolbars="toolbars"
-          ></md-editor>
-        </div>
-        <!-- button -->
-        <div class="text-right">
-          <div class="relative inline-block">
-            <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-gray rounded-r-none rounded-l">
-              {{ currSubmitName }}
-            </button>
+      <ui-form-combobox :tags="['Vue', 'Nuxt3', 'SCSS']" class="col-span-2" />
+      <md-editor
+        class="col-span-2"
+        v-model="postInfo.content"
+        code-theme="github"
+        preview-theme="github"
+        language="zh-tw"
+        :toolbars="toolbars"
+      ></md-editor>
+    </div>
+    <!-- button -->
+    <div class="text-right">
+      <div class="relative inline-block">
+        <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-gray rounded-r-none rounded-l">
+          {{ currSubmitName }}
+        </button>
+        <button
+          ref="container_el"
+          @click.prevent="toggleList"
+          class="c-rounded-button c-rounded-button-gray rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
+        >
+          <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="inline-block" />
+          <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />
+
+          <div
+            v-if="isOpen"
+            class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-400 bg-white p-2 text-center shadow-lg"
+          >
             <button
-              ref="container_el"
-              @click.prevent="toggleList"
-              class="c-rounded-button c-rounded-button-gray rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
+              v-for="item in submitList"
+              :key="item.status"
+              class="block w-full py-1 text-c-gray-800 hover:opacity-50"
+              @click.prevent="selectSubmitStatus = item.status"
             >
-              <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="inline-block" />
-              <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />
-
-              <div
-                v-if="isOpen"
-                class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-400 bg-white p-2 text-center shadow-lg"
-              >
-                <button
-                  v-for="item in submitList"
-                  :key="item.status"
-                  class="block w-full py-1 text-c-gray-800 hover:opacity-50"
-                  @click.prevent="selectSubmitStatus = item.status"
-                >
-                  {{ item.name }}
-                </button>
-              </div>
+              {{ item.name }}
             </button>
           </div>
-        </div>
-      </ClientOnly>
-    </form>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,21 +61,15 @@ import { computed, onMounted, reactive } from 'vue';
 const route = useRoute();
 const { isOpen, toggleList, setContainer } = useToggle();
 
-const postInfo = reactive({
-  id: '',
-  title: '',
-  category: '',
-  content: '使用 Markdown 語法，填寫你的內容...',
-  status: 'draft'
-});
+const postInfo = useState(() => reactive({}));
 
 const routeName = computed(() => route.name);
 
 // 標題填寫
 const fillTitle = computed({
-  get: () => postInfo.title,
+  get: () => postInfo.value.title,
   set: val => {
-    postInfo.title = val;
+    postInfo.value.title = val;
   }
 });
 
@@ -105,11 +85,11 @@ const submitList = [
     status: 'public'
   }
 ];
-const currSubmitName = computed(() => submitList.filter(item => item.status === postInfo.status)[0].name);
+const currSubmitName = computed(() => submitList.filter(item => item.status === postInfo.value.status)[0].name);
 const selectSubmitStatus = computed({
-  get: () => postInfo.status,
+  get: () => postInfo.value.status,
   set: val => {
-    postInfo.status = val;
+    postInfo.value.status = val;
   }
 });
 onMounted(() => {
@@ -141,9 +121,9 @@ const toolbars = [
 const $categoriesStore = useCategoriesStore();
 const categorieList = computed(() => $categoriesStore.categorieList);
 const selectCategory = computed({
-  get: () => postInfo.category,
+  get: () => postInfo.value.category,
   set: val => {
-    postInfo.category = val;
+    postInfo.value.category = val;
   }
 });
 if (categorieList.value.length === 0) {
@@ -165,7 +145,7 @@ const sendForm = async () => {
       data1.success && $router.push({ path: `/dashboard/posts/post-edit/${data1.id}` });
       break;
     default:
-      const data2 = await updatePostsAPI(postInfo.id, postInfo);
+      const data2 = await updatePostsAPI(postInfo.value.id, postInfo);
       data2.success && $router.push({ path: `/dashboard/posts/post-edit/${data2.id}` });
       break;
   }
@@ -175,14 +155,22 @@ const sendForm = async () => {
 const initPage = async () => {
   // 判斷是文章編輯頁執行
   if (routeName.value === 'dashboard-posts-post-edit-id') {
-    postInfo.id = route.params.id;
+    postInfo.value.id = route.params.id;
 
-    const data = await getPostsAPI(postInfo.id);
+    const data = await getPostsAPI(postInfo.value.id);
     if (data.success) {
-      Object.assign(postInfo, data.result);
+      postInfo.value = data.result;
     } else {
       $router.push({ path: `/dashboard/posts/public` });
     }
+  } else {
+    postInfo.value = {
+      id: '',
+      title: '',
+      category: [],
+      content: '使用 Markdown 語法，填寫你的內容...',
+      status: 'draft'
+    };
   }
 };
 initPage();
