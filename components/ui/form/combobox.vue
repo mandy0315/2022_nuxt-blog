@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
-    <label for="input-tags">
-      <p class="inline-block pb-1 pr-4 text-lg">分類</p>
+    <label v-if="formTitle" for="input-tags">
+      <p class="inline-block pb-1 pr-4 text-lg">{{ formTitle }}</p>
     </label>
     <div
       ref="combobox_el"
@@ -11,15 +11,22 @@
       <div class="flex flex-1 flex-wrap">
         <template v-if="selectedTags.length > 0">
           <div v-for="item in selectedTags" :key="item">
-            <ui-tag :name="item" :hasLinks="false" :hasCloseIcon="true" @handleDeleteTag="deleteTag" />
+            <ui-tag
+              class="cursor-pointer"
+              :name="item"
+              :hasLinks="false"
+              :hasCloseIcon="true"
+              @handleDeleteTag="deleteTag"
+            />
           </div>
         </template>
 
         <input
           id="input-tags"
           type="text"
-          class="flex-1 self-center border-none p-0 focus:outline-none"
+          class="flex-1 self-center border-0 border-none py-0 px-1 shadow-none outline-none"
           autocomplete="off"
+          :placeholder="inputPlaceholder"
           v-model.trim="fillTag"
           @click="openList"
           @keydown.enter.exact="addTag(fillTag)"
@@ -49,6 +56,14 @@ const fillTag = ref('');
 
 const emit = defineEmits(['update:selectedTags']);
 const props = defineProps({
+  formTitle: {
+    type: String,
+    default: ''
+  },
+  inputPlaceholder: {
+    type: String,
+    default: ''
+  },
   tags: {
     type: Array,
     required: true

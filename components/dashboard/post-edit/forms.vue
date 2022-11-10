@@ -10,9 +10,10 @@
           placeholder="請輸入標題"
         />
       </label>
-
       <ui-form-combobox
         v-model:selectedTags="postInfo.categories"
+        formTitle="分類"
+        inputPlaceholder="請輸入分類"
         :tags="['Vue', 'Nuxt3', 'SCSS']"
         class="col-span-2"
       />
@@ -61,38 +62,13 @@
 <script setup>
 import { computed, onMounted, reactive } from 'vue';
 
-const route = useRoute();
+const $route = useRoute();
+const $router = useRouter();
 const { isOpen, toggleList, setContainer } = useToggle();
 const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
 
 const postInfo = useState(() => reactive({}));
-const hasPostEditId = computed(() => !!route.params.id);
-console.log(hasPostEditId.value);
-const routeName = computed(() => route.name);
-
-// 初始
-const initPage = async () => {
-  // 判斷編輯還是新增文章
-  if (hasPostEditId) {
-    postInfo.value.id = route.params.id;
-
-    const data = await getPostsAPI(postInfo.value.id);
-    if (data.success) {
-      postInfo.value = data.result;
-    } else {
-      $router.push({ path: `/dashboard/public` });
-    }
-  } else {
-    postInfo.value = {
-      id: '',
-      title: '',
-      categories: [],
-      content: '使用 Markdown 語法，填寫你的內容...',
-      status: 'draft'
-    };
-  }
-};
-initPage();
+const hasPostEditId = computed(() => !!$route.params.id);
 
 // 編輯器 md-editor-v3
 const toolbars = [
@@ -144,7 +120,6 @@ onMounted(() => {
 
 // 送出表單
 const { nowToISO } = useDateTime();
-const $router = useRouter();
 
 const sendForm = async () => {
   postInfo.value['update_time'] = nowToISO;
@@ -157,6 +132,30 @@ const sendForm = async () => {
     data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
   }
 };
+
+// 初始
+const initPage = async () => {
+  // 判斷編輯還是新增文章
+  if (hasPostEditId.value) {
+    postInfo.value.id = $route.params.id;
+
+    const data = await getPostsAPI(postInfo.value.id);
+    if (data.success) {
+      postInfo.value = data.result;
+    } else {
+      $router.push({ path: `/dashboard/public` });
+    }
+  } else {
+    postInfo.value = {
+      id: '',
+      title: '',
+      categories: [],
+      content: '使用 Markdown 語法，填寫你的內容...',
+      status: 'draft'
+    };
+  }
+};
+initPage();
 </script>
 
 <style lang="scss" scoped></style>

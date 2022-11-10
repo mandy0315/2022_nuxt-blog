@@ -10,11 +10,11 @@
       <p class="line-clamp-3">
         {{ postContent }}
       </p>
-      <template v-if="categories.length > 0">
-        <div v-for="item in categories" :key="item">
-          <ui-tag :name="item" class="mt-1 -ml-1" />
-        </div>
-      </template>
+      <div v-if="categories.length > 0" class="mt-4 -ml-1">
+        <span v-for="item in categories" :key="item">
+          <ui-tag :name="item" class="inline-block" />
+        </span>
+      </div>
     </div>
 
     <!-- <ui-post-image class="w-[230px]" /> -->
