@@ -14,7 +14,7 @@
           </td>
           <td class="p-4">
             <nuxt-link
-              :to="`/dashboard/posts/post-edit/${item.id}`"
+              :to="`/dashboard/post-edit/${item.id}`"
               class="c-border-button c-border-button-gray my-1 w-full text-center"
             >
               編輯
@@ -42,7 +42,7 @@ definePageMeta({
   middleware: [
     (to, form) => {
       if (!['public', 'draft'].includes(to.params.postsState)) {
-        return navigateTo('/dashboard/posts/public');
+        return navigateTo('/dashboard/public');
       }
     }
   ]

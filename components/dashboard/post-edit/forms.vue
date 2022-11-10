@@ -59,48 +59,42 @@
 </template>
 
 <script setup>
-import { useCategoriesStore } from '@/stores/index';
 import { computed, onMounted, reactive } from 'vue';
 
 const route = useRoute();
 const { isOpen, toggleList, setContainer } = useToggle();
+const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
 
 const postInfo = useState(() => reactive({}));
-
+const hasPostEditId = computed(() => !!route.params.id);
+console.log(hasPostEditId.value);
 const routeName = computed(() => route.name);
 
-// 標題填寫
-const fillTitle = computed({
-  get: () => postInfo.value.title,
-  set: val => {
-    postInfo.value.title = val;
-  }
-});
+// 初始
+const initPage = async () => {
+  // 判斷編輯還是新增文章
+  if (hasPostEditId) {
+    postInfo.value.id = route.params.id;
 
-// 按鈕選擇
-const container_el = ref(null);
-const submitList = [
-  {
-    name: '儲存草稿',
-    status: 'draft'
-  },
-  {
-    name: '公開文章',
-    status: 'public'
+    const data = await getPostsAPI(postInfo.value.id);
+    if (data.success) {
+      postInfo.value = data.result;
+    } else {
+      $router.push({ path: `/dashboard/public` });
+    }
+  } else {
+    postInfo.value = {
+      id: '',
+      title: '',
+      categories: [],
+      content: '使用 Markdown 語法，填寫你的內容...',
+      status: 'draft'
+    };
   }
-];
-const currSubmitName = computed(() => submitList.filter(item => item.status === postInfo.value.status)[0].name);
-const selectSubmitStatus = computed({
-  get: () => postInfo.value.status,
-  set: val => {
-    postInfo.value.status = val;
-  }
-});
-onMounted(() => {
-  setContainer(container_el.value);
-});
+};
+initPage();
 
-// md-editor-v3
+// 編輯器 md-editor-v3
 const toolbars = [
   '-',
   'title',
@@ -121,62 +115,48 @@ const toolbars = [
   'preview'
 ];
 
-// 分類選擇
-const $categoriesStore = useCategoriesStore();
-const categorieList = computed(() => $categoriesStore.categorieList);
-const selectCategory = computed({
-  get: () => postInfo.value.category,
-  set: val => {
-    postInfo.value.category = val;
-  }
+// 標題填寫
+const fillTitle = computed({
+  get: () => postInfo.value.title,
+  set: val => (postInfo.value.title = val)
 });
-if (categorieList.value.length === 0) {
-  await $categoriesStore.getCategoriesList();
-}
-selectCategory.value = selectCategory.value || categorieList.value[0].name;
 
-// 送出
+// 按鈕選擇
+const container_el = ref(null);
+const submitList = [
+  {
+    name: '儲存草稿',
+    status: 'draft'
+  },
+  {
+    name: '公開文章',
+    status: 'public'
+  }
+];
+const currSubmitName = computed(() => submitList.filter(item => item.status === postInfo.value.status)[0].name);
+const selectSubmitStatus = computed({
+  get: () => postInfo.value.status,
+  set: val => (postInfo.value.status = val)
+});
+onMounted(() => {
+  setContainer(container_el.value);
+});
+
+// 送出表單
 const { nowToISO } = useDateTime();
-const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
-
 const $router = useRouter();
+
 const sendForm = async () => {
   postInfo.value['update_time'] = nowToISO;
-  switch (routeName.value) {
-    case 'dashboard-posts-post-edit':
-      const data1 = await addPostsAPI(postInfo.value);
-      data1.success && $router.push({ path: `/dashboard/posts/post-edit/${data1.id}` });
-      break;
-    default:
-      const data2 = await updatePostsAPI(postInfo.value.id, postInfo.value);
-      data2.success && $router.push({ path: `/dashboard/posts/post-edit/${data2.id}` });
-      break;
-  }
-};
 
-// 初始
-const initPage = async () => {
-  // 判斷是文章編輯頁執行
-  if (routeName.value === 'dashboard-posts-post-edit-id') {
-    postInfo.value.id = route.params.id;
-
-    const data = await getPostsAPI(postInfo.value.id);
-    if (data.success) {
-      postInfo.value = data.result;
-    } else {
-      $router.push({ path: `/dashboard/posts/public` });
-    }
+  if (hasPostEditId) {
+    const data = await updatePostsAPI(postInfo.value.id, postInfo.value);
+    data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
   } else {
-    postInfo.value = {
-      id: '',
-      title: '',
-      categories: [],
-      content: '使用 Markdown 語法，填寫你的內容...',
-      status: 'draft'
-    };
+    const data = await addPostsAPI(postInfo.value);
+    data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
   }
 };
-initPage();
 </script>
 
 <style lang="scss" scoped></style>

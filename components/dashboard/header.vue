@@ -23,12 +23,8 @@
 <script setup>
 const topBarNav = [
   {
-    link: '/dashboard/posts/public',
-    name: '文章管理'
-  },
-  {
-    link: '/dashboard/categories',
-    name: '分類管理'
+    link: '/',
+    name: '回到前台'
   }
 ];
 </script>

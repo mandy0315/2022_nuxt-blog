@@ -7,21 +7,6 @@ export default function () {
     });
     return data.value;
   };
-  const addCategoriesAPI = async doc => {
-    const { data } = await useFetch('/api/firebase/categories', {
-      method: 'post',
-      body: doc,
-      initialCache: false
-    });
-    return data.value;
-  };
-  const deleteCategoriesAPI = async id => {
-    const { data } = await useFetch(`/api/firebase/categories/${id}`, {
-      method: 'delete',
-      initialCache: false
-    });
-    return data.value;
-  };
   // 文章
   const getPostsPublicListAPI = async () => {
     const { data } = await useFetch('/api/firebase/posts/publicList', {
@@ -70,8 +55,6 @@ export default function () {
 
   return {
     getCategoriesListAPI,
-    addCategoriesAPI,
-    deleteCategoriesAPI,
     getPostsPublicListAPI,
     getPostsDraftListAPI,
     getPostsAPI,
