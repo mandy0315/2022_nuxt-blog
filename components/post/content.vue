@@ -8,9 +8,9 @@
         >
       </div>
       <template v-if="categories.length > 0">
-        <div v-for="item in categories" :key="item">
-          <ui-tag :name="item" class="mt-1 -ml-1" />
-        </div>
+        <span v-for="item in categories" :key="item" class="mt-2">
+          <ui-tag :name="item" :hasLink="true" :link="`/categories/${item.toLowerCase()}`" />
+        </span>
       </template>
     </div>
     <md-editor

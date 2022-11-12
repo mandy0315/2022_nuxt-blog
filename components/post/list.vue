@@ -12,7 +12,7 @@
       </p>
       <div v-if="categories.length > 0" class="mt-4 -ml-1">
         <span v-for="item in categories" :key="item">
-          <ui-tag :name="item" class="inline-block" />
+          <ui-tag :name="item" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />
         </span>
       </div>
     </div>

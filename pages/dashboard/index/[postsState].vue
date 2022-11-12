@@ -1,6 +1,6 @@
 <template>
   <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
-    <table>
+    <table class="w-full">
       <thead class="bg-c-gray-800 text-white">
         <tr>
           <th scope="row" class="w-5/6 py-2">文章資訊</th>
@@ -10,7 +10,7 @@
       <tbody v-if="postsList.length > 0">
         <tr v-for="item in postsList" :key="item.id" class="border-b border-solid border-c-gray-400">
           <td scope="col" class="p-4 text-c-gray-600">
-            <ui-post-list v-bind="item" />
+            <post-list v-bind="item" />
           </td>
           <td class="p-4">
             <nuxt-link
@@ -35,7 +35,7 @@
 <script setup>
 import { $vfm } from 'vue-final-modal';
 import CustomModal from '@/components/ui/customModal.vue';
-import UiPostContent from '@/components/ui/post/content.vue';
+import PostContent from '@/components/post/content.vue';
 
 definePageMeta({
   layout: 'dashboard',
@@ -87,7 +87,7 @@ const openPreviewPost = async id => {
       on: {},
       slots: {
         default: {
-          component: UiPostContent,
+          component: PostContent,
           bind: {
             title: data.result.title,
             categories: data.result.categories,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ui-post-content />
+    <post-content />
   </div>
 </template>
 

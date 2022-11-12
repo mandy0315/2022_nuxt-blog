@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div class="w-full">
-      <ui-post-list />
+      <post-list />
     </div>
   </div>
 </template>

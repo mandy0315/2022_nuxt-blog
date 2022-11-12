@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-      <label class="col-span-2 pb-4">
+      <label class="col-span-2">
         <p class="pb-1 pr-4 text-lg">標題</p>
         <input
           v-model.lazy="fillTitle"
@@ -17,14 +17,16 @@
         :tags="['Vue', 'Nuxt3', 'SCSS']"
         class="col-span-2"
       />
-      <md-editor
-        class="col-span-2"
-        v-model="postInfo.content"
-        code-theme="github"
-        preview-theme="github"
-        language="zh-tw"
-        :toolbars="toolbars"
-      ></md-editor>
+      <div class="col-span-2">
+        <p class="pb-1 pr-4 text-lg">內容</p>
+        <md-editor
+          v-model="postInfo.content"
+          code-theme="github"
+          preview-theme="github"
+          language="zh-tw"
+          :toolbars="toolbars"
+        />
+      </div>
     </div>
     <!-- button -->
     <div class="text-right">
@@ -60,15 +62,40 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive } from 'vue';
-
 const $route = useRoute();
 const $router = useRouter();
 const { isOpen, toggleList, setContainer } = useToggle();
 const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
+const { nowToISO } = useDateTime();
 
 const postInfo = useState(() => reactive({}));
 const hasPostEditId = computed(() => !!$route.params.id);
+
+const initPostInfo = () => {
+  postInfo.value = {
+    id: '',
+    title: '',
+    categories: [],
+    content: '使用 Markdown 語法，填寫你的內容...',
+    status: 'draft',
+    update_time: nowToISO
+  };
+};
+initPostInfo();
+
+onMounted(async () => {
+  // 判斷編輯還是新增文章
+  if (hasPostEditId.value) {
+    postInfo.value.id = $route.params.id;
+
+    const data = await getPostsAPI(postInfo.value.id);
+    if (data.success) {
+      postInfo.value = data.result;
+    } else {
+      $router.push({ path: `/dashboard/public` });
+    }
+  }
+});
 
 // 編輯器 md-editor-v3
 const toolbars = [
@@ -119,12 +146,10 @@ onMounted(() => {
 });
 
 // 送出表單
-const { nowToISO } = useDateTime();
-
 const sendForm = async () => {
   postInfo.value['update_time'] = nowToISO;
 
-  if (hasPostEditId) {
+  if (hasPostEditId.value) {
     const data = await updatePostsAPI(postInfo.value.id, postInfo.value);
     data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
   } else {
@@ -132,30 +157,6 @@ const sendForm = async () => {
     data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
   }
 };
-
-// 初始
-const initPage = async () => {
-  // 判斷編輯還是新增文章
-  if (hasPostEditId.value) {
-    postInfo.value.id = $route.params.id;
-
-    const data = await getPostsAPI(postInfo.value.id);
-    if (data.success) {
-      postInfo.value = data.result;
-    } else {
-      $router.push({ path: `/dashboard/public` });
-    }
-  } else {
-    postInfo.value = {
-      id: '',
-      title: '',
-      categories: [],
-      content: '使用 Markdown 語法，填寫你的內容...',
-      status: 'draft'
-    };
-  }
-};
-initPage();
 </script>
 
 <style lang="scss" scoped></style>
