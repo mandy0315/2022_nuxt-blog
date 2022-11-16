@@ -68,10 +68,20 @@ const { isOpen, toggleList, setContainer } = useToggle();
 const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
 const { nowToISO } = useDateTime();
 
-const postInfo = useState(() => reactive({}));
+const postInfo = useState(() => ref({}));
 const hasPostEditId = computed(() => !!$route.params.id);
 
-const initPostInfo = () => {
+// 判斷編輯還是新增文章
+if (hasPostEditId.value) {
+  postInfo.value.id = $route.params.id;
+
+  const data = await getPostsAPI(postInfo.value.id);
+  if (data.success) {
+    postInfo.value = data.result;
+  } else {
+    $router.push({ path: `/dashboard/public` });
+  }
+} else {
   postInfo.value = {
     id: '',
     title: '',
@@ -80,22 +90,7 @@ const initPostInfo = () => {
     status: 'draft',
     update_time: nowToISO
   };
-};
-initPostInfo();
-
-onMounted(async () => {
-  // 判斷編輯還是新增文章
-  if (hasPostEditId.value) {
-    postInfo.value.id = $route.params.id;
-
-    const data = await getPostsAPI(postInfo.value.id);
-    if (data.success) {
-      postInfo.value = data.result;
-    } else {
-      $router.push({ path: `/dashboard/public` });
-    }
-  }
-});
+}
 
 // 編輯器 md-editor-v3
 const toolbars = [
