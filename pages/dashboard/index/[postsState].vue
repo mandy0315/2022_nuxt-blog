@@ -34,11 +34,11 @@
 
 <script setup>
 import { $vfm } from 'vue-final-modal';
+
 import CustomModal from '@/components/ui/customModal.vue';
 import PostContent from '@/components/post/content.vue';
 
 definePageMeta({
-  layout: 'dashboard',
   middleware: [
     (to, form) => {
       if (!['public', 'draft'].includes(to.params.postsState)) {

@@ -21,6 +21,7 @@
 
 <script setup>
 definePageMeta({
+  layout: 'dashboard',
   middleware: [
     (to, form) => {
       if (to.path === '/dashboard') {
