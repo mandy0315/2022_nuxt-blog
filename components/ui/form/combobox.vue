@@ -51,8 +51,8 @@
 
 <script setup>
 const combobox_el = ref(null);
-const { isOpen, setContainer, openList } = useToggle();
 const fillTag = ref('');
+const { isOpen, setContainer, openList } = useToggle();
 
 const emit = defineEmits(['update:selectedTags']);
 const props = defineProps({
