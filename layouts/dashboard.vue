@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-100">
-    <dashboard-header />
+    <header-dashboard />
     <slot />
-    <app-footer />
+    <footer-default />
   </div>
 </template>
 

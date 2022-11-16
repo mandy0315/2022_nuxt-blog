@@ -1,5 +1,5 @@
 <template>
-  <app-build />
+  <div>hello</div>
 </template>
 
 <script setup></script>
