@@ -10,7 +10,7 @@
           placeholder="請輸入標題"
         />
       </label>
-      <ui-form-combobox
+      <form-combobox
         v-model:selectedTags="postInfo.categories"
         formTitle="分類"
         inputPlaceholder="請輸入分類"

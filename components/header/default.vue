@@ -15,7 +15,7 @@
       </nav>
 
       <div class="ml-auto">
-        <ui-color-mode-toggle />
+        <color-mode-toggle />
       </div>
     </div>
   </header>

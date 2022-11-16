@@ -11,7 +11,7 @@
       <div class="flex flex-1 flex-wrap">
         <template v-if="selectedTags.length > 0">
           <div v-for="item in selectedTags" :key="item">
-            <ui-tag
+            <the-tag
               class="cursor-pointer"
               :name="item"
               :hasLinks="false"

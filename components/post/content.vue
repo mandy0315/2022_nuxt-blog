@@ -9,7 +9,7 @@
       </div>
       <template v-if="categories.length > 0">
         <span v-for="item in categories" :key="item" class="mt-2">
-          <ui-tag :name="item" :hasLink="true" :link="`/categories/${item.toLowerCase()}`" />
+          <the-tag :name="item" :hasLink="true" :link="`/categories/${item.toLowerCase()}`" />
         </span>
       </template>
     </div>

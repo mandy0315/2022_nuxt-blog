@@ -35,7 +35,7 @@
 <script setup>
 import { $vfm } from 'vue-final-modal';
 
-import CustomModal from '@/components/ui/customModal.vue';
+import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content.vue';
 
 definePageMeta({
