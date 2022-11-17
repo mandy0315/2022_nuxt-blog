@@ -3,7 +3,7 @@ import DOMPurify from 'isomorphic-dompurify'; // 輸出防止 XXS 攻擊
 import hljs from 'highlight.js';
 import 'highlight.js/scss/atom-one-dark.scss';
 
-export default function () {
+export default defineNuxtPlugin(nuxtApp => {
   const rendererMD = new marked.Renderer();
 
   // https://marked.js.org/using_pro#renderer 調整元素
@@ -18,9 +18,9 @@ export default function () {
     }
   });
 
-  const markdownToHtml = markdownString => DOMPurify.sanitize(marked.parse(markdownString));
-
   return {
-    markdownToHtml
+    provide: {
+      markdownToHtml: markdownString => DOMPurify.sanitize(marked.parse(markdownString))
+    }
   };
-}
+});

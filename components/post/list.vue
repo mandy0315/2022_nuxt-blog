@@ -41,10 +41,10 @@ const props = defineProps({
   }
 });
 const { dateFormat } = useDateTime();
-const { markdownToHtml } = useMarked();
+const { $markdownToHtml } = useNuxtApp();
 
 const postContent = computed(() => {
-  const html = markdownToHtml(props.content);
+  const html = $markdownToHtml(props.content);
   const stripTagsToString = html.replace(/(<([^>]+)>)/gi, '');
   return stripTagsToString;
 });
