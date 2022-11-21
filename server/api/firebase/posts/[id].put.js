@@ -4,7 +4,7 @@ import { db } from '@/server/libs/firebase';
 export default defineEventHandler(async event => {
   try {
     const params = getRouterParams(event);
-    const body = await useBody(event.req);
+    const body = await readBody(event);
 
     const docRef = doc(db, 'posts', params.id);
     await updateDoc(docRef, body);

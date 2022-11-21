@@ -3,7 +3,7 @@ import { db } from '@/server/libs/firebase';
 
 export default defineEventHandler(async event => {
   try {
-    const body = await useBody(event.req);
+    const body = await readBody(event);
 
     const docRef = doc(collection(db, 'posts'));
     body.id = docRef.id;
