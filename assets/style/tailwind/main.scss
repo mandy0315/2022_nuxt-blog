@@ -34,4 +34,7 @@
       @apply rounded-sm border-red-600 text-red-600 bg-white hover:bg-red-600 hover:text-white;
     }
   }
+  .c-form{
+    @apply border-c-gray-400 border-solid border px-2 py-1;
+  }
 }

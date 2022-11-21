@@ -1,13 +1,9 @@
 <template>
   <div class="relative">
-    <label v-if="formTitle" for="input-tags">
-      <p class="inline-block pb-1 pr-4 text-lg">{{ formTitle }}</p>
+    <label v-if="title" for="input-tags">
+      <p class="inline-block pb-1 pr-4 text-lg">{{ title }}</p>
     </label>
-    <div
-      ref="combobox_el"
-      class="form-input flex border-c-gray-400"
-      :class="isOpen ? 'rounded-t border-b-0' : 'rounded'"
-    >
+    <div ref="combobox_el" class="c-form flex" :class="isOpen ? 'rounded-t border-b-0' : 'rounded'">
       <div class="flex flex-1 flex-wrap">
         <template v-if="selectedTags.length > 0">
           <div v-for="item in selectedTags" :key="item">
@@ -24,9 +20,9 @@
         <input
           id="input-tags"
           type="text"
-          class="fo flex-1 self-center border-0 border-none py-0 px-1 shadow-none outline-none focus:ring-0"
+          class="flex-1 self-center border-0 border-none py-0 px-1 shadow-none outline-none"
           autocomplete="off"
-          :placeholder="inputPlaceholder"
+          :placeholder="placeholder"
           v-model.trim="fillTag"
           @click="openList"
           @keydown.enter.exact="addTag(fillTag)"
@@ -50,25 +46,27 @@
 </template>
 
 <script setup>
+import { computed } from '@vue/reactivity';
+
 const combobox_el = ref(null);
 const fillTag = ref('');
 const { isOpen, setContainer, openList } = useToggle();
 
-const emit = defineEmits(['update:selectedTags']);
+const emit = defineEmits(['update:tags']);
 const props = defineProps({
-  formTitle: {
+  title: {
     type: String,
     default: ''
   },
-  inputPlaceholder: {
+  placeholder: {
     type: String,
     default: ''
   },
-  tags: {
+  tagList: {
     type: Array,
     required: true
   },
-  selectedTags: {
+  tags: {
     type: Array,
     required: true
   }
@@ -81,10 +79,10 @@ onMounted(() => {
 // autocomplete
 const searchTags = computed(() => {
   if (fillTag.value === '') {
-    return props.tags;
+    return props.tagList;
   }
   let count = 0;
-  return props.tags.filter(tag => {
+  return props.tagList.filter(tag => {
     if (tag.toLowerCase().includes(fillTag.value.toLowerCase()) && count < 10) {
       count++;
       return tag;
@@ -92,20 +90,26 @@ const searchTags = computed(() => {
   });
 });
 
-const addTag = val => {
-  const filterSameCategories = computed(() => {
-    return props.selectedTags.filter(tag => tag === val);
-  });
+const selectedTags = computed({
+  get: () => props.tags,
+  set: val => emit('update:tags', val)
+});
 
-  if (filterSameCategories.value.length === 0) {
-    props.selectedTags.push(val);
+const addTag = val => {
+  let array = [...selectedTags.value];
+
+  const filterSameCategories = array.filter(tag => tag === val);
+  if (filterSameCategories.length === 0) {
+    array.push(val);
+    selectedTags.value = array;
   }
   fillTag.value = '';
 };
 
 const deleteTag = val => {
-  props.selectedTags.splice(props.selectedTags.indexOf(val), 1);
+  let array = [...selectedTags.value];
+
+  array.splice(array.indexOf(val), 1);
+  selectedTags.value = array;
 };
 </script>
-
-<style lang="scss" scoped></style>

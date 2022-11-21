@@ -1,20 +1,12 @@
 <template>
   <div>
     <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-      <label class="col-span-2">
-        <p class="pb-1 pr-4 text-lg">標題</p>
-        <input
-          v-model.lazy="fillTitle"
-          type="text"
-          class="form-input w-full rounded border-c-gray-400"
-          placeholder="請輸入標題"
-        />
-      </label>
-      <form-combobox
-        v-model:selectedTags="postInfo.categories"
-        formTitle="分類"
-        inputPlaceholder="請輸入分類"
-        :tags="['Vue', 'Nuxt3', 'SCSS']"
+      <form-fill-input v-model:value="postInfo.title" title="標題" placeholder="請輸入標題" class="col-span-2" />
+      <form-tags-combobox
+        v-model:tags="postInfo.categories"
+        title="分類"
+        placeholder="請輸入分類"
+        :tagList="['Vue', 'Nuxt3', 'SCSS']"
         class="col-span-2"
       />
       <div class="col-span-2">
@@ -146,10 +138,10 @@ const sendForm = async () => {
 
   if (hasPostEditId.value) {
     const data = await updatePostsAPI(postInfo.value.id, postInfo.value);
-    data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
+    console.log(data.success);
   } else {
     const data = await addPostsAPI(postInfo.value);
-    data.success && $router.push({ path: `/dashboard/post-edit/${data.id}` });
+    console.log(data.success);
   }
 };
 </script>
