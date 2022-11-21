@@ -24,7 +24,7 @@
         <input
           id="input-tags"
           type="text"
-          class="flex-1 self-center border-0 border-none py-0 px-1 shadow-none outline-none"
+          class="fo flex-1 self-center border-0 border-none py-0 px-1 shadow-none outline-none focus:ring-0"
           autocomplete="off"
           :placeholder="inputPlaceholder"
           v-model.trim="fillTag"
