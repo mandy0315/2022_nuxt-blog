@@ -12,9 +12,5 @@ export default defineStore('mainStore', {
       store.title = 'test';
       console.log(store.title);
     }
-  },
-  persist: {
-    key: 'main-persisted-state',
-    storage: process.client ? localStorage : null
   }
 });

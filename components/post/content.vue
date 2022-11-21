@@ -15,7 +15,7 @@
     </div>
     <md-editor
       editor-id="my-editor"
-      v-model="content"
+      v-model="postContent"
       code-theme="github"
       preview-theme="github"
       class="!bg-transparent"
@@ -33,7 +33,7 @@ const props = defineProps({
   },
   categories: {
     type: Array,
-    default: []
+    default: () => []
   },
   content: {
     type: String,
@@ -46,6 +46,8 @@ const props = defineProps({
 });
 
 const { dateFormat } = useDateTime();
+const postContent = ref('');
+postContent.value = props.content;
 </script>
 
 <style lang="scss" scoped></style>
