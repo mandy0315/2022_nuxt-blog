@@ -13,10 +13,6 @@
           {{ item.name }}
         </nuxt-link>
       </nav>
-
-      <div class="ml-auto">
-        <color-mode-toggle />
-      </div>
     </div>
   </header>
 </template>

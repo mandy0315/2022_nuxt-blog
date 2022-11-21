@@ -19,7 +19,6 @@
       code-theme="github"
       preview-theme="github"
       class="!bg-transparent"
-      :theme="$colorMode.value"
       previewOnly
     />
   </div>
