@@ -16,9 +16,7 @@
 </template>
 
 <script setup>
-useHead({
-  title: '找不到頁面'
-});
+useHead({ title: '404' });
 definePageMeta({
   layout: false,
   middleware: [

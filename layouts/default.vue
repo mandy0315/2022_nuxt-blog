@@ -7,12 +7,6 @@
     <footer-default class="dark:text-c-gray-400" />
   </div>
 </template>
-<script setup>
-useHead({
-  titleTemplate: title => {
-    return title ? `${title} - Mandy 部落格` : 'Mandy 部落格';
-  }
-});
-</script>
+<script setup></script>
 
 <style lang="scss" scoped></style>

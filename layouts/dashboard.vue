@@ -6,12 +6,6 @@
   </div>
 </template>
 
-<script setup>
-useHead({
-  titleTemplate: title => {
-    return title ? `${title} - Mandy 部落格後台` : 'Mandy 部落格後台';
-  }
-});
-</script>
+<script setup></script>
 
 <style lang="scss" scoped></style>

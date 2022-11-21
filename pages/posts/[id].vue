@@ -5,10 +5,8 @@
 </template>
 
 <script setup>
+useHead({ title: route.params.id });
 const route = useRoute();
-useHead({
-  title: route.params.id
-});
 </script>
 
 <style lang="scss" scoped></style>

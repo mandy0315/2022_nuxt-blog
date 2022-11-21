@@ -6,10 +6,5 @@
 </template>
 
 <script setup>
-useHead({
-  title: '新增文章'
-});
-definePageMeta({
-  layout: 'dashboard'
-});
+useHead({ title: '新增文章' });
 </script>

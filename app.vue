@@ -7,6 +7,10 @@
 
 <script setup>
 useHead({
+  title: '',
+  titleTemplate: title => {
+    return title ? `${title}-Mandy 部落格` : 'Mandy 部落格';
+  },
   meta: [
     {
       name: 'description',
