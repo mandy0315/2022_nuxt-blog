@@ -8,7 +8,8 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       // 掃描整個 composables 目錄下的檔案
-      'composables/**'
+      'composables/**',
+      'utils/**'
     ]
   }
 });
