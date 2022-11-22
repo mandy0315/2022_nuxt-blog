@@ -7,9 +7,7 @@
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
       </div>
-      <p class="line-clamp-3">
-        {{ postContent }}
-      </p>
+      <p class="line-clamp-3"></p>
       <div v-if="categories.length > 0" class="mt-4 -ml-1">
         <span v-for="item in categories" :key="item">
           <the-tag :name="item" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />
@@ -41,13 +39,6 @@ const props = defineProps({
   }
 });
 const { dateFormat } = useDateTime();
-const { $markdownToHtml } = useNuxtApp();
-
-const postContent = computed(() => {
-  const html = $markdownToHtml(props.content);
-  const stripTagsToString = html.replace(/(<([^>]+)>)/gi, '');
-  return stripTagsToString;
-});
 </script>
 
 <style lang="scss" scoped></style>

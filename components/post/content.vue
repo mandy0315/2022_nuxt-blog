@@ -13,14 +13,6 @@
         </span>
       </template>
     </div>
-    <md-editor
-      editor-id="my-editor"
-      v-model="postContent"
-      code-theme="github"
-      preview-theme="github"
-      class="!bg-transparent"
-      previewOnly
-    />
   </div>
 </template>
 

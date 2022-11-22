@@ -11,13 +11,6 @@
       />
       <div class="col-span-2">
         <p class="pb-1 pr-4 text-lg">內容</p>
-        <md-editor
-          v-model="postInfo.content"
-          code-theme="github"
-          preview-theme="github"
-          language="zh-tw"
-          :toolbars="toolbars"
-        />
       </div>
     </div>
     <!-- button -->
@@ -83,33 +76,6 @@ if (hasPostEditId.value) {
     update_time: nowToISO
   };
 }
-
-// 編輯器 md-editor-v3
-const toolbars = [
-  '-',
-  'title',
-  'strikeThrough',
-  'bold',
-  'underline',
-  'italic',
-  '-',
-  'quote',
-  'unorderedList',
-  'orderedList',
-  'codeRow',
-  'code',
-  'link',
-  // 'image',
-  'table',
-  '-',
-  'preview'
-];
-
-// 標題填寫
-const fillTitle = computed({
-  get: () => postInfo.value.title,
-  set: val => (postInfo.value.title = val)
-});
 
 // 按鈕選擇
 const container_el = ref(null);
