@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   runtimeConfig: {}, // 環境變數
   imports: {
     dirs: [
-      // 掃描整個 composables 目錄下的檔案
+      // 掃描整個目錄下的檔案
       'composables/**',
       'utils/**'
     ]

@@ -16,12 +16,11 @@
           height="400px"
           v-model="postInfo.content"
           placeholder="使用 Markdown 語法，填寫你的內容..."
-          :disabled-menus="['h/h1']"
           :toolbar="$toolbarCustom"
           :left-toolbar="$toolbarConfig.leftToolbar"
           :right-toolbar="$toolbarConfig.rightToolbar"
+          :disabled-menus="['h/h1']"
           @upload-image="uploadImage"
-          @copy-code-success="copyCode"
         />
       </div>
     </div>
@@ -95,9 +94,6 @@ if (hasPostEditId.value) {
 // v-md-editor 上傳圖片
 const uploadImage = (event, insertImage, files) => {
   console.log(files);
-};
-const copyCode = code => {
-  console.log(code);
 };
 
 // 按鈕選擇
