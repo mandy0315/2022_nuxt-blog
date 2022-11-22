@@ -11,8 +11,21 @@
       />
       <div class="col-span-2">
         <p class="pb-1 pr-4 text-lg">內容</p>
+        <v-md-editor
+          class="test"
+          height="400px"
+          v-model="postInfo.content"
+          placeholder="使用 Markdown 語法，填寫你的內容..."
+          :disabled-menus="['h/h1']"
+          :toolbar="$toolbarCustom"
+          :left-toolbar="$toolbarConfig.leftToolbar"
+          :right-toolbar="$toolbarConfig.rightToolbar"
+          @upload-image="uploadImage"
+          @copy-code-success="copyCode"
+        />
       </div>
     </div>
+
     <!-- button -->
     <div class="text-right">
       <div class="relative inline-block">
@@ -56,6 +69,8 @@ const { nowToISO } = useDateTime();
 const postInfo = useState(() => ref({}));
 const hasPostEditId = computed(() => !!$route.params.id);
 
+const { $toolbarConfig, toolbarCustom } = useNuxtApp();
+
 // 判斷編輯還是新增文章
 if (hasPostEditId.value) {
   postInfo.value.id = $route.params.id;
@@ -71,11 +86,19 @@ if (hasPostEditId.value) {
     id: '',
     title: '',
     categories: [],
-    content: '使用 Markdown 語法，填寫你的內容...',
+    content: '',
     status: 'draft',
     update_time: nowToISO
   };
 }
+
+// v-md-editor 上傳圖片
+const uploadImage = (event, insertImage, files) => {
+  console.log(files);
+};
+const copyCode = code => {
+  console.log(code);
+};
 
 // 按鈕選擇
 const container_el = ref(null);
