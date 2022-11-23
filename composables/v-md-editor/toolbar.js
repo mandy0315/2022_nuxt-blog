@@ -1,7 +1,7 @@
 export default function () {
   // props-toolbar 配置
   const toolbarConfig = {
-    leftToolbar: 'h bold italic strikethrough quote | ul ol table hr |  link code images emoji iframes | clear',
+    leftToolbar: 'h bold italic strikethrough quote | ul ol table hr |  link code images iframes | clear',
     rightToolbar: 'preview sync-scroll'
   };
 
@@ -70,11 +70,15 @@ export default function () {
           action(editor) {
             editor.$nextTick(async () => {
               const event = await editor.$refs.uploadFile.upload();
-              const img = event.target.files[0];
-
+              const file = event.target.files[0];
+              console.log(file.name);
               // 上傳資料
-              const file = new FormData();
-              file.append('file', img);
+              let formData = new FormData();
+              formData.append('fileName', file.name);
+              formData.append('file', file);
+
+              const { uploadImageAPI } = useFirebase();
+              const data = await uploadImageAPI(formData);
             });
             console.log('你点击了菜单2ccc');
           }

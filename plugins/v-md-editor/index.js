@@ -9,9 +9,9 @@ import hljs from './highlight';
 
 // markdownIt 插件
 import markdownItPlayground from 'markdown-it-playground';
-import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+// import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
-import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
+// import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
 export default defineNuxtPlugin(nuxtApp => {
@@ -39,7 +39,7 @@ export default defineNuxtPlugin(nuxtApp => {
 
   // 套件擴充插件
   VMdEditor.use(createCopyCodePlugin());
-  VMdEditor.use(createEmojiPlugin());
+  // VMdEditor.use(createEmojiPlugin());
 
   nuxtApp.vueApp.use(VMdEditor); // 導入 Vue
 });
