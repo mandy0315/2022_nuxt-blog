@@ -16,9 +16,9 @@
           height="400px"
           v-model="postInfo.content"
           placeholder="使用 Markdown 語法，填寫你的內容..."
-          :toolbar="$toolbarCustom"
-          :left-toolbar="$toolbarConfig.leftToolbar"
-          :right-toolbar="$toolbarConfig.rightToolbar"
+          :toolbar="toolbarCustom"
+          :left-toolbar="toolbarConfig.leftToolbar"
+          :right-toolbar="toolbarConfig.rightToolbar"
           :disabled-menus="['h/h1']"
           @upload-image="uploadImage"
         />
@@ -68,7 +68,7 @@ const { nowToISO } = useDateTime();
 const postInfo = useState(() => ref({}));
 const hasPostEditId = computed(() => !!$route.params.id);
 
-const { $toolbarConfig, toolbarCustom } = useNuxtApp();
+const { toolbarConfig, toolbarCustom } = toolbar();
 
 // 判斷編輯還是新增文章
 if (hasPostEditId.value) {

@@ -8,9 +8,15 @@
     @apply w-full h-60;
   }
 }
-.v-md-icon-codepen{
+.v-md-icon-iframe{
   &::before{
-    background: url('/images/icon/codepen.svg') no-repeat bottom;
-    @apply inline-block relative top-[2px] w-5 h-5 content-[''];
+    background: url('/images/icon/iframe.svg') no-repeat bottom;
+    @apply inline-block relative top-[1px] w-4 h-4 content-[''];
+  }
+}
+.v-md-icon-images{
+  &::before{
+    background: url('/images/icon/images.svg') no-repeat bottom;
+    @apply inline-block relative top-[1px] w-4 h-4 content-[''];
   }
 }

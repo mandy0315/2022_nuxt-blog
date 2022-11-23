@@ -14,9 +14,6 @@ import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index
 import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
-// props-toolbar 配置與自訂
-import { toolbarConfig, toolbarCustom } from './toolbar';
-
 export default defineNuxtPlugin(nuxtApp => {
   VMdEditor.lang.use('en-US', enUS); // 編輯器語言
 
@@ -41,15 +38,8 @@ export default defineNuxtPlugin(nuxtApp => {
   });
 
   // 套件擴充插件
-  VMdEditor.use(createEmojiPlugin());
   VMdEditor.use(createCopyCodePlugin());
+  VMdEditor.use(createEmojiPlugin());
 
   nuxtApp.vueApp.use(VMdEditor); // 導入 Vue
-
-  return {
-    provide: {
-      toolbarConfig: toolbarConfig,
-      toolbarCustom: toolbarCustom
-    }
-  };
 });
