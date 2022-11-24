@@ -7,15 +7,15 @@ export default function () {
     });
     return data.value;
   };
-  const uploadImageAPI = async formData => {
-    console.log('uploadImageAPI');
+  // const uploadImageAPI = async formData => {
+  //   console.log('uploadImageAPI');
 
-    const { data } = await useFetch('/api/firebase/uploadImage', {
-      method: 'POST',
-      body: formData
-    });
-    // return data.value;
-  };
+  //   const { data } = await useFetch('/api/firebase/uploadImage', {
+  //     method: 'POST',
+  //     body: formData
+  //   });
+  //   // return data.value;
+  // };
   // 文章
   const getPostsPublicListAPI = async () => {
     const { data } = await useFetch('/api/firebase/posts/publicList', {
@@ -69,7 +69,6 @@ export default function () {
     getPostsAPI,
     addPostsAPI,
     deletePostsAPI,
-    updatePostsAPI,
-    uploadImageAPI
+    updatePostsAPI
   };
 }

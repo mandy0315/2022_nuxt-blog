@@ -1,3 +1,6 @@
+import { storage } from '@/utils/firebase/useFirebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 export default function () {
   // props-toolbar 配置
   const toolbarConfig = {
@@ -71,16 +74,21 @@ export default function () {
             editor.$nextTick(async () => {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
-              console.log(file.name);
-              // 上傳資料
-              let formData = new FormData();
-              formData.append('fileName', file.name);
-              formData.append('file', file);
-
-              const { uploadImageAPI } = useFirebase();
-              const data = await uploadImageAPI(formData);
+              const url = await uploadFileToStorage(file);
+              insertURL(file.name, url);
             });
-            console.log('你点击了菜单2ccc');
+            const insertURL = (fileName, fileUrl) => {
+              editor.insert(function (selected) {
+                const prefix = `![${fileName}](`;
+                const suffix = ')';
+                const placeholder = fileUrl;
+                const content = placeholder;
+
+                return {
+                  text: `${prefix}${content}${suffix}`
+                };
+              });
+            };
           }
         },
         {
@@ -99,3 +107,18 @@ export default function () {
     toolbarCustom
   };
 }
+
+const uploadFileToStorage = file => {
+  return new Promise((resolve, reject) => {
+    const fileRef = ref(storage, `/posts/${file.name}`);
+    uploadBytes(fileRef, file)
+      .then(snapshot => {
+        return getDownloadURL(fileRef);
+      })
+      .then(url => {
+        resolve(url);
+      })
+      .catch(err => reject(err));
+  });
+  console.log(fileRef);
+};

@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-const { getPostsPublicListAPI } = useFirebase();
+const { getPostsPublicListAPI } = firebaseAPIs();
 const postsList = useState(() => []);
 
 const getPostsList = async () => {

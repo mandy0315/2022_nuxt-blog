@@ -62,7 +62,7 @@
 const $route = useRoute();
 const $router = useRouter();
 const { isOpen, toggleList, setContainer } = useToggle();
-const { addPostsAPI, getPostsAPI, updatePostsAPI } = useFirebase();
+const { addPostsAPI, getPostsAPI, updatePostsAPI } = firebaseAPIs();
 const { nowToISO } = useDateTime();
 
 const postInfo = useState(() => ref({}));

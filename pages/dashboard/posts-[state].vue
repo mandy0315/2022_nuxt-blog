@@ -82,7 +82,7 @@ const postsStateList = [
 const route = useRoute();
 const currState = computed(() => route.params.state);
 const postsList = useState(() => []);
-const { getPostsPublicListAPI, getPostsDraftListAPI, deletePostsAPI, getPostsAPI } = useFirebase();
+const { getPostsPublicListAPI, getPostsDraftListAPI, deletePostsAPI, getPostsAPI } = firebaseAPIs();
 
 // 初始-取的資料
 const getPostsListData = {
