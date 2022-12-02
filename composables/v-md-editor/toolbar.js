@@ -1,4 +1,5 @@
 import { storage } from '@/utils/firebase/useFirebase';
+// import client from '@/utils/imgur/useImgur';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function () {
@@ -57,7 +58,7 @@ export default function () {
           action(editor) {
             editor.insert(function (selected) {
               const prefix = '![Description](';
-              const suffix = ')';
+              const suffix = '){{{width="auto" height="auto"}}}';
               const placeholder = 'http://';
               const content = placeholder;
 
@@ -75,27 +76,20 @@ export default function () {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
               const url = await uploadFileToStorage(file);
-              insertURL(file.name, url);
+              insertURL(editor, file.name, url);
             });
-            const insertURL = (fileName, fileUrl) => {
-              editor.insert(function (selected) {
-                const prefix = `![${fileName}](`;
-                const suffix = ')';
-                const placeholder = fileUrl;
-                const content = placeholder;
-
-                return {
-                  text: `${prefix}${content}${suffix}`
-                };
-              });
-            };
           }
         },
         {
           name: 'menu3',
           text: 'Imgur',
-          action() {
-            console.log('你点击了菜单3');
+          action(editor) {
+            editor.$nextTick(async () => {
+              const event = await editor.$refs.uploadFile.upload();
+              const file = event.target.files[0];
+              const url = await uploadFileToImgur(file);
+              // insertURL(editor, file.name, url);
+            });
           }
         }
       ]
@@ -120,5 +114,52 @@ const uploadFileToStorage = file => {
       })
       .catch(err => reject(err));
   });
-  console.log(fileRef);
+};
+
+const uploadFileToImgur = async file => {
+  var reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = async e => {
+    let base64Img = e.target.result;
+    const test = base64Img.replace(`data:${file.type};base64,`, '');
+    console.log('test', test);
+
+    let form = new FormData();
+    form.append('file', file);
+    form.append('base64Img', base64Img);
+
+    const { data } = await useFetch('/api/uploadImage', {
+      method: 'POST',
+      body: form
+    });
+  };
+  // let form = new FormData();
+  // form.append('image', file);
+
+  // const { data } = await useFetch('/api/uploadImage', {
+  //   method: 'POST',
+  //   body: form
+  // });
+  // const { data } = await useFetch('https://api.imgur.com/3/upload', {
+  //   method: 'POST',
+  //   data: formData,
+  //   headers: {
+  //     Authorization: 'Client-ID {{a0733a9b8a9493e}}'
+  //   },
+  //   mimeType: 'multipart/form-data'
+  // });
+  // console.log(data);
+};
+
+const insertURL = (editor, fileName, fileUrl) => {
+  editor.insert(function (selected) {
+    const prefix = `![${fileName}](`;
+    const suffix = '){{{width="auto" height="auto"}}}';
+    const placeholder = fileUrl;
+    const content = placeholder;
+
+    return {
+      text: `${prefix}${content}${suffix}`
+    };
+  });
 };
