@@ -3,7 +3,7 @@
     <div class="c-container flex items-center py-2 text-white">
       <nuxt-link to="/dashboard" class="inline-block">
         <div class="mr-2 inline-block w-10 align-middle">
-          <img src="/images/icon/logo.svg" alt="logo" />
+          <img src="/static/images/logo.svg" alt="logo" />
         </div>
         <span class="relative top-1 text-xl">部落格後台</span>
       </nuxt-link>

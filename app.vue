@@ -28,7 +28,7 @@ useHead({
   link: [
     {
       rel: 'shortcut icon',
-      href: '/images/icon/logo.ico'
+      href: '/static/images/logo.ico'
     }
   ]
 });
