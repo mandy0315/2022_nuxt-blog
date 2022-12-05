@@ -63,7 +63,7 @@ const $route = useRoute();
 const $router = useRouter();
 const { isOpen, toggleList, setContainer } = useToggle();
 const { addPostsAPI, getPostsAPI, updatePostsAPI } = firebaseAPIs();
-const { nowToISO } = useDateTime();
+const { nowToISO, nowDataTime } = useDateTime();
 
 const postInfo = useState(() => ref({}));
 const hasPostEditId = computed(() => !!$route.params.id);
@@ -81,13 +81,14 @@ if (hasPostEditId.value) {
     $router.push({ path: `/dashboard/public` });
   }
 } else {
+  const time = nowToISO(nowDataTime);
   postInfo.value = {
     id: '',
     title: '',
     categories: [],
     content: '',
     status: 'draft',
-    update_time: nowToISO
+    update_time: time
   };
 }
 
@@ -119,7 +120,8 @@ onMounted(() => {
 
 // 送出表單
 const sendForm = async () => {
-  postInfo.value['update_time'] = nowToISO;
+  const time = nowToISO(nowDataTime);
+  postInfo.value['update_time'] = time;
 
   if (hasPostEditId.value) {
     const data = await updatePostsAPI(postInfo.value.id, postInfo.value);

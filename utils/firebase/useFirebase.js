@@ -1,3 +1,4 @@
+// TODO 改 server
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
