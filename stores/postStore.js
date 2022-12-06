@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
-import firebaseAPIs from '@/utils/firebaseAPIs.js';
+import firebaseAPIs from '@/utils/firebaseAPIs';
+import useDateTime from '@/utils/useDateTime';
 
 export default defineStore('postStore', {
   state: () => ({
     conditions: {
       id: '',
-      status: '',
       title: '',
       content: '',
-      status: '',
+      status: 'draft',
       categories: [],
       update_time: ''
     },
@@ -39,6 +39,27 @@ export default defineStore('postStore', {
 
       const res = await getPostsAPI(id);
       res.success && Object.assign($store.conditions, res.result);
+
+      return res;
+    },
+    async updateCasePost() {
+      const $store = this;
+      // 更新時間
+      const { nowToISO, nowDataTime } = useDateTime();
+      const time = nowToISO(nowDataTime);
+      $store.conditions.update_time = time;
+
+      // 新增還是更新資料
+      const { addPostsAPI, updatePostsAPI } = firebaseAPIs();
+      const res = $store.conditions.id
+        ? await updatePostsAPI($store.conditions.id, $store.conditions)
+        : await addPostsAPI($store.conditions);
+
+      return res;
+    },
+    updateConditionsItem(item, val) {
+      const $store = this;
+      $store.conditions[item] = val;
     }
   }
 });

@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <main class="c-container pt-6 pb-10">
+    <h1 class="c-dashboard-title">
+      {{ editId === '' ? '文章新增' : '文章編輯' }}
+    </h1>
     <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-      <form-fill-input v-model:value="postInfo.title" title="標題" placeholder="請輸入標題" class="col-span-2" />
+      <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-2" />
       <form-tags-combobox
-        v-model:tags="postInfo.categories"
+        v-model:tags="categoriesChoosed"
         title="分類"
         placeholder="請輸入分類"
         :tagList="['Vue', 'Nuxt3', 'SCSS']"
@@ -14,13 +17,12 @@
         <v-md-editor
           class="test"
           height="400px"
-          v-model="postInfo.content"
+          v-model="contentFill"
           placeholder="使用 Markdown 語法，填寫你的內容..."
           :toolbar="toolbarCustom"
           :left-toolbar="toolbarConfig.leftToolbar"
           :right-toolbar="toolbarConfig.rightToolbar"
           :disabled-menus="['h/h1']"
-          @upload-image="uploadImage"
         />
       </div>
     </div>
@@ -47,7 +49,7 @@
               v-for="item in submitList"
               :key="item.status"
               class="block w-full py-1 text-c-gray-800 hover:opacity-50"
-              @click.prevent="selectSubmitStatus = item.status"
+              @click.prevent="statusChoosed = item.status"
             >
               {{ item.name }}
             </button>
@@ -55,50 +57,59 @@
         </button>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup>
+import { usePostStore } from '@/stores/index';
+import { computed } from '@vue/reactivity';
+
 const $route = useRoute();
 const $router = useRouter();
+const $postStore = usePostStore();
 
+const { toolbarConfig, toolbarCustom } = editorToolbar(); // 內容編輯工具列
 const { isOpen, toggleList, setContainer } = useToggle();
-const { addPostsAPI, getPostsAPI, updatePostsAPI } = firebaseAPIs();
-const { nowToISO, nowDataTime } = useDateTime();
-const { toolbarConfig, toolbarCustom } = editorToolbar();
 
-const postInfo = useState(() => ref({}));
-const hasPostEditId = computed(() => !!$route.params.id);
+const editId = computed(() => $route.params.id || '');
 
-// 判斷編輯還是新增文章
-if (hasPostEditId.value) {
-  postInfo.value.id = $route.params.id;
+// 判斷是文章編輯還是文章編輯
+if (editId.value) {
+  const res = await $postStore.getCasePost(editId.value);
 
-  const data = await getPostsAPI(postInfo.value.id);
-  if (data.success) {
-    postInfo.value = data.result;
-  } else {
-    $router.push({ path: `/dashboard/public` });
-  }
+  !res.success && $router.push({ path: `/dashboard/posts-public` });
 } else {
-  const time = nowToISO(nowDataTime);
-  postInfo.value = {
-    id: '',
-    title: '',
-    categories: [],
-    content: '',
-    status: 'draft',
-    update_time: time
-  };
+  $postStore.$reset();
 }
 
-// v-md-editor 上傳圖片
-const uploadImage = (event, insertImage, files) => {
-  console.log(files);
-};
+// 標題
+const titleFill = computed({
+  get: () => $postStore.conditions.title,
+  set: val => {
+    $postStore.updateConditionsItem('title', val);
+  }
+});
+// 分類
+const categoriesChoosed = computed({
+  get: () => $postStore.conditions.categories,
+  set: val => {
+    $postStore.updateConditionsItem('categories', val);
+  }
+});
+// 內容
+const contentFill = computed({
+  get: () => $postStore.conditions.content,
+  set: val => {
+    $postStore.updateConditionsItem('content', val);
+  }
+});
 
 // 按鈕選擇
 const container_el = ref(null);
+onMounted(() => {
+  setContainer(container_el.value);
+});
+
 const submitList = [
   {
     name: '儲存草稿',
@@ -109,28 +120,20 @@ const submitList = [
     status: 'public'
   }
 ];
-const currSubmitName = computed(() => submitList.filter(item => item.status === postInfo.value.status)[0].name);
-const selectSubmitStatus = computed({
-  get: () => postInfo.value.status,
-  set: val => (postInfo.value.status = val)
-});
-onMounted(() => {
-  setContainer(container_el.value);
+const currStatus = computed(() => $postStore.conditions.status);
+const currSubmitName = computed(() => submitList.filter(item => item.status === currStatus.value)[0].name);
+
+// 狀態
+const statusChoosed = computed({
+  get: () => $postStore.conditions.status,
+  set: val => {
+    $postStore.updateConditionsItem('status', val);
+  }
 });
 
 // 送出表單
 const sendForm = async () => {
-  const time = nowToISO(nowDataTime);
-  postInfo.value['update_time'] = time;
-
-  if (hasPostEditId.value) {
-    const data = await updatePostsAPI(postInfo.value.id, postInfo.value);
-    console.log(data.success);
-  } else {
-    const data = await addPostsAPI(postInfo.value);
-    console.log(data.success);
-  }
+  const res = await $postStore.updateCasePost();
+  res.success && $router.push({ path: '/dashboard/post-edit-finish' });
 };
 </script>
-
-<style lang="scss" scoped></style>

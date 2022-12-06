@@ -14,7 +14,6 @@
         <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
       </li>
     </ul>
-
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
         <thead class="bg-c-gray-800 text-white">
@@ -85,19 +84,19 @@ const $postStore = usePostStore();
 const currState = computed(() => route.params.state);
 const currPostList = computed(() => $postStore.postList);
 const currConditions = computed(() => $postStore.conditions);
-const { deletePostsAPI, getPostsAPI } = firebaseAPIs();
 
-// 初始-取的資料
+$postStore.$reset();
 $postStore.getPostList(currState.value);
 
+const { deletePostsAPI } = firebaseAPIs();
 const deletePost = async id => {
   const res = await deletePostsAPI(id);
-  res.success && $postStore.getPostsList(currState.value);
+  res.success && $postStore.getPostList(currState.value);
 };
 
 const openPreviewPost = async id => {
-  $postStore.getCasePost(id);
-  currConditions.value.id &&
+  const res = await $postStore.getCasePost(id);
+  res.success &&
     $vfm.show({
       component: CustomModal,
       bind: {
