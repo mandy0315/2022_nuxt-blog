@@ -21,6 +21,19 @@ export default defineEventHandler(async event => {
   const base64Img = fields.base64Img;
   const file = files.file;
 
+  // 取得 token
+  const token = await setToken(event);
+
+  // 相簿已經有相同圖片直接使用
+  const albumImages = await getAlbumImages(albumId, token);
+  const arr = albumImages.length > 0 && albumImages.filter(item => item.name === file.originalFilename);
+  if (arr.length === 1) {
+    return {
+      success: true,
+      result: arr[0]
+    };
+  }
+
   // 驗證資料
   const result = verifyFormat(file.size, file.mimetype);
   if (result.isError) {
@@ -32,9 +45,6 @@ export default defineEventHandler(async event => {
       }
     });
   }
-
-  // 取得 token
-  const token = await setToken(event);
 
   // 上傳圖片
   const res = await $fetch('https://api.imgur.com/3/upload', {
@@ -103,4 +113,14 @@ const getNewToken = async () => {
     });
   });
   return res.access_token;
+};
+
+const getAlbumImages = async (albumId, token) => {
+  const res = await $fetch(`https://api.imgur.com/3/album/${albumId}/images`, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  });
+  return res.data;
 };

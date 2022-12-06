@@ -1,5 +1,5 @@
 import { collection, setDoc, doc } from 'firebase/firestore';
-import { db } from '@/utils/firebase/useFirebase';
+import { db } from '@/server/utils/useFirebase';
 
 export default defineEventHandler(async event => {
   try {

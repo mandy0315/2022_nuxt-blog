@@ -1,6 +1,36 @@
-// TODO 改 utils
-import { storage } from '@/utils/firebase/useFirebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+const uploadFile = async (file, path) => {
+  return new Promise((resolve, reject) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async e => {
+      let base64Img = e.target.result;
+      base64Img = base64Img.replace(`data:${file.type};base64,`, '');
+
+      let form = new FormData();
+      form.append('file', file);
+      form.append('base64Img', base64Img);
+
+      const { data } = await useFetch(`/api/image/${path}?album=post`, {
+        method: 'POST',
+        body: form
+      });
+      resolve(data.value.result?.link);
+    };
+  });
+};
+
+const insertURL = (editor, fileName, fileUrl) => {
+  editor.insert(function (selected) {
+    const prefix = `![${fileName}](`;
+    const suffix = '){{{width="auto" height="auto"}}}';
+    const placeholder = fileUrl;
+    const content = placeholder;
+
+    return {
+      text: `${prefix}${content}${suffix}`
+    };
+  });
+};
 
 export default function () {
   // props-toolbar 配置
@@ -75,7 +105,7 @@ export default function () {
             editor.$nextTick(async () => {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
-              const url = await uploadFileToStorage(file);
+              const url = await uploadFile(file, 'pictureToStorage');
               insertURL(editor, file.name, url);
             });
           }
@@ -87,8 +117,8 @@ export default function () {
             editor.$nextTick(async () => {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
-              const url = await uploadFileToImgur(file);
-              url && insertURL(editor, file.name, url);
+              const url = await uploadFile(file, 'pictureToImgur');
+              insertURL(editor, file.name, url);
             });
           }
         }
@@ -101,52 +131,3 @@ export default function () {
     toolbarCustom
   };
 }
-
-const uploadFileToStorage = file => {
-  return new Promise((resolve, reject) => {
-    const fileRef = ref(storage, `/posts/${file.name}`);
-    uploadBytes(fileRef, file)
-      .then(snapshot => {
-        return getDownloadURL(fileRef);
-      })
-      .then(url => {
-        resolve(url);
-      })
-      .catch(err => reject(err));
-  });
-};
-
-const uploadFileToImgur = async file => {
-  return new Promise((resolve, reject) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async e => {
-      let base64Img = e.target.result;
-      base64Img = base64Img.replace(`data:${file.type};base64,`, '');
-
-      let form = new FormData();
-      form.append('file', file);
-      form.append('base64Img', base64Img);
-
-      const { data, error } = await useFetch('/api/image/pictureToImgur?album=post', {
-        method: 'POST',
-        body: form
-      });
-      const url = (data.value && data.value.result?.link) || '';
-      resolve(url);
-    };
-  });
-};
-
-const insertURL = (editor, fileName, fileUrl) => {
-  editor.insert(function (selected) {
-    const prefix = `![${fileName}](`;
-    const suffix = '){{{width="auto" height="auto"}}}';
-    const placeholder = fileUrl;
-    const content = placeholder;
-
-    return {
-      text: `${prefix}${content}${suffix}`
-    };
-  });
-};

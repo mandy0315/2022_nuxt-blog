@@ -61,14 +61,14 @@
 <script setup>
 const $route = useRoute();
 const $router = useRouter();
+
 const { isOpen, toggleList, setContainer } = useToggle();
 const { addPostsAPI, getPostsAPI, updatePostsAPI } = firebaseAPIs();
 const { nowToISO, nowDataTime } = useDateTime();
+const { toolbarConfig, toolbarCustom } = editorToolbar();
 
 const postInfo = useState(() => ref({}));
 const hasPostEditId = computed(() => !!$route.params.id);
-
-const { toolbarConfig, toolbarCustom } = toolbar();
 
 // 判斷編輯還是新增文章
 if (hasPostEditId.value) {
