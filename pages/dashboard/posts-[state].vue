@@ -23,8 +23,8 @@
             <th scope="row" class="w-1/6 py-2">管理</th>
           </tr>
         </thead>
-        <tbody v-if="postsList.length > 0">
-          <tr v-for="item in postsList" :key="item.id" class="border-b border-solid border-c-gray-400">
+        <tbody v-if="currPostList.length > 0">
+          <tr v-for="item in currPostList" :key="item.id" class="border-b border-solid border-c-gray-400">
             <td scope="col" class="p-4 text-c-gray-600">
               <post-list v-bind="item" />
             </td>
@@ -41,7 +41,7 @@
               >
                 預覽
               </button>
-              <button @click.prevent="deleteCase(item.id)" class="c-border-button c-border-button-red my-1 w-full">
+              <button @click.prevent="deletePost(item.id)" class="c-border-button c-border-button-red my-1 w-full">
                 刪除
               </button>
             </td>
@@ -54,7 +54,7 @@
 
 <script setup>
 import { $vfm } from 'vue-final-modal';
-
+import { usePostStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content.vue';
 
@@ -80,35 +80,24 @@ const postsStateList = [
 ];
 
 const route = useRoute();
+const $postStore = usePostStore();
+
 const currState = computed(() => route.params.state);
-const postsList = useState(() => []);
-const { getPostsPublicListAPI, getPostsDraftListAPI, deletePostsAPI, getPostsAPI } = firebaseAPIs();
+const currPostList = computed(() => $postStore.postList);
+const currConditions = computed(() => $postStore.conditions);
+const { deletePostsAPI, getPostsAPI } = firebaseAPIs();
 
 // 初始-取的資料
-const getPostsListData = {
-  public: async () => {
-    const data = await getPostsPublicListAPI();
-    return data.result;
-  },
-  draft: async () => {
-    const data = await getPostsDraftListAPI();
-    return data.result;
-  }
-};
-const getPostsList = async () => {
-  const data = await getPostsListData[currState.value]();
-  postsList.value = data || [];
-};
-getPostsList();
+$postStore.getPostList(currState.value);
 
-const deleteCase = async id => {
-  const data = await deletePostsAPI(id);
-  data.success && getPostsList();
+const deletePost = async id => {
+  const res = await deletePostsAPI(id);
+  res.success && $postStore.getPostsList(currState.value);
 };
 
 const openPreviewPost = async id => {
-  const data = await getPostsAPI(id);
-  data.success &&
+  $postStore.getCasePost(id);
+  currConditions.value.id &&
     $vfm.show({
       component: CustomModal,
       bind: {
@@ -119,12 +108,7 @@ const openPreviewPost = async id => {
       slots: {
         default: {
           component: PostContent,
-          bind: {
-            title: data.result.title,
-            categories: data.result.categories,
-            content: data.result.content,
-            update_time: data.result.update_time
-          }
+          bind: currConditions.value
         }
       }
     });
