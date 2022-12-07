@@ -10,7 +10,7 @@ const customColors = {
   'c-orange-600': '#F7B168',
   'c-orange-200': '#FDF8F2',
   'c-brown-800': '#4d3224',
-  'c-brown-400': '#7A6A56',
+  'c-brown-600': '#7A6A56',
   'c-yellow-200': '#FFF89E'
 };
 module.exports = {

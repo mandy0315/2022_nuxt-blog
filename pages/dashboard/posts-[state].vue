@@ -30,13 +30,13 @@
             <td class="p-4">
               <nuxt-link
                 :to="`/dashboard/post-edit/${item.id}`"
-                class="c-border-button c-border-button-gray my-1 w-full text-center"
+                class="c-border-button c-border-button-brown my-1 w-full text-center"
               >
                 編輯
               </nuxt-link>
               <button
                 @click.prevent="openPreviewPost(item.id)"
-                class="c-border-button c-border-button-gray my-1 w-full"
+                class="c-border-button c-border-button-brown my-1 w-full"
               >
                 預覽
               </button>

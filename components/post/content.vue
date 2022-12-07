@@ -8,7 +8,7 @@
     </div>
     <div v-if="categories.length > 0" class="pt-3">
       <span v-for="item in categories" :key="item" class="mt-4">
-        <the-tag :name="item" :hasLink="true" :link="`/categories/${item.toLowerCase()}`" />
+        <the-tag :name="item" :link="`/categories/${item.toLowerCase()}`" />
       </span>
     </div>
     <div class="pt-8">
