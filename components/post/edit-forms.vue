@@ -12,7 +12,7 @@
         :tagList="['Vue', 'Nuxt3', 'SCSS']"
         class="col-span-2"
       />
-
+      <form-fill-textarea title="摘要" placeholder="請輸入摘要" class="col-span-2" />
       <div class="col-span-2">
         <p class="pb-1 pr-4 text-lg">內容</p>
         <v-md-editor
