@@ -2,7 +2,7 @@
   <main class="c-container pt-6 pb-10">
     <div class="flex items-center justify-between">
       <h1 class="c-dashboard-title">文章管理</h1>
-      <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-gray">+ 新增文章</nuxt-link>
+      <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-brown">+ 新增文章</nuxt-link>
     </div>
     <ul class="mt-6">
       <li
@@ -16,7 +16,7 @@
     </ul>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
-        <thead class="bg-c-gray-800 text-white">
+        <thead class="bg-c-brown-800 text-white">
           <tr>
             <th scope="row" class="w-5/6 py-2">文章資訊</th>
             <th scope="row" class="w-1/6 py-2">管理</th>
@@ -85,7 +85,6 @@ const currState = computed(() => route.params.state);
 const currPostList = computed(() => $postStore.postList);
 const currConditions = computed(() => $postStore.conditions);
 
-$postStore.$reset();
 $postStore.getPostList(currState.value);
 
 const { deletePostsAPI } = firebaseAPIs();
