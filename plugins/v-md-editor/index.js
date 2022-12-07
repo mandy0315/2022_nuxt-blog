@@ -1,5 +1,7 @@
 import VMdEditor from '@kangc/v-md-editor';
+import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/base-editor.css';
+import '@kangc/v-md-editor/lib/style/preview.css';
 import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
 import '@kangc/v-md-editor/lib/theme/style/github.css';
 
@@ -25,8 +27,25 @@ export default defineNuxtPlugin(nuxtApp => {
       iframe: ['src']
     }
   });
+  VMdPreview.xss.extend({
+    // extend white list
+    whiteList: {
+      source: [],
+      iframe: ['src']
+    }
+  });
 
   VMdEditor.use(githubTheme, {
+    Hljs: hljs,
+    // 擴充程式碼語言顏色
+    codeHighlightExtensionMap: {
+      vue: 'html'
+    },
+    extend(md) {
+      md.use(markdownItPlayground);
+    }
+  });
+  VMdPreview.use(githubTheme, {
     Hljs: hljs,
     // 擴充程式碼語言顏色
     codeHighlightExtensionMap: {
@@ -39,7 +58,8 @@ export default defineNuxtPlugin(nuxtApp => {
 
   // 套件擴充插件
   VMdEditor.use(createCopyCodePlugin());
-  // VMdEditor.use(createEmojiPlugin());
+  VMdPreview.use(createCopyCodePlugin());
 
   nuxtApp.vueApp.use(VMdEditor); // 導入 Vue
+  nuxtApp.vueApp.use(VMdPreview);
 });
