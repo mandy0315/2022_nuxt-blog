@@ -2,7 +2,7 @@
   <component
     :is="hasLinks ? 'a' : 'span'"
     :href="link"
-    class="relative m-1 inline-flex items-center rounded bg-c-gray-600 py-0.5 px-3 text-white hover:bg-c-gray-800"
+    class="relative m-1 inline-flex items-center rounded border border-solid border-c-brown-400 py-0.5 px-3 text-c-brown-400 hover:bg-c-brown-400 hover:text-white"
     @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"
   >
     <span class="inline-block text-xs">

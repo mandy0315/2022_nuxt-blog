@@ -12,6 +12,7 @@
         :tagList="['Vue', 'Nuxt3', 'SCSS']"
         class="col-span-2"
       />
+
       <div class="col-span-2">
         <p class="pb-1 pr-4 text-lg">內容</p>
         <v-md-editor
@@ -30,13 +31,13 @@
     <!-- button -->
     <div class="text-right">
       <div class="relative inline-block">
-        <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-gray rounded-r-none rounded-l">
+        <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-brown rounded-r-none rounded-l">
           {{ currSubmitName }}
         </button>
         <button
           ref="container_el"
           @click.prevent="toggleList"
-          class="c-rounded-button c-rounded-button-gray rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
+          class="c-rounded-button c-rounded-button-brown rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
         >
           <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="inline-block" />
           <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />

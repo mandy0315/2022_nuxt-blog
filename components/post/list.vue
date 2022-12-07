@@ -1,13 +1,13 @@
 <template>
   <div class="flex items-center">
     <div class="mx-4">
-      <h3 class="pb-2 text-2xl text-c-orange-800 group-hover:underline">{{ title }}</h3>
+      <h3 class="pb-2 text-2xl text-c-brown-800 group-hover:underline">{{ title }}</h3>
       <div class="pb-2 text-sm">
         <span class="pr-3"
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
       </div>
-      <p class="line-clamp-3"></p>
+      <!-- <p class="line-clamp-3">{{content}}</p> -->
       <div v-if="categories.length > 0" class="mt-4 -ml-1">
         <span v-for="item in categories" :key="item">
           <the-tag :name="item" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />

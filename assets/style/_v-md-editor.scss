@@ -20,3 +20,9 @@
     @apply inline-block relative top-[1px] w-4 h-4 content-[''];
   }
 }
+
+.v-md-editor-preview.preview-custom{
+  .github-markdown-body{
+    padding: 0px;
+  }
+}

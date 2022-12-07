@@ -1,32 +1,19 @@
 <template>
-  <header class="bg-c-gray-800">
-    <div class="c-container flex items-center py-2 text-white">
-      <nuxt-link to="/dashboard" class="inline-block">
-        <div class="mr-2 inline-block w-10 align-middle">
+  <header class="inline-block w-full bg-c-brown-800 text-white shadow">
+    <div class="c-container flex items-center py-2">
+      <nuxt-link to="/dashboard" class="flex items-center">
+        <div class="mr-2 inline-block w-7 align-middle">
           <img src="/static/images/logo.svg" alt="logo" />
         </div>
-        <span class="relative top-1 text-xl">部落格後台</span>
+        <span>Mandy 紀錄後台</span>
       </nuxt-link>
       <nav class="pl-6">
-        <nuxt-link v-for="item in topBarNav" :to="item.link" :key="item.link" class="px-2 hover:text-c-orange-800">
-          {{ item.name }}
-        </nuxt-link>
+        <nuxt-link to="/" class="text-sm text-c-yellow-200">回到前台</nuxt-link>
       </nav>
       <div class="ml-auto">
-        <span class="pr-2 text-c-orange-800">mandy 您好</span>
-        <button class="text-sm hover:text-c-orange-800">登出</button>
+        <span class="pr-2">mandy 您好</span>
+        <button class="text-sm">登出</button>
       </div>
     </div>
   </header>
 </template>
-
-<script setup>
-const topBarNav = [
-  {
-    link: '/',
-    name: '回到前台'
-  }
-];
-</script>
-
-<style lang="scss" scoped></style>
