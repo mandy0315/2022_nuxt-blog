@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="py-10">
-      <h1 class="text-center text-3xl text-c-brown-800">Mandy 生活技術紀錄</h1>
+      <h1 class="text-center text-3xl text-c-brown-800">{{ webTitle }}</h1>
     </section>
     <section class="px-10">
       <ul v-if="postsList.length > 0" class="w-full">
@@ -14,6 +14,7 @@
 </template>
 
 <script setup>
+const webTitle = useState('webTitle');
 const { getPostsPublicListAPI } = firebaseAPIs();
 const postsList = useState(() => []);
 

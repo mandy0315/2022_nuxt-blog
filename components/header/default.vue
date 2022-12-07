@@ -1,13 +1,12 @@
 <template>
-  <header class="inline-block w-full bg-c-brown-800 text-white shadow">
-    <div class="c-container flex items-center py-2">
+  <header class="w-full bg-c-brown-800 text-white shadow">
+    <div class="c-container flex items-center">
       <nuxt-link to="/" class="flex items-center">
-        <div class="mr-2 inline-block w-7 align-middle">
-          <img src="/static/images/logo.svg" alt="logo" />
+        <div class="mr-2 inline-block h-10 w-10 align-middle">
+          <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
         </div>
-        <span>Mandy 生活技術紀錄</span>
+        <span class="text-base">{{ webTitle }}</span>
       </nuxt-link>
-
       <nav class="ml-auto">
         <nuxt-link
           v-for="item in topBarNav"
@@ -23,6 +22,7 @@
 </template>
 
 <script setup>
+const webTitle = useState('webTitle');
 const topBarNav = [
   {
     link: '/posts',
@@ -38,5 +38,3 @@ const topBarNav = [
   }
 ];
 </script>
-
-<style lang="scss" scoped></style>

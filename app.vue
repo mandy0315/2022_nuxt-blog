@@ -9,7 +9,7 @@
 useHead({
   title: '',
   titleTemplate: title => {
-    return title ? `${title}-Mandy 部落格` : 'Mandy 部落格';
+    return title ? `${title}-Mandy 生活&技術筆記` : 'Mandy 生活&技術筆記';
   },
   meta: [
     {
@@ -32,6 +32,7 @@ useHead({
     }
   ]
 });
+useState('webTitle', () => 'Mandy 生活&技術筆記');
 </script>
 
 <style lang="scss" scoped></style>
