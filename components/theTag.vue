@@ -5,7 +5,7 @@
     class="relative m-1 inline-flex items-center rounded py-0.5 px-3"
     :class="
       hasLinks
-        ? 'border border-solid border-c-brown-600 hover:bg-c-brown-600 hover:text-white'
+        ? 'border border-solid border-c-brown-600 text-c-brown-600 hover:bg-c-brown-600 hover:text-white'
         : 'bg-c-brown-600 text-white'
     "
     @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"

@@ -1,7 +1,7 @@
 <template>
-  <label class="col-span-2">
+  <label>
     <p class="pb-1 pr-4 text-lg">{{ title }}</p>
-    <input v-model="text" type="text" class="c-form w-full rounded border-c-gray-400" :placeholder="placeholder" />
+    <input v-model="text" type="text" class="c-form w-full rounded" :placeholder="placeholder" />
   </label>
 </template>
 
