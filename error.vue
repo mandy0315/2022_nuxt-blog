@@ -1,18 +1,20 @@
 <template>
-  <nuxt-layout name="dashboard">
-    <div class="c-container">
-      <h1
-        class="pb-4 text-6xl font-bold after:mx-auto after:mt-4 after:block after:h-1 after:w-10 after:bg-c-orange-800 after:content-['']"
-      >
-        404
-      </h1>
-      <p class="mb-6 text-xl font-medium">找不到此頁面</p>
+  <nuxt-layout :name="isDashboardPath ? 'dashboard' : 'default'">
+    <div v-if="error.statusCode === '404'" class="c-container flex flex-col items-center">
+      <h1 class="pt-20 pb-8 text-center text-3xl text-c-brown-800">404 找不到此頁面</h1>
+      <nuxt-link :to="isDashboardPath ? '/dashboard' : '/'" class="c-text-button">返回頁面</nuxt-link>
     </div>
   </nuxt-layout>
 </template>
 
 <script setup>
 useHead({ title: '404 找不到此頁面' });
+const $route = useRoute();
+const props = defineProps({
+  error: Object
+});
+
+const isDashboardPath = computed(() => /^\/dashboard/g.test($route.path));
 </script>
 
 <style lang="scss" scoped></style>

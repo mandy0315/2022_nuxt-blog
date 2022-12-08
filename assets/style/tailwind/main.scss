@@ -11,7 +11,7 @@
     @apply pl-3 relative text-2xl text-c-gray-800 inline-block before:content-[''] before:absolute before:w-1 before:h-8 before:bg-c-brown-600 before:-left-0 ;
   }
   .c-text-button{
-    @apply hover:text-c-orange-800 underline;
+    @apply text-c-brown-800 underline;
   }
   .c-rounded-button{
     @apply rounded-3xl py-1 px-5 text-base inline-block;
