@@ -1,8 +1,9 @@
 <template>
   <div class="min-h-screen bg-gray-100">
-    <top-nav />
     <header-default />
-    <slot />
+    <main class="pt-6 pb-10">
+      <slot></slot>
+    </main>
     <footer-default class="dark:text-c-gray-400" />
   </div>
 </template>

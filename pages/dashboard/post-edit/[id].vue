@@ -1,7 +1,7 @@
 <template>
-  <main class="c-container pt-6 pb-10">
+  <div class="c-container">
     <post-edit-forms />
-  </main>
+  </div>
 </template>
 
 <script setup>

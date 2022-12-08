@@ -1,5 +1,5 @@
 <template>
-  <main class="c-container pt-6 pb-10">
+  <div class="c-container">
     <div class="flex items-center justify-between">
       <h1 class="c-dashboard-title">文章管理</h1>
       <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-brown">+ 新增文章</nuxt-link>
@@ -48,7 +48,7 @@
         </tbody>
       </table>
     </section>
-  </main>
+  </div>
 </template>
 
 <script setup>

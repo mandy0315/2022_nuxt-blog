@@ -1,8 +1,9 @@
 <template>
   <div class="min-h-screen bg-gray-100">
-    <top-nav />
     <header-dashboard />
-    <slot />
+    <main class="pt-6 pb-10">
+      <slot></slot>
+    </main>
     <footer-default />
   </div>
 </template>

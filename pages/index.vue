@@ -1,5 +1,5 @@
 <template>
-  <main class="c-container pt-6 pb-10">
+  <div class="c-container">
     <section class="py-10">
       <h1 class="text-center text-3xl text-c-brown-800">{{ webTitle }}</h1>
     </section>
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </section>
-  </main>
+  </div>
 </template>
 
 <script setup>
