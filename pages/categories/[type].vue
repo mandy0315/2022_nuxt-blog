@@ -1,9 +1,7 @@
 <template>
-  <div class="flex">
-    <div class="w-full">
-      <post-list />
-    </div>
-  </div>
+  <main class="c-container pt-6 pb-10">
+    <div>Hello</div>
+  </main>
 </template>
 
 <script setup></script>

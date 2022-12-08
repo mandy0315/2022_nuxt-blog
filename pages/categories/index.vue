@@ -1,5 +1,7 @@
 <template>
-  <div>Hello</div>
+  <main class="c-container pt-6 pb-10">
+    <div>Hello</div>
+  </main>
 </template>
 
 <script setup>

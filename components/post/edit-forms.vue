@@ -1,5 +1,5 @@
 <template>
-  <main class="c-container pt-6 pb-10">
+  <div>
     <h1 class="c-dashboard-title">
       {{ editId === '' ? '文章新增' : '文章編輯' }}
     </h1>
@@ -58,7 +58,7 @@
         </button>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <nuxt-layout name="dashboard">
     <nuxt-page />
-  </div>
+  </nuxt-layout>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'dashboard',
+  layout: false,
   middleware: [
     (to, form) => {
       if (to.path === '/dashboard') {

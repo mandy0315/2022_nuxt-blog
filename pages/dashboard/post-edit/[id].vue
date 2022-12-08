@@ -1,5 +1,7 @@
 <template>
-  <post-edit-forms />
+  <main class="c-container pt-6 pb-10">
+    <post-edit-forms />
+  </main>
 </template>
 
 <script setup>
