@@ -14,5 +14,8 @@
   </header>
 </template>
 <script setup>
-const webTitle = useState('webTitle');
+import { useMainStore } from '@/stores/index';
+
+const $mainStore = useMainStore();
+const webTitle = computed(() => $mainStore.webTitle);
 </script>

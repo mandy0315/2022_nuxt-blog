@@ -22,7 +22,8 @@
 </template>
 
 <script setup>
-const webTitle = useState('webTitle');
+import { useMainStore } from '@/stores/index';
+
 const topBarNav = [
   {
     link: '/posts',
@@ -37,4 +38,7 @@ const topBarNav = [
     name: '關於我'
   }
 ];
+
+const $mainStore = useMainStore();
+const webTitle = computed(() => $mainStore.webTitle);
 </script>

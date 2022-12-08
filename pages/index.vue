@@ -14,9 +14,14 @@
 </template>
 
 <script setup>
-const webTitle = useState('webTitle');
+import { useMainStore } from '@/stores/index';
+import { computed } from '@vue/reactivity';
+
 const { getPostsPublicListAPI } = firebaseAPIs();
 const postsList = useState(() => []);
+const $mainStore = useMainStore();
+
+const webTitle = computed(() => $mainStore.webTitle);
 
 const getPostsList = async () => {
   const data = await getPostsPublicListAPI();
