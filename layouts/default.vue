@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-gray-100 text-c-gray-800">
     <header-default />
-    <main class="pt-6 pb-10">
+    <main class="min-h-[680px] pt-6 pb-10">
       <slot></slot>
     </main>
-    <footer-default class="dark:text-c-gray-400" />
+    <footer-default />
   </div>
 </template>
 <script setup></script>
