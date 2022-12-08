@@ -1,6 +1,6 @@
 <template>
   <header>
-    <top-nav />
+    <header-top-nav />
     <div class="w-full bg-c-brown-800 text-white shadow">
       <div class="c-container flex items-center">
         <nuxt-link to="/" class="flex items-center">
