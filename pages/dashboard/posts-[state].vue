@@ -85,6 +85,10 @@ const currState = computed(() => route.params.state);
 const currPostList = computed(() => $postStore.postList);
 const currConditions = computed(() => $postStore.conditions);
 
+onMounted(() => {
+  $postStore.$reset();
+});
+
 $postStore.getPostList(currState.value);
 
 const { deletePostsAPI } = firebaseAPIs();
@@ -99,8 +103,8 @@ const openPreviewPost = async id => {
     $vfm.show({
       component: CustomModal,
       bind: {
-        modalContainerClass: 'max-w-[960px]',
-        modalContentClass: 'p-6'
+        modalContainerClass: 'c-container h-[600px]',
+        modalContentClass: 'mt-8 p-4 overflow-y-scroll'
       },
       on: {},
       slots: {
