@@ -1,11 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gray-100 text-c-gray-800">
-    <header-default />
-    <main class="min-h-[680px] pt-6 pb-10">
-      <slot></slot>
-    </main>
-    <footer-default />
-  </div>
+  <header-default />
+  <main class="min-h-[680px] py-10">
+    <slot></slot>
+  </main>
+  <footer-default />
 </template>
 <script setup></script>
 
