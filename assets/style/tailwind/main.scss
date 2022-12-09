@@ -7,34 +7,28 @@
   .c-container{
     @apply w-full max-w-[960px] mx-auto;
   }
-  .c-dashboard-title{
-    @apply pl-3 relative text-2xl text-c-gray-800 inline-block before:content-[''] before:absolute before:w-1 before:h-8 before:bg-c-brown-600 before:-left-0 ;
+  .c-form{
+    @apply border-c-gray-400 border-solid border px-2 py-1 ;
   }
   .c-text-button{
-    @apply text-c-brown-800 underline;
+    @apply text-c-brown-600 underline;
   }
   .c-rounded-button{
-    @apply rounded-3xl py-1 px-5 text-base inline-block;
+    @apply rounded-3xl py-1 px-5 font-bold inline-block;
     &-brown{
-      @apply bg-c-brown-800 text-white hover:bg-c-brown-600;
-    }
-    &-orange{
-      @apply bg-c-orange-800 text-white hover:bg-c-brown-600;
-    }
-    &-red{
-      @apply bg-red-700 text-white hover:bg-red-600;
+      @apply bg-c-brown-600 text-white hover:bg-c-brown-600/80;
     }
   }
   .c-border-button {
-    @apply rounded-sm border py-1 px-5 text-base inline-block;
+    @apply rounded-sm border py-1 px-5 inline-block font-bold;
     &-brown{
-      @apply border-c-brown-800 text-c-brown-800 bg-white hover:bg-c-brown-800 hover:text-white;
+      @apply border-c-brown-800 text-c-brown-600 bg-white hover:bg-c-brown-600 hover:text-white;
     }
     &-red{
       @apply rounded-sm border-red-600 text-red-600 bg-white hover:bg-red-600 hover:text-white;
     }
   }
-  .c-form{
-    @apply border-c-gray-400 border-solid border px-2 py-1 ;
+  .c-dashboard-title{
+    @apply pl-3 relative text-3xl text-c-gray-800 font-bold inline-block before:content-[''] before:absolute before:w-1 before:h-8 before:bg-c-brown-600 before:-left-0;
   }
 }
