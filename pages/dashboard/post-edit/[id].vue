@@ -1,6 +1,6 @@
 <template>
   <div class="c-container">
-    <post-edit-forms />
+    <post-forms />
   </div>
 </template>
 
