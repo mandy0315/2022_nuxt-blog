@@ -1,2 +1,13 @@
 @import './tailwind/main';
 @import './v-md-editor';
+
+body {
+  @apply w-full relative bg-gray-50 text-c-gray-800;
+  font-family: 'Microsoft JhengHei', PingFang, STHeiti, sans-serif, serif;
+}
+
+input,textarea{
+  &:focus{
+    @apply outline-none;
+  }
+}

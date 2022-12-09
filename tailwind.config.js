@@ -6,12 +6,9 @@ const customColors = {
   'c-gray-800': '#323232',
   'c-gray-600': '#575757',
   'c-gray-400': '#D4D4D4',
-  'c-orange-800': '#E98012',
-  'c-orange-600': '#F7B168',
-  'c-brown-900': '#311e15',
+  'c-brown-900': '#3d2a20',
   'c-brown-800': '#4d3224',
   'c-brown-600': '#7A6A56',
-  'c-brown-400': '#f0e9e1',
   'c-yellow-200': '#FFF89E'
 };
 module.exports = {

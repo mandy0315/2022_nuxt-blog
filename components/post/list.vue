@@ -7,7 +7,7 @@
           ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
         >
       </div>
-      <!-- <p class="line-clamp-3">{{content}}</p> -->
+      <p class="line-clamp-2">{{ summary }}</p>
       <div v-if="categories.length > 0" class="mt-4 -ml-1">
         <span v-for="item in categories" :key="item">
           <the-tag :name="item" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />
@@ -29,9 +29,13 @@ const props = defineProps({
     type: Array,
     default: []
   },
+  summary: {
+    type: String,
+    default: '摘要'
+  },
   content: {
     type: String,
-    default: '輸入內容'
+    default: '內容'
   },
   update_time: {
     type: String,

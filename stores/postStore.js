@@ -7,6 +7,7 @@ export default defineStore('postStore', {
     conditions: {
       id: '',
       title: '',
+      summary: '',
       content: '',
       status: 'draft',
       categories: [],

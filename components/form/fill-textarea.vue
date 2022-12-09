@@ -6,12 +6,14 @@
       @input="handleAutoGrow"
       v-model="text"
       :placeholder="placeholder"
-      class="c-form w-full resize-none rounded"
+      class="c-form scroll-y-hidden w-full resize-none rounded"
     ></textarea>
   </label>
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+
 const props = defineProps({
   title: {
     type: String,
@@ -33,5 +35,13 @@ const text = computed({
   set: val => emit('update:value', val)
 });
 const textareaEl = ref(null);
-const handleAutoGrow = () => {};
+const handleAutoGrow = () => {
+  textareaEl.value.style.height = '35px';
+  nextTick(() => {
+    textareaEl.value.style.height = text.value ? `${textareaEl.value.scrollHeight}px` : '35px';
+  });
+};
+onMounted(() => {
+  handleAutoGrow();
+});
 </script>
