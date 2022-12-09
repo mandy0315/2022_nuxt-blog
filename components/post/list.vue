@@ -1,17 +1,30 @@
 <template>
-  <div class="flex items-center">
-    <div class="mx-4">
-      <h3 class="pb-2 text-2xl text-c-brown-800 group-hover:underline">{{ title }}</h3>
-      <div class="pb-2 text-sm">
-        <span class="pr-3"
-          ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
-        >
-      </div>
+  <div class="flex w-full items-center">
+    <div class="mx-4 w-full">
+      <component
+        :is="hasLinks ? 'a' : 'h3'"
+        class="block pb-2 text-2xl font-bold text-c-brown-800"
+        :class="{ 'hover:underline': hasLinks }"
+        >{{ title }}</component
+      >
       <p class="line-clamp-2">{{ summary }}</p>
-      <div v-if="categories.length > 0" class="mt-4 -ml-1">
-        <span v-for="item in categories" :key="item">
-          <the-tag :name="item" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />
-        </span>
+      <div class="flex justify-between pt-6">
+        <div v-if="categories.length > 0" class="-ml-1">
+          <span v-for="item in categories" :key="item">
+            <the-tag
+              :name="item"
+              :hasLinks="hasLinks"
+              :link="`/categories/${item.toLowerCase()}`"
+              class="inline-block"
+            />
+          </span>
+        </div>
+        <div class="self-end text-sm text-c-brown-600">
+          <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
+          <span class="align-middle">
+            {{ dateFormat(update_time) }}
+          </span>
+        </div>
       </div>
     </div>
 
@@ -40,9 +53,11 @@ const props = defineProps({
   update_time: {
     type: String,
     default: '2022/11/04'
+  },
+  hasLinks: {
+    type: Boolean,
+    default: false
   }
 });
 const { dateFormat } = useDateTime();
 </script>
-
-<style lang="scss" scoped></style>

@@ -6,7 +6,7 @@
     <section class="px-10">
       <ul v-if="currPostList.length > 0" class="w-full">
         <li v-for="item in currPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
-          <post-list v-bind="item" />
+          <post-list v-bind="item" :hasLinks="true" />
         </li>
       </ul>
     </section>

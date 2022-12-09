@@ -1,15 +1,18 @@
 <template>
   <div class="text-c-gray-800">
-    <h1 class="text-3xl text-c-brown-800">{{ title }}</h1>
-    <div class="pt-3 text-sm">
-      <span class="pr-3"
-        ><Icon icon="ic:outline-access-time" class="mr-1 inline-block" />{{ dateFormat(update_time) }}</span
-      >
-    </div>
-    <div v-if="categories.length > 0" class="pt-3">
-      <span v-for="item in categories" :key="item" class="mt-4">
-        <the-tag :name="item" :link="`/categories/${item.toLowerCase()}`" />
-      </span>
+    <h1 class="pb-2 text-3xl font-bold">{{ title }}</h1>
+    <div class="flex justify-between">
+      <div v-if="categories.length > 0" class="-ml-1">
+        <span v-for="item in categories" :key="item">
+          <the-tag :name="item" :hasLinks="hasLinks" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />
+        </span>
+      </div>
+      <div class="self-end text-sm text-c-brown-600">
+        <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
+        <span class="align-middle">
+          {{ dateFormat(update_time) }}
+        </span>
+      </div>
     </div>
     <div class="pt-8">
       <v-md-preview class="preview-custom" :text="content" />
@@ -34,12 +37,14 @@ const props = defineProps({
   update_time: {
     type: String,
     default: '2022/11/04'
+  },
+  hasLinks: {
+    type: Boolean,
+    default: false
   }
 });
 
 const { dateFormat } = useDateTime();
-const postContent = ref('');
-postContent.value = props.content;
 </script>
 
 <style lang="scss" scoped></style>
