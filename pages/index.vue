@@ -4,8 +4,8 @@
       <h1 class="text-center text-3xl text-c-brown-800">{{ webTitle }}</h1>
     </section>
     <section class="px-10">
-      <ul v-if="postsList.length > 0" class="w-full">
-        <li v-for="item in postsList" :key="item.id" class="group block border-b border-c-gray-400 py-5">
+      <ul v-if="currPostList.length > 0" class="w-full">
+        <li v-for="item in currPostList" :key="item.id" class="group block border-b border-c-gray-400 py-5">
           <post-list v-bind="item" />
         </li>
       </ul>
@@ -14,20 +14,16 @@
 </template>
 
 <script setup>
-import { useMainStore } from '@/stores/index';
+import { useMainStore, usePostStore } from '@/stores/index';
 import { computed } from '@vue/reactivity';
 
-const { getPostsPublicListAPI } = firebaseAPIs();
-const postsList = useState(() => []);
 const $mainStore = useMainStore();
+const $postStore = usePostStore();
 
 const webTitle = computed(() => $mainStore.webTitle);
+const currPostList = computed(() => $postStore.postList);
 
-const getPostsList = async () => {
-  const data = await getPostsPublicListAPI();
-  postsList.value = data.result || [];
-};
-getPostsList();
+$postStore.getPostList();
 </script>
 
 <style lang="scss" scoped></style>
