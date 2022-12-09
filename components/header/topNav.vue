@@ -6,13 +6,13 @@
         <nuxt-link
           to="/"
           class="bordre-solid border-r border-c-gray-400/40 px-2 hover:text-c-yellow-200"
-          :class="{ 'text-c-yellow-200': !isDashboardPath }"
+          :class="{ 'text-c-yellow-200': !isDashboardPages }"
           >前台</nuxt-link
         >
         <nuxt-link
           to="/dashboard"
           class="px-2 hover:text-c-yellow-200"
-          :class="{ 'text-c-yellow-200': isDashboardPath }"
+          :class="{ 'text-c-yellow-200': isDashboardPages }"
           >後台</nuxt-link
         >
       </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
-const $route = useRoute();
-const isDashboardPath = computed(() => /^\/dashboard/g.test($route.path));
+import { useMainStore } from '@/stores/index';
+const $mainStore = useMainStore();
+const isDashboardPages = computed(() => $mainStore.isDashboardPages);
 </script>
