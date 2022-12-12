@@ -14,7 +14,7 @@ const uploadFile = async (file, path) => {
         method: 'POST',
         body: form
       });
-      resolve(data.value.result?.link);
+      resolve(data.value);
     };
   });
 };
@@ -105,8 +105,8 @@ export default function () {
             editor.$nextTick(async () => {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
-              const url = await uploadFile(file, 'pictureToStorage');
-              insertURL(editor, file.name, url);
+              const data = await uploadFile(file, 'pictureToStorage');
+              insertURL(editor, file.name, data.result?.link);
             });
           }
         },
@@ -117,8 +117,8 @@ export default function () {
             editor.$nextTick(async () => {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
-              const url = await uploadFile(file, 'pictureToImgur');
-              insertURL(editor, file.name, url);
+              const data = await uploadFile(file, 'pictureToImgur');
+              insertURL(editor, file.name, data.result?.link);
             });
           }
         }

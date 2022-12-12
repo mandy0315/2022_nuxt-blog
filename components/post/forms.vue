@@ -4,7 +4,8 @@
       {{ editId === '' ? '文章新增' : '文章編輯' }}
     </h1>
     <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-      <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-2" />
+      <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
+      <form-file-input v-model:value="coverPictureChoosed" title="封面圖" class="col-span-1" />
       <form-tags-combobox
         v-model:tags="categoriesChoosed"
         title="分類"
@@ -109,6 +110,13 @@ const contentFill = computed({
   get: () => $postStore.conditions.content,
   set: val => {
     $postStore.updateConditionsItem('content', val);
+  }
+});
+//
+const coverPictureChoosed = computed({
+  get: () => $postStore.conditions.coverPicture,
+  set: val => {
+    $postStore.updateConditionsItem('coverPicture', val);
   }
 });
 

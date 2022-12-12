@@ -1,9 +1,20 @@
 <template>
-  <div class="overflow-hidden rounded-md">
-    <img src="https://picsum.photos/seed/picsum/560/315" alt="假圖" class="h-full w-full object-cover" />
+  <div class="overflow-hidden rounded">
+    <img :src="link" :alt="title" class="h-full w-full object-cover" />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
+  },
+  link: {
+    type: String,
+    default: ''
+  }
+});
+</script>
 
 <style lang="scss" scoped></style>

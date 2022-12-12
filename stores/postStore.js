@@ -8,6 +8,7 @@ export default defineStore('postStore', {
       id: '',
       title: '',
       summary: '',
+      coverPicture: [],
       content: '',
       status: 'draft',
       categories: [],
