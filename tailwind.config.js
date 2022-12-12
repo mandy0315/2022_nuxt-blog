@@ -5,11 +5,12 @@ const customColors = {
   // Configure your color palette here
   'c-gray-800': '#323232',
   'c-gray-600': '#575757',
-  'c-gray-400': '#D4D4D4',
+  'c-gray-400': '#E2E2E2',
   'c-brown-900': '#3d2a20',
   'c-brown-800': '#4d3224',
-  'c-brown-600': '#7A6A56',
-  'c-yellow-200': '#FFF89E'
+  'c-brown-600': '#BC9C73',
+  'c-yellow-200': '#FFF89E',
+  'c-red-600': '#DC2626'
 };
 module.exports = {
   content: [

@@ -5,7 +5,7 @@
 /* components 新增元件 */
 @layer components{
   .c-container{
-    @apply w-full max-w-[960px] mx-auto;
+    @apply w-full max-w-[1200px] mx-auto;
   }
   .c-form{
     @apply border-c-gray-400 border-solid border px-2 py-1 ;
@@ -22,7 +22,7 @@
   .c-border-button {
     @apply rounded-sm border py-1 px-5 inline-block font-bold;
     &-brown{
-      @apply border-c-brown-800 text-c-brown-600 bg-white hover:bg-c-brown-600 hover:text-white;
+      @apply border-c-brown-600 text-c-brown-600 bg-white hover:bg-c-brown-600 hover:text-white;
     }
     &-red{
       @apply rounded-sm border-red-600 text-red-600 bg-white hover:bg-red-600 hover:text-white;
