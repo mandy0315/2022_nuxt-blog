@@ -98,18 +98,18 @@ export default function () {
             });
           }
         },
-        {
-          name: 'menu2',
-          text: 'Cloud Storage',
-          action(editor) {
-            editor.$nextTick(async () => {
-              const event = await editor.$refs.uploadFile.upload();
-              const file = event.target.files[0];
-              const data = await uploadFile(file, 'pictureToStorage');
-              insertURL(editor, file.name, data.result?.link);
-            });
-          }
-        },
+        // {
+        //   name: 'menu2',
+        //   text: 'Cloud Storage',
+        //   action(editor) {
+        //     editor.$nextTick(async () => {
+        //       const event = await editor.$refs.uploadFile.upload();
+        //       const file = event.target.files[0];
+        //       const data = await uploadFile(file, 'pictureToStorage');
+        //       insertURL(editor, file.name, data.result?.link);
+        //     });
+        //   }
+        // },
         {
           name: 'menu3',
           text: 'Imgur',
