@@ -16,7 +16,7 @@
     </ul>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
-        <thead class="bg-c-brown-600 text-white">
+        <thead class="bg-c-gray-400 text-c-gray-800">
           <tr>
             <th scope="row" class="w-5/6 py-2">文章資訊</th>
             <th scope="row" class="w-1/6 py-2">管理</th>

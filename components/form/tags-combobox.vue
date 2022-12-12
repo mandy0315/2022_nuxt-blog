@@ -20,7 +20,7 @@
         <input
           id="input-tags"
           type="text"
-          class="flex-1 self-center border-0 border-none py-0 px-1 shadow-none outline-none"
+          class="flex-1 self-center border-0 border-none py-0 shadow-none outline-none"
           autocomplete="off"
           :placeholder="placeholder"
           v-model.trim="fillTag"
