@@ -47,6 +47,9 @@
           </tr>
         </tbody>
       </table>
+      <div v-if="totalPages" class="mt-6">
+        <the-pagination v-model:currentPages="currentPages" :totalPages="totalPages" />
+      </div>
     </section>
   </div>
 </template>
@@ -85,16 +88,19 @@ const currState = computed(() => route.params.state);
 const currPostList = computed(() => $postStore.postList);
 const currConditions = computed(() => $postStore.conditions);
 
+const currentPages = ref(0);
+const totalPages = 12;
+
 onMounted(() => {
   $postStore.$reset();
 });
 
-$postStore.getPostList(currState.value);
+$postStore.getPostList({ state: currState.value });
 
 const { deletePostsAPI } = firebaseAPIs();
 const deletePost = async id => {
   const res = await deletePostsAPI(id);
-  res.success && $postStore.getPostList(currState.value);
+  res.success && $postStore.getPostList({ state: currState.value });
 };
 
 const openPreviewPost = async id => {

@@ -18,22 +18,21 @@ export default defineStore('postStore', {
   }),
   getters: {},
   actions: {
-    async getPostList(state = 'public') {
+    async getPostList({ state = 'public', page = 1 }) {
       const $store = this;
       const { getPostsPublicListAPI, getPostsDraftListAPI } = firebaseAPIs();
       const api = {
         public: async () => {
-          const data = await getPostsPublicListAPI();
+          const data = await getPostsPublicListAPI(page);
           return data.result;
         },
         draft: async () => {
-          const data = await getPostsDraftListAPI();
+          const data = await getPostsDraftListAPI(page);
           return data.result;
         }
       };
-
-      const res = await api[state]();
-      $store.postList = res;
+      const result = await api[state]();
+      $store.postList = result?.articleList;
     },
     async getCasePost(id = '') {
       const $store = this;

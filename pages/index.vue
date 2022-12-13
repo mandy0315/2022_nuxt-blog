@@ -10,12 +10,18 @@
         </li>
       </ul>
     </section>
+
+    <div v-if="totalPages" class="mt-6">
+      <the-pagination v-model:currentPages="currentPages" :totalPages="totalPages" />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useMainStore, usePostStore } from '@/stores/index';
-import { computed } from '@vue/reactivity';
+
+const currentPages = ref(0);
+const totalPages = 12;
 
 const $mainStore = useMainStore();
 const $postStore = usePostStore();
@@ -23,5 +29,5 @@ const $postStore = usePostStore();
 const webTitle = computed(() => $mainStore.webTitle);
 const currPostList = computed(() => $postStore.postList);
 
-$postStore.getPostList();
+$postStore.getPostList({ state: 'public' });
 </script>

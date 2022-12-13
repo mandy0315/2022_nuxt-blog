@@ -8,15 +8,15 @@ export default function () {
     return data.value;
   };
   // 文章
-  const getPostsPublicListAPI = async () => {
-    const { data } = await useFetch('/api/firebase/posts/publicList', {
+  const getPostsPublicListAPI = async page => {
+    const { data } = await useFetch(`/api/firebase/posts/publicList?page=${page}`, {
       method: 'get',
       initialCache: false
     });
     return data.value;
   };
-  const getPostsDraftListAPI = async () => {
-    const { data } = await useFetch('/api/firebase/posts/draftList', {
+  const getPostsDraftListAPI = async page => {
+    const { data } = await useFetch(`/api/firebase/posts/draftList?page=${page}`, {
       method: 'get',
       initialCache: false
     });
