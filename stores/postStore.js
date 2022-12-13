@@ -24,15 +24,14 @@ export default defineStore('postStore', {
       const api = {
         public: async () => {
           const data = await getPostsPublicListAPI(page);
-          return data.result;
+          return data;
         },
         draft: async () => {
           const data = await getPostsDraftListAPI(page);
-          return data.result;
+          return data;
         }
       };
-      const result = await api[state]();
-      $store.postList = result?.articleList;
+      return await api[state]();
     },
     async getCasePost(id = '') {
       const $store = this;

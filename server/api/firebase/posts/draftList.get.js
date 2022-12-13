@@ -14,14 +14,14 @@ export default defineEventHandler(async event => {
         data.push(doc.data());
       }
     });
-    console.log(data);
+
     const urlQuery = getQuery(event);
-    const result = pagination({ currPage: urlQuery.page, perPage: 10, articles: data });
+    const result = pagination({ currPage: +urlQuery.page, perPage: 2, articles: data });
 
     return {
       success: true,
       result: {
-        ...result.pageInfo,
+        pageInfo: result.pageInfo,
         articleList: result.data
       }
     };

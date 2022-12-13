@@ -1,4 +1,4 @@
-export default function ({ currPage = '1', perPage, articles }) {
+export default function ({ currPage = 1, perPage, articles }) {
   const total = articles.length;
   const pages = Math.ceil(total / perPage);
 

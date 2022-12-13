@@ -47,8 +47,8 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="totalPages" class="mt-6">
-        <the-pagination v-model:currentPages="currentPages" :totalPages="totalPages" />
+      <div v-if="+pager?.pages" class="mt-6">
+        <the-pagination v-model:currentPages="currentPages" :totalPages="+pager?.pages" />
       </div>
     </section>
   </div>
@@ -85,22 +85,34 @@ const route = useRoute();
 const $postStore = usePostStore();
 
 const currState = computed(() => route.params.state);
-const currPostList = computed(() => $postStore.postList);
 const currConditions = computed(() => $postStore.conditions);
-
-const currentPages = ref(0);
-const totalPages = 12;
 
 onMounted(() => {
   $postStore.$reset();
 });
 
-$postStore.getPostList({ state: currState.value });
+const currPostList = ref([]);
+const currentPages = ref(1);
+const pager = ref({});
+
+const getStatePostList = async (page = 1) => {
+  const data = await $postStore.getPostList({ state: currState.value, page });
+  if (data.success) {
+    currPostList.value = data.result?.articleList;
+    pager.value = data.result?.pageInfo;
+  }
+};
+
+watchEffect(() => {
+  getStatePostList(currentPages.value);
+});
 
 const { deletePostsAPI } = firebaseAPIs();
 const deletePost = async id => {
   const res = await deletePostsAPI(id);
-  res.success && $postStore.getPostList({ state: currState.value });
+  if (res.success) {
+    getStatePostList(currentPages.value);
+  }
 };
 
 const openPreviewPost = async id => {
