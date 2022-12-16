@@ -5,13 +5,13 @@ export default function () {
   const setContainer = element => {
     container = element;
   };
-
   const closeList = () => {
     isOpen.value = false;
     window.removeEventListener('click', clickHandler);
   };
 
   const clickHandler = e => {
+    // contains 包括節點與節點的後代
     if (isOpen.value && !container.contains(e.target)) {
       closeList();
     }
@@ -19,14 +19,10 @@ export default function () {
 
   const openList = e => {
     isOpen.value = true;
-
-    setTimeout(() => {
-      window.addEventListener('click', clickHandler);
-    }, 300);
+    window.addEventListener('click', clickHandler);
   };
 
   const toggleList = e => {
-    console.log(isOpen.value);
     return isOpen.value ? closeList() : openList();
   };
 
