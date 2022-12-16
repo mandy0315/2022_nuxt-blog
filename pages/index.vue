@@ -4,16 +4,16 @@
       <h1 class="text-center text-4xl font-bold">{{ webTitle }}</h1>
     </section>
     <section class="px-10">
-      <ul v-if="currPostList.length > 0" class="w-full">
+      <theSortList v-model:sort="currSort" />
+      <ul v-if="currPostList.length > 0" class="w-full pb-6">
         <li v-for="item in currPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
           <post-list v-bind="item" :hasLinks="true" />
         </li>
       </ul>
+      <div v-if="+pager?.pages">
+        <the-pagination v-model:currentPages="currentPages" :totalPages="+pager?.pages" />
+      </div>
     </section>
-
-    <div v-if="+pager?.pages" class="mt-6">
-      <the-pagination v-model:currentPages="currentPages" :totalPages="+pager?.pages" />
-    </div>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ const webTitle = computed(() => $mainStore.webTitle);
 
 const currPostList = ref([]);
 const currentPages = ref(1);
+const currSort = ref(0);
 const pager = ref({});
 
 const getPublicPostList = async (page = 1) => {
