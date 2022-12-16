@@ -27,36 +27,41 @@
           :disabled-menus="['h/h1']"
         />
       </div>
-    </div>
 
-    <!-- button -->
-    <div class="text-right">
-      <div class="relative inline-block">
-        <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-brown rounded-r-none rounded-l">
-          {{ currSubmitName }}
-        </button>
-        <button
-          ref="container_el"
-          @click.prevent="toggleList"
-          class="c-rounded-button c-rounded-button-brown rounded-l-none rounded-r border-l border-solid border-c-gray-400/50 px-2"
-        >
-          <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="inline-block" />
-          <Icon v-else icon="material-symbols:arrow-drop-up" class="inline-block" />
-
-          <div
-            v-if="isOpen"
-            class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-400 bg-white p-2 text-center shadow-lg"
+      <!-- button -->
+      <div class="col-span-2 ml-auto">
+        <div class="relative flex w-36">
+          <button
+            @click.prevent="sendForm"
+            class="c-rounded-button c-rounded-button-brown grow rounded-r-none rounded-l"
           >
-            <button
-              v-for="item in submitList"
-              :key="item.status"
-              class="block w-full py-1 text-c-gray-800 hover:opacity-50"
-              @click.prevent="statusChoosed = item.status"
+            {{ currSubmitName }}
+          </button>
+          <div
+            class="c-rounded-button c-rounded-button-brown cursor-pointer rounded-l-none rounded-r border-l border-solid border-white px-2"
+            ref="container_el"
+            @click="toggleList"
+          >
+            <i>
+              <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="pointer-events-none inline-block" />
+              <Icon v-else icon="material-symbols:arrow-drop-up" class="pointer-events-none inline-block" />
+            </i>
+
+            <ul
+              v-if="isOpen"
+              class="absolute left-0 bottom-[36px] inline-block w-full rounded border border-c-gray-100 bg-white py-2 text-center shadow-lg"
             >
-              {{ item.name }}
-            </button>
+              <li
+                v-for="item in submitList"
+                :key="item.status"
+                class="block w-full px-3 py-2 text-left text-c-gray-800 hover:opacity-50"
+                @click="statusChoosed = item.status"
+              >
+                {{ item.name }}
+              </li>
+            </ul>
           </div>
-        </button>
+        </div>
       </div>
     </div>
   </div>
