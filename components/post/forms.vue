@@ -49,12 +49,12 @@
 
             <ul
               v-if="isOpen"
-              class="absolute left-0 bottom-[36px] inline-block w-full rounded border border-c-gray-100 bg-white py-2 text-center shadow-lg"
+              class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-100 bg-white py-2 shadow-lg"
             >
               <li
                 v-for="item in submitList"
                 :key="item.status"
-                class="block w-full px-3 py-2 text-left text-c-gray-800 hover:opacity-50"
+                class="block w-full px-3 py-2 text-left text-lg text-c-gray-800 hover:opacity-50"
                 @click="statusChoosed = item.status"
               >
                 {{ item.name }}
