@@ -95,7 +95,7 @@ const currPostList = ref([]);
 const currentPages = ref(1);
 const pager = ref({});
 
-const getStatePostList = async (page = 1) => {
+const pageInit = async (page = 1) => {
   const data = await $postStore.getPostList({ state: currState.value, page });
   if (data.success) {
     currPostList.value = data.result?.articleList;
@@ -104,14 +104,13 @@ const getStatePostList = async (page = 1) => {
 };
 
 watchEffect(() => {
-  getStatePostList(currentPages.value);
+  pageInit(currentPages.value);
 });
 
-const { deletePostsAPI } = firebaseAPIs();
 const deletePost = async id => {
-  const res = await deletePostsAPI(id);
-  if (res.success) {
-    getStatePostList(currentPages.value);
+  const data = await $postStore.deleteCasePost(id);
+  if (data.success) {
+    pageInit(currentPages.value);
   }
 };
 

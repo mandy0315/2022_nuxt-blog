@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import firebaseAPIs from '@/utils/firebaseAPIs';
 import useDateTime from '@/utils/useDateTime';
 
 export default defineStore('postStore', {
@@ -18,29 +17,35 @@ export default defineStore('postStore', {
   }),
   getters: {},
   actions: {
-    async getPostList({ state = 'public', page = 1 }) {
-      const $store = this;
-      const { getPostsPublicListAPI, getPostsDraftListAPI } = firebaseAPIs();
+    async getPostList({ state = 'public', page = 1, sort = 0 }) {
       const api = {
         public: async () => {
-          const data = await getPostsPublicListAPI(page);
-          return data;
+          const { data } = await useFetch(`/api/firebase/posts/publicList?page=${page}&sort=${sort}`, {
+            method: 'get',
+            initialCache: false
+          });
+          return data.value;
         },
         draft: async () => {
-          const data = await getPostsDraftListAPI(page);
-          return data;
+          const { data } = await useFetch(`/api/firebase/posts/draftList?page=${page}`, {
+            method: 'get',
+            initialCache: false
+          });
+          return data.value;
         }
       };
       return await api[state]();
     },
     async getCasePost(id = '') {
       const $store = this;
-      const { getPostsAPI } = firebaseAPIs();
 
-      const res = await getPostsAPI(id);
-      res.success && Object.assign($store.conditions, res.result);
+      const { data } = await useFetch(`/api/firebase/posts/${id}`, {
+        method: 'get',
+        initialCache: false
+      });
+      data.value.success && Object.assign($store.conditions, data.value.result);
 
-      return res;
+      return data.value;
     },
     async updateCasePost() {
       const $store = this;
@@ -48,15 +53,31 @@ export default defineStore('postStore', {
       const { nowToISO, nowDataTime } = useDateTime();
       const time = nowToISO(nowDataTime);
       $store.conditions.update_time = time;
+      const id = $store.conditions.id;
 
       // 新增還是更新資料
-      const { addPostsAPI, updatePostsAPI } = firebaseAPIs();
-      const res = $store.conditions.id
-        ? await updatePostsAPI($store.conditions.id, $store.conditions)
-        : await addPostsAPI($store.conditions);
+      const { data } = id
+        ? await useFetch(`/api/firebase/posts/${id}`, {
+            method: 'put',
+            body: $store.conditions,
+            initialCache: false
+          })
+        : await useFetch('/api/firebase/posts', {
+            method: 'post',
+            body: $store.conditions,
+            initialCache: false
+          });
 
-      return res;
+      return data.value;
     },
+    async deleteCasePost(id = '') {
+      const { data } = await useFetch(`/api/firebase/posts/${id}`, {
+        method: 'delete',
+        initialCache: false
+      });
+      return data.value;
+    },
+
     updateConditionsItem(item, val) {
       const $store = this;
       $store.conditions[item] = val;
