@@ -30,8 +30,8 @@ const currentPages = ref(1);
 const currSort = ref(0);
 const pager = ref({});
 
-const getPublicPostList = async (page = 1) => {
-  const data = await $postStore.getPostList({ state: 'public', page });
+const pageInit = async (page, sort) => {
+  const data = await $postStore.getPostList({ state: 'public', page, sort });
   if (data.success) {
     currPostList.value = data.result?.articleList;
     pager.value = data.result?.pageInfo;
@@ -39,6 +39,6 @@ const getPublicPostList = async (page = 1) => {
 };
 
 watchEffect(() => {
-  getPublicPostList(currentPages.value);
+  pageInit(currentPages.value, currSort.value);
 });
 </script>

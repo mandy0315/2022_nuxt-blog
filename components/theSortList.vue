@@ -10,8 +10,8 @@
       >
       <span class="inline-block align-middle font-bold text-c-gray-800">{{ sortListMap.get(selectedSort) }}</span>
       <i class="pointer-events-none absolute right-0 top-1">
-        <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-down" class="inline-block text-xl" />
-        <Icon v-else icon="material-symbols:keyboard-arrow-up" class="inline-block text-xl" />
+        <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-up" class="inline-block text-xl" />
+        <Icon v-else icon="material-symbols:keyboard-arrow-down" class="inline-block text-xl" />
       </i>
     </div>
 

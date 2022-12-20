@@ -2,10 +2,17 @@ import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/server/utils/useFirebase';
 import pagination from '@/server/utils/usePagination';
 
+const sortListMap = new Map([
+  [0, postsRef => query(postsRef, orderBy('update_time', 'desc'))],
+  [1, postsRef => query(postsRef, orderBy('update_time'))]
+]);
+
 export default defineEventHandler(async event => {
   try {
+    const urlQuery = getQuery(event);
+
     const postsRef = collection(db, 'posts');
-    const q = query(postsRef, orderBy('update_time', 'desc'));
+    const q = sortListMap.get(+urlQuery.sort)(postsRef);
 
     const snapshot = await getDocs(q);
     let data = [];
@@ -15,7 +22,6 @@ export default defineEventHandler(async event => {
       }
     });
 
-    const urlQuery = getQuery(event);
     const result = pagination({ currPage: +urlQuery.page, perPage: 2, articles: data });
 
     return {
