@@ -10,35 +10,39 @@
           <post-list v-bind="item" :hasLinks="true" />
         </li>
       </ul>
-      <div v-if="+pager?.pages">
-        <the-pagination v-model:currentPages="currentPages" :totalPages="+pager?.pages" />
+      <div v-if="+pages">
+        <the-pagination v-model:currentPages="currentPage" :totalPages="+pages" />
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-import { useMainStore, usePostStore } from '@/stores/index';
+import { useMainStore, usePostSearchStore } from '@/stores/index';
+import { computed } from '@vue/reactivity';
 
 const $mainStore = useMainStore();
-const $postStore = usePostStore();
+const $postSearchStore = usePostSearchStore();
+const $route = useRoute();
 
 const webTitle = computed(() => $mainStore.webTitle);
 
-const currPostList = ref([]);
-const currentPages = ref(1);
-const currSort = ref(0);
-const pager = ref({});
+const currPostList = computed(() => $postSearchStore.postList.articleList);
 
-const pageInit = async (page, sort) => {
-  const data = await $postStore.getPostList({ state: 'public', page, sort });
-  if (data.success) {
-    currPostList.value = data.result?.articleList;
-    pager.value = data.result?.pageInfo;
-  }
-};
+const pages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
+
+const currSort = computed({
+  get: () => +$postSearchStore.params.sort,
+  set: val => $postSearchStore.setCurrentSort(val)
+});
+const currentPage = computed({
+  get: () => +$postSearchStore.params.page,
+  set: val => $postSearchStore.setCurrentPage(val)
+});
 
 watchEffect(() => {
-  pageInit(currentPages.value, currSort.value);
+  const { query } = $route;
+  query.publishState = 'On';
+  $postSearchStore.getNewPostList(query);
 });
 </script>
