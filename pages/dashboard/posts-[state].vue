@@ -4,17 +4,20 @@
       <h1 class="c-dashboard-title">文章管理</h1>
       <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-brown">+ 新增文章</nuxt-link>
     </div>
-    <ul class="mt-6">
-      <li
-        v-for="item in postsStateList"
-        :key="item.state"
-        class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
-        :class="currState === item.state ? 'opacity-100' : 'opacity-50'"
-      >
-        <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
-      </li>
-    </ul>
-    <theSortList v-model:sort="currSort" />
+    <div class="flex items-end">
+      <ul class="mt-6 inline-block">
+        <li
+          v-for="item in postsStateList"
+          :key="item.state"
+          class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
+          :class="currState === item.state ? 'opacity-100' : 'opacity-50'"
+        >
+          <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
+        </li>
+      </ul>
+      <theSearch class="w-86 ml-auto mr-4 h-9 w-80" />
+      <theSortList v-model:sort="currSort" />
+    </div>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
         <thead class="bg-c-gray-400 text-c-gray-800">
@@ -104,13 +107,13 @@ const pages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
 
 watchEffect(() => {
   $route.query.publishState = currState.value === 'public' ? 'On' : 'Off';
-  $postSearchStore.getNewPostList($route.query);
+  $postSearchStore.getPostList($route.query);
 });
 
 const deletePost = async id => {
   const data = await $postStore.deleteCasePost(id);
   if (data.success) {
-    $postSearchStore.getNewPostList($route.query);
+    $postSearchStore.getPostList($route.query);
   }
 };
 

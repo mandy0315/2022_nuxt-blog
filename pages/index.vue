@@ -42,6 +42,6 @@ const currentPage = computed({
 
 watchEffect(() => {
   $route.query.publishState = 'On';
-  $postSearchStore.getNewPostList($route.query);
+  $postSearchStore.getPostList($route.query);
 });
 </script>

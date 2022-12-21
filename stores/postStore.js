@@ -78,38 +78,7 @@ const postSearchStore = defineStore('postSearchStore', {
   }),
   getters: {},
   actions: {
-    getParamsObj() {
-      const $store = this;
-      const params = { ...$store.params };
-
-      for (let key in params) {
-        if (!params[key]) {
-          delete params[key];
-        }
-      }
-
-      return params;
-    },
-    async getPostList({ state = 'public', page = 1, sort = 0 }) {
-      const api = {
-        public: async () => {
-          const { data } = await useFetch(`/api/firebase/posts/publicList?page=${page}&sort=${sort}`, {
-            method: 'get',
-            initialCache: false
-          });
-          return data.value;
-        },
-        draft: async () => {
-          const { data } = await useFetch(`/api/firebase/posts/draftList?page=${page}`, {
-            method: 'get',
-            initialCache: false
-          });
-          return data.value;
-        }
-      };
-      return await api[state]();
-    },
-    async getNewPostList(query) {
+    async getPostList(query) {
       const $store = this;
       Object.assign($store.params, query);
 
@@ -119,10 +88,21 @@ const postSearchStore = defineStore('postSearchStore', {
         initialCache: false
       });
       if (data.value.success) {
-        console.log(data.value.result);
         $store.postList.articleList = data.value.result?.articleList;
         $store.postList.pageInfo = data.value.result?.pageInfo;
       }
+    },
+    getURLParams() {
+      const $store = this;
+      const params = { ...$store.params };
+
+      for (let key in params) {
+        if (!params[key] || key === 'publishState') {
+          delete params[key];
+        }
+      }
+
+      return params;
     },
     async setCurrentSort(sort) {
       const $store = this;
@@ -133,7 +113,7 @@ const postSearchStore = defineStore('postSearchStore', {
 
       await navigateTo({
         path,
-        query: $store.getParamsObj()
+        query: $store.getURLParams()
       });
     },
     async setCurrentPage(page) {
@@ -144,7 +124,7 @@ const postSearchStore = defineStore('postSearchStore', {
 
       await navigateTo({
         path,
-        query: $store.getParamsObj()
+        query: $store.getURLParams()
       });
     }
   }
