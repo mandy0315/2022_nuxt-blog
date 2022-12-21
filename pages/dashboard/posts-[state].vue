@@ -16,7 +16,7 @@
         </li>
       </ul>
       <theSearch class="w-86 ml-auto mr-4 h-9 w-80" />
-      <theSortList v-model:sort="currSort" />
+      <theSortList />
     </div>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
@@ -92,10 +92,6 @@ const $route = useRoute();
 const currState = computed(() => $route.params.state);
 const currConditions = computed(() => $postStore.conditions);
 
-const currSort = computed({
-  get: () => +$postSearchStore.params.sort,
-  set: val => $postSearchStore.setCurrentSort(val)
-});
 const currentPage = computed({
   get: () => +$postSearchStore.params.page,
   set: val => $postSearchStore.setCurrentPage(val)

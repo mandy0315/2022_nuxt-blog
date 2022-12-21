@@ -8,7 +8,7 @@
       <Icon icon="fluent:arrow-sort-20-filled" class="item mr-1 inline-block" /><span class="mr-2 align-middle"
         >時間:</span
       >
-      <span class="inline-block align-middle font-bold text-c-gray-800">{{ sortListMap.get(selectedSort) }}</span>
+      <span class="inline-block align-middle font-bold text-c-gray-800">{{ sortListMap.get(currSort) }}</span>
       <i class="pointer-events-none absolute right-0 top-1">
         <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-up" class="inline-block text-xl" />
         <Icon v-else icon="material-symbols:keyboard-arrow-down" class="inline-block text-xl" />
@@ -20,8 +20,8 @@
         v-for="key in sortListByKeys"
         :key="key"
         class="cursor-pointer px-3 py-1 text-left text-lg text-c-gray-600"
-        :class="{ 'bg-c-gray-100': selectedSort === key }"
-        @click="selectedSort = key"
+        :class="{ 'bg-c-gray-100': currSort === key }"
+        @click="currSort = key"
       >
         {{ sortListMap.get(key) }}
       </li>
@@ -29,15 +29,10 @@
   </div>
 </template>
 <script setup>
-const { toggleList, isOpen, setContainer } = useToggle();
+import { usePostSearchStore } from '@/stores/index';
 
-const emit = defineEmits(['update:sort']);
-const props = defineProps({
-  sort: {
-    type: Number,
-    default: 0
-  }
-});
+const { toggleList, isOpen, setContainer } = useToggle();
+const $postSearchStore = usePostSearchStore();
 
 const container_el = ref(null);
 onMounted(() => {
@@ -56,8 +51,8 @@ const sortListByKeys = computed(() => {
   return keys;
 });
 
-const selectedSort = computed({
-  get: () => props.sort,
-  set: val => emit('update:sort', val)
+const currSort = computed({
+  get: () => +$postSearchStore.params.sort,
+  set: val => $postSearchStore.setCurrentSort(val)
 });
 </script>

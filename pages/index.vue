@@ -4,7 +4,7 @@
       <h1 class="text-center text-4xl font-bold">{{ webTitle }}</h1>
     </section>
     <section class="px-10">
-      <theSortList v-model:sort="currSort" />
+      <theSortList class="ml-auto" />
       <ul v-if="currPostList.length > 0" class="w-full pb-6">
         <li v-for="item in currPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
           <post-list v-bind="item" :hasLinks="true" />
@@ -19,7 +19,6 @@
 
 <script setup>
 import { useMainStore, usePostSearchStore } from '@/stores/index';
-import { computed } from '@vue/reactivity';
 
 const $mainStore = useMainStore();
 const $postSearchStore = usePostSearchStore();
@@ -31,10 +30,6 @@ const currPostList = computed(() => $postSearchStore.postList.articleList);
 
 const pages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
 
-const currSort = computed({
-  get: () => +$postSearchStore.params.sort,
-  set: val => $postSearchStore.setCurrentSort(val)
-});
 const currentPage = computed({
   get: () => +$postSearchStore.params.page,
   set: val => $postSearchStore.setCurrentPage(val)
