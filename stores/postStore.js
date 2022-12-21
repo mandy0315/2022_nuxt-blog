@@ -67,7 +67,7 @@ const postStore = defineStore('postStore', {
 const postSearchStore = defineStore('postSearchStore', {
   state: () => ({
     params: {
-      publishState: '', // On: 發布 ; Off: 草稿
+      publishState: '', // On: 發布 ; Off: 沒發佈-草稿
       sort: null, // 文章時間 0:desc ; 1:asc
       page: 1
     },
