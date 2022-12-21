@@ -48,7 +48,7 @@
         </tbody>
       </table>
       <div v-if="+pager?.pages" class="mt-6">
-        <the-pagination v-model:currentPages="currentPages" :totalPages="+pager?.pages" />
+        <the-pagination v-model:currentPage="currentPages" :totalPages="+pager?.pages" />
       </div>
     </section>
   </div>

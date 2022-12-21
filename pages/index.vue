@@ -11,7 +11,7 @@
         </li>
       </ul>
       <div v-if="+pages">
-        <the-pagination v-model:currentPages="currentPage" :totalPages="+pages" />
+        <the-pagination v-model:currentPage="currentPage" :totalPages="+pages" />
       </div>
     </section>
   </div>
