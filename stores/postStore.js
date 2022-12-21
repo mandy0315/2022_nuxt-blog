@@ -80,9 +80,8 @@ const postSearchStore = defineStore('postSearchStore', {
   actions: {
     getParamsObj(paramsObj) {
       const $store = this;
-
       const params = paramsObj ? { ...paramsObj } : { ...$store.params };
-      params.page = $store.params.page;
+      Object.assign($store.params, params);
 
       for (let key in params) {
         if (!params[key]) {
@@ -113,8 +112,6 @@ const postSearchStore = defineStore('postSearchStore', {
     },
     async getNewPostList(query) {
       const $store = this;
-
-      $store.params.publishState = query.publishState; // 文章是否公開
 
       const { data } = await useFetch('/api/firebase/posts/caseList', {
         method: 'get',
