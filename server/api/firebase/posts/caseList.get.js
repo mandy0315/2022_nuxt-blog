@@ -12,7 +12,7 @@ export default defineEventHandler(async event => {
     const urlQuery = getQuery(event);
     const currentState = urlQuery.publishState === 'On' ? 'public' : 'draft';
     const currentPage = +urlQuery.page;
-    const currentSort = +urlQuery.sort || 0;
+    const currentSort = +urlQuery.sort || 0; // 預設排序: 時間新->舊
 
     const postsRef = collection(db, 'posts');
     const q = sortListMap.get(currentSort)(postsRef);
