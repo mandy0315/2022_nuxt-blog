@@ -14,6 +14,7 @@
         <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
       </li>
     </ul>
+    <theSortList v-model:sort="currSort" />
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
         <thead class="bg-c-gray-400 text-c-gray-800">
@@ -47,8 +48,8 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="+pager?.pages" class="mt-6">
-        <the-pagination v-model:currentPage="currentPages" :totalPages="+pager?.pages" />
+      <div v-if="+pages" class="mt-6">
+        <the-pagination v-model:currentPage="currentPage" :totalPages="+pages" />
       </div>
     </section>
   </div>
@@ -56,7 +57,7 @@
 
 <script setup>
 import { $vfm } from 'vue-final-modal';
-import { usePostStore } from '@/stores/index';
+import { usePostStore, usePostSearchStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content.vue';
 
@@ -81,36 +82,35 @@ const postsStateList = [
   }
 ];
 
-const route = useRoute();
 const $postStore = usePostStore();
+const $postSearchStore = usePostSearchStore();
+const $route = useRoute();
 
-const currState = computed(() => route.params.state);
+const currState = computed(() => $route.params.state);
 const currConditions = computed(() => $postStore.conditions);
 
-onMounted(() => {
-  $postStore.$reset();
+const currSort = computed({
+  get: () => +$postSearchStore.params.sort,
+  set: val => $postSearchStore.setCurrentSort(val)
+});
+const currentPage = computed({
+  get: () => +$postSearchStore.params.page,
+  set: val => $postSearchStore.setCurrentPage(val)
 });
 
-const currPostList = ref([]);
-const currentPages = ref(1);
-const pager = ref({});
+const currPostList = computed(() => $postSearchStore.postList.articleList);
 
-const pageInit = async (page = 1) => {
-  const data = await $postStore.getPostList({ state: currState.value, page });
-  if (data.success) {
-    currPostList.value = data.result?.articleList;
-    pager.value = data.result?.pageInfo;
-  }
-};
+const pages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
 
 watchEffect(() => {
-  pageInit(currentPages.value);
+  $route.query.publishState = currState.value === 'public' ? 'On' : 'Off';
+  $postSearchStore.getNewPostList($route.query);
 });
 
 const deletePost = async id => {
   const data = await $postStore.deleteCasePost(id);
   if (data.success) {
-    pageInit(currentPages.value);
+    $postSearchStore.getNewPostList($route.query);
   }
 };
 
@@ -132,4 +132,9 @@ const openPreviewPost = async id => {
       }
     });
 };
+
+onMounted(() => {
+  $postStore.$reset();
+  $postSearchStore.$reset();
+});
 </script>
