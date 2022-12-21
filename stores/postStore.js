@@ -78,10 +78,9 @@ const postSearchStore = defineStore('postSearchStore', {
   }),
   getters: {},
   actions: {
-    getParamsObj(paramsObj) {
+    getParamsObj() {
       const $store = this;
-      const params = paramsObj ? { ...paramsObj } : { ...$store.params };
-      Object.assign($store.params, params);
+      const params = { ...$store.params };
 
       for (let key in params) {
         if (!params[key]) {
@@ -112,33 +111,39 @@ const postSearchStore = defineStore('postSearchStore', {
     },
     async getNewPostList(query) {
       const $store = this;
+      Object.assign($store.params, query);
 
       const { data } = await useFetch('/api/firebase/posts/caseList', {
         method: 'get',
-        params: $store.getParamsObj(query),
+        params: $store.params,
         initialCache: false
       });
       if (data.value.success) {
+        console.log(data.value.result);
         $store.postList.articleList = data.value.result?.articleList;
         $store.postList.pageInfo = data.value.result?.pageInfo;
       }
     },
     async setCurrentSort(sort) {
       const $store = this;
+      const $route = useRoute();
+      const { path } = $route;
       $store.params.page = 1;
       $store.params.sort = +sort;
 
       await navigateTo({
-        path: '/',
+        path,
         query: $store.getParamsObj()
       });
     },
     async setCurrentPage(page) {
       const $store = this;
+      const $route = useRoute();
+      const { path } = $route;
       $store.params.page = +page;
 
       await navigateTo({
-        path: '/',
+        path,
         query: $store.getParamsObj()
       });
     }
