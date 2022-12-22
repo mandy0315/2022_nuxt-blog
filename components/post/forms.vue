@@ -69,7 +69,6 @@
 
 <script setup>
 import { usePostStore } from '@/stores/index';
-import { computed } from '@vue/reactivity';
 
 const $route = useRoute();
 const $router = useRouter();
