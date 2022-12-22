@@ -10,12 +10,12 @@
           v-for="item in postsStateList"
           :key="item.state"
           class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
-          :class="currState === item.state ? 'opacity-100' : 'opacity-50'"
+          :class="currentState === item.state ? 'opacity-100' : 'opacity-50'"
         >
           <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
         </li>
       </ul>
-      <theSearch class="w-86 ml-auto mr-4 h-9 w-80" />
+      <!-- <theSearch class="w-86 ml-auto mr-4 h-9 w-80" /> -->
       <theSortList />
     </div>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
@@ -26,8 +26,8 @@
             <th scope="row" class="w-1/6 py-2">管理</th>
           </tr>
         </thead>
-        <tbody v-if="currPostList.length > 0">
-          <tr v-for="item in currPostList" :key="item.id" class="border-b border-solid border-c-gray-400">
+        <tbody v-if="currentPostList.length > 0">
+          <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-gray-400">
             <td scope="col" class="p-4 text-c-gray-600">
               <post-list v-bind="item" />
             </td>
@@ -51,8 +51,8 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="+pages" class="mt-6">
-        <the-pagination v-model:currentPage="currentPage" :totalPages="+pages" />
+      <div v-if="+totalPages" class="mt-6">
+        <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
       </div>
     </section>
   </div>
@@ -89,27 +89,21 @@ const $postStore = usePostStore();
 const $postSearchStore = usePostSearchStore();
 const $route = useRoute();
 
-const currState = computed(() => $route.params.state);
-const currConditions = computed(() => $postStore.conditions);
+const currentState = computed(() => $route.params.state);
+const caseConditions = computed(() => $postStore.conditions);
+
+const currentPostList = computed(() => $postSearchStore.postList.articleList);
+const totalPages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
 
 const currentPage = computed({
   get: () => +$postSearchStore.params.page,
   set: val => $postSearchStore.setCurrentPage(val)
 });
 
-const currPostList = computed(() => $postSearchStore.postList.articleList);
-
-const pages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
-
-watchEffect(() => {
-  $route.query.publishState = currState.value === 'public' ? 'On' : 'Off';
-  $postSearchStore.getPostList($route.query);
-});
-
 const deletePost = async id => {
   const data = await $postStore.deleteCasePost(id);
   if (data.success) {
-    $postSearchStore.getPostList($route.query);
+    $postSearchStore.setCurrentPage(1);
   }
 };
 
@@ -126,14 +120,23 @@ const openPreviewPost = async id => {
       slots: {
         default: {
           component: PostContent,
-          bind: currConditions.value
+          bind: caseConditions.value
         }
       }
     });
 };
 
-onMounted(() => {
-  $postStore.$reset();
-  $postSearchStore.$reset();
-});
+const setPostList = () => {
+  $route.query.publishState = currentState.value === 'public' ? 'On' : 'Off';
+  $postSearchStore.getPostList($route.query);
+};
+
+watch(
+  () => $route.query,
+  () => {
+    setPostList();
+  }
+);
+
+setPostList();
 </script>

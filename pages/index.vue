@@ -5,13 +5,13 @@
     </section>
     <section class="px-10">
       <theSortList class="ml-auto" />
-      <ul v-if="currPostList.length > 0" class="w-full pb-6">
-        <li v-for="item in currPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
+      <ul v-if="currentPostList.length > 0" class="w-full pb-6">
+        <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
           <post-list v-bind="item" :hasLinks="true" />
         </li>
       </ul>
-      <div v-if="+pages">
-        <the-pagination v-model:currentPage="currentPage" :totalPages="+pages" />
+      <div v-if="+totalPages">
+        <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
       </div>
     </section>
   </div>
@@ -26,17 +26,20 @@ const $route = useRoute();
 
 const webTitle = computed(() => $mainStore.webTitle);
 
-const currPostList = computed(() => $postSearchStore.postList.articleList);
-
-const pages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
+const currentPostList = computed(() => $postSearchStore.postList.articleList);
+const totalPages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
 
 const currentPage = computed({
   get: () => +$postSearchStore.params.page,
   set: val => $postSearchStore.setCurrentPage(val)
 });
 
-watchEffect(() => {
-  $route.query.publishState = 'On';
-  $postSearchStore.getPostList($route.query);
-});
+watch(
+  () => $route.query,
+  () => {
+    $postSearchStore.getPostList($route.query);
+  }
+);
+
+$postSearchStore.getPostList($route.query);
 </script>

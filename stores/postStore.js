@@ -64,13 +64,16 @@ const postStore = defineStore('postStore', {
     }
   }
 });
+
+const defaultParams = {
+  publishState: 'On', // On: 發布 ; Off: 沒發佈-草稿
+  search: '',
+  sort: null, // 文章時間 0:desc ; 1:asc
+  page: 1
+};
 const postSearchStore = defineStore('postSearchStore', {
   state: () => ({
-    params: {
-      publishState: '', // On: 發布 ; Off: 沒發佈-草稿
-      sort: null, // 文章時間 0:desc ; 1:asc
-      page: 1
-    },
+    params: { ...defaultParams },
     postList: {
       articleList: [],
       pageInfo: {}
@@ -78,19 +81,21 @@ const postSearchStore = defineStore('postSearchStore', {
   }),
   getters: {},
   actions: {
-    async getPostList(query) {
+    resetStateParams() {
       const $store = this;
-      Object.assign($store.params, query);
+      Object.assign($store.params, defaultParams);
+    },
+    getParams(queryStr) {
+      const $store = this;
+      Object.assign($store.params, queryStr);
+      const params = { ...$store.params };
 
-      const { data } = await useFetch('/api/firebase/posts/caseList', {
-        method: 'get',
-        params: $store.params,
-        initialCache: false
-      });
-      if (data.value.success) {
-        $store.postList.articleList = data.value.result?.articleList;
-        $store.postList.pageInfo = data.value.result?.pageInfo;
+      for (let key in params) {
+        if (!params[key]) {
+          delete params[key];
+        }
       }
+      return params;
     },
     getURLParams() {
       const $store = this;
@@ -104,29 +109,56 @@ const postSearchStore = defineStore('postSearchStore', {
 
       return params;
     },
-    async setCurrentSort(sort) {
+    async getPostList(queryStr) {
+      const $store = this;
+
+      $store.resetStateParams();
+
+      const { data } = await useFetch('/api/firebase/posts/caseList', {
+        method: 'get',
+        params: $store.getParams(queryStr),
+        initialCache: false
+      });
+      if (data.value.success) {
+        $store.postList.articleList = data.value.result?.articleList;
+        $store.postList.pageInfo = data.value.result?.pageInfo;
+      }
+    },
+    setCurrentSort(sort) {
       const $store = this;
       const $route = useRoute();
       const { path } = $route;
       $store.params.page = 1;
       $store.params.sort = +sort;
 
-      await navigateTo({
+      navigateTo({
         path,
         query: $store.getURLParams()
       });
     },
-    async setCurrentPage(page) {
+    setCurrentPage(page) {
       const $store = this;
       const $route = useRoute();
       const { path } = $route;
       $store.params.page = +page;
 
-      await navigateTo({
+      navigateTo({
         path,
         query: $store.getURLParams()
       });
     }
+    // setCurrentSearch(search) {
+    //   const $store = this;
+    //   const $route = useRoute();
+    //   const { path } = $route;
+    //   $store.params.page = 1;
+    //   $store.params.search = search;
+
+    //   navigateTo({
+    //     path,
+    //     query: $store.getURLParams()
+    //   });
+    // }
   }
 });
 
