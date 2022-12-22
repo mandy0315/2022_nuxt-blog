@@ -147,15 +147,15 @@ const postSearchStore = defineStore('postSearchStore', {
         query: $store.getURLParams()
       });
     },
-    setCurrentSearch(search) {
+    setCurrentSearch({ currentPath = '', currentSearch = '' }) {
       const $store = this;
       const $route = useRoute();
       const { path } = $route;
       $store.params.page = 1;
-      $store.params.search = search;
+      $store.params.search = currentSearch;
 
       navigateTo({
-        path,
+        path: currentPath ? currentPath : path,
         query: $store.getURLParams()
       });
     }

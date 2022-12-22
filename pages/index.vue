@@ -4,6 +4,7 @@
       <h1 class="text-center text-4xl font-bold">{{ webTitle }}</h1>
     </section>
     <section class="px-10">
+      <theSearch class="mx-auto max-w-md" />
       <theSortList class="ml-auto" />
       <ul v-if="currentPostList.length > 0" class="w-full pb-6">
         <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
