@@ -1,13 +1,24 @@
 <template>
   <div class="flex">
-    <input
-      v-model.trim="currSearch"
-      @keyup.enter="setCurrentSearch(currSearch)"
-      type="search"
-      placeholder="搜尋文章標題、摘要"
-      autocomplete="off"
-      class="grow rounded-l border-t border-b border-l border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
-    />
+    <div
+      class="relative grow rounded-l border-t border-b border-l border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
+    >
+      <input
+        v-model.trim="currSearch"
+        @keyup.enter="setCurrentSearch(currSearch)"
+        type="text"
+        placeholder="搜尋文章標題、摘要"
+        autocomplete="off"
+        class="w-full"
+      />
+      <span
+        v-if="currSearch"
+        class="absolute top-2 right-2 h-full cursor-pointer text-c-brown-600"
+        @click="setCurrentSearch('')"
+      >
+        <Icon icon="ion:close-sharp" />
+      </span>
+    </div>
     <button
       @click.prevent="setCurrentSearch(currSearch)"
       class="c-rounded-button c-rounded-button-brown w-18 rounded-r rounded-l-none"
@@ -23,5 +34,8 @@ import { usePostSearchStore } from '@/stores/index';
 const $postSearchStore = usePostSearchStore();
 const { setCurrentSearch } = $postSearchStore;
 
-const currSearch = ref('');
+const currSearch = computed({
+  get: () => $postSearchStore.params.search,
+  set: val => ($postSearchStore.params.search = val)
+});
 </script>

@@ -1,9 +1,17 @@
 export default function ({ currPage = 1, perPage, articles }) {
   const total = articles.length;
   const pages = Math.ceil(total / perPage);
+  const pageInfo = {
+    total,
+    pages,
+    size: perPage,
+    current: currPage
+  };
 
   if (currPage > pages) {
-    currPage = pages;
+    return {
+      data: []
+    };
   }
 
   const minItem = currPage * perPage - perPage + 1;
@@ -15,12 +23,6 @@ export default function ({ currPage = 1, perPage, articles }) {
       data.push(item);
     }
   });
-  const pageInfo = {
-    total,
-    pages,
-    size: perPage,
-    current: currPage
-  };
 
   return {
     data,

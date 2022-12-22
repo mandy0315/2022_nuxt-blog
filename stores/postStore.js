@@ -146,19 +146,19 @@ const postSearchStore = defineStore('postSearchStore', {
         path,
         query: $store.getURLParams()
       });
-    }
-    // setCurrentSearch(search) {
-    //   const $store = this;
-    //   const $route = useRoute();
-    //   const { path } = $route;
-    //   $store.params.page = 1;
-    //   $store.params.search = search;
+    },
+    setCurrentSearch(search) {
+      const $store = this;
+      const $route = useRoute();
+      const { path } = $route;
+      $store.params.page = 1;
+      $store.params.search = search;
 
-    //   navigateTo({
-    //     path,
-    //     query: $store.getURLParams()
-    //   });
-    // }
+      navigateTo({
+        path,
+        query: $store.getURLParams()
+      });
+    }
   }
 });
 

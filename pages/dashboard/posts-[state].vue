@@ -15,7 +15,7 @@
           <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
         </li>
       </ul>
-      <!-- <theSearch class="w-86 ml-auto mr-4 h-9 w-80" /> -->
+      <theSearch class="w-86 ml-auto mr-4 h-9 w-80" />
       <theSortList />
     </div>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
@@ -26,29 +26,36 @@
             <th scope="row" class="w-1/6 py-2">管理</th>
           </tr>
         </thead>
-        <tbody v-if="currentPostList.length > 0">
-          <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-gray-400">
-            <td scope="col" class="p-4 text-c-gray-600">
-              <post-list v-bind="item" />
-            </td>
-            <td class="p-4">
-              <nuxt-link
-                :to="`/dashboard/post-edit/${item.id}`"
-                class="c-border-button c-border-button-brown my-1 w-full text-center"
-              >
-                編輯
-              </nuxt-link>
-              <button
-                @click.prevent="openPreviewPost(item.id)"
-                class="c-border-button c-border-button-brown my-1 w-full"
-              >
-                預覽
-              </button>
-              <button @click.prevent="deletePost(item.id)" class="c-border-button c-border-button-red my-1 w-full">
-                刪除
-              </button>
-            </td>
-          </tr>
+        <tbody>
+          <template v-if="currentPostList.length > 0">
+            <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-gray-400">
+              <td scope="col" class="p-4 text-c-gray-600">
+                <post-list v-bind="item" />
+              </td>
+              <td class="p-4">
+                <nuxt-link
+                  :to="`/dashboard/post-edit/${item.id}`"
+                  class="c-border-button c-border-button-brown my-1 w-full text-center"
+                >
+                  編輯
+                </nuxt-link>
+                <button
+                  @click.prevent="openPreviewPost(item.id)"
+                  class="c-border-button c-border-button-brown my-1 w-full"
+                >
+                  預覽
+                </button>
+                <button @click.prevent="deletePost(item.id)" class="c-border-button c-border-button-red my-1 w-full">
+                  刪除
+                </button>
+              </td>
+            </tr>
+          </template>
+          <template v-else-if="currentPostList.length === 0">
+            <tr>
+              <td colspan="2" class="h-80 text-center text-lg text-c-gray-800">目前沒有資料，請重新搜尋</td>
+            </tr>
+          </template>
         </tbody>
       </table>
       <div v-if="+totalPages" class="mt-6">

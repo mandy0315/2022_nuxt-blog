@@ -20,6 +20,7 @@ const getSearchFilterData = (data, currentSearch) => {
   });
   filterData = [...new Set(filterData)];
   console.log(filterData);
+  return filterData;
 };
 
 export default defineEventHandler(async event => {
@@ -42,10 +43,11 @@ export default defineEventHandler(async event => {
     });
 
     if (currentSearch !== '') {
-      getSearchFilterData(data, currentSearch);
+      data = getSearchFilterData(data, currentSearch);
     }
 
     const result = pagination({ currPage: currentPage, perPage: 2, articles: data });
+
     return {
       success: true,
       result: {
@@ -54,6 +56,11 @@ export default defineEventHandler(async event => {
       }
     };
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+    return {
+      success: true,
+      result: {
+        articleList: []
+      }
+    };
   }
 });
