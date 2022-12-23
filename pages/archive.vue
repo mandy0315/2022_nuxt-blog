@@ -1,6 +1,10 @@
 <template>
   <div class="c-container">
-    <div>Hello</div>
+    <div>
+      <ul v-if="tagList.length > 0">
+        <li v-for="tag in tagList" :key="tag.name">{{ tag.name }}({{ tag.count }})</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -8,6 +12,11 @@
 useHead({
   title: '檔案'
 });
-</script>
+const tagList = ref([]);
 
-<style lang="scss" scoped></style>
+const { data } = await useFetch('/api/firebase/archive/tags', {
+  method: 'get',
+  initialCache: false
+});
+tagList.value = data.value.success && data.value.result.data;
+</script>
