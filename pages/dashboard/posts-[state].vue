@@ -145,5 +145,6 @@ watch(
   }
 );
 
+$postStore.$reset();
 setPostList();
 </script>
