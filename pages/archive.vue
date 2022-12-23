@@ -6,7 +6,7 @@
 
 <script setup>
 useHead({
-  title: '分類'
+  title: '檔案'
 });
 </script>
 
