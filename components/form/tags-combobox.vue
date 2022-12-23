@@ -96,13 +96,12 @@ const selectedTags = computed({
 });
 
 const addTag = val => {
-  let array = [...selectedTags.value];
+  const array = [...selectedTags.value];
 
-  const filterSametags = array.filter(tag => tag === val);
-  if (filterSametags.length === 0) {
-    array.push(val);
-    selectedTags.value = array;
-  }
+  const value = val.toLowerCase();
+  array.push(value);
+  const notRepeatTags = [...new Set(array)];
+  selectedTags.value = notRepeatTags;
   fillTag.value = '';
 };
 
