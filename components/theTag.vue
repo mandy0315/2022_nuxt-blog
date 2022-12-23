@@ -11,7 +11,7 @@
     @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"
   >
     <span class="inline-block text-xs">
-      {{ name }}
+      {{ firstWordToUpperCase }}
     </span>
     <span v-if="hasCloseIcon" class="pl-3">
       <Icon icon="ion:ios-close" class="absolute top-0 right-0 inline-block text-xl" />
@@ -39,6 +39,7 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['handleDeleteTag']);
+const firstWordToUpperCase = computed(() => props.name.replace(/^./, props.name[0].toUpperCase()));
 </script>
 
 <style lang="scss" scoped></style>
