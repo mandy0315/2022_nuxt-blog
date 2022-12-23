@@ -42,7 +42,7 @@ const postStore = defineStore('postStore', {
             body: $store.conditions,
             initialCache: false
           })
-        : await useFetch('/api/firebase/posts', {
+        : await useFetch('/api/firebase/posts/addCase', {
             method: 'post',
             body: $store.conditions,
             initialCache: false
