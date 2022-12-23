@@ -3,12 +3,11 @@ import { db } from '@/server/utils/useFirebase';
 import pagination from '@/server/utils/usePagination';
 
 const sortListMap = new Map([
-  [0, postsRef => query(postsRef, orderBy('update_time', 'desc'))],
-  [1, postsRef => query(postsRef, orderBy('update_time'))]
+  [0, () => orderBy('update_time', 'desc')],
+  [1, () => orderBy('update_time')]
 ]);
 const getSearchFilterData = (data, currentSearch) => {
   const strArray = currentSearch.split(' ');
-  console.log('strArray', strArray);
   let filterData = [];
   // 比對字串
   strArray.forEach(str => {
@@ -19,7 +18,6 @@ const getSearchFilterData = (data, currentSearch) => {
     });
   });
   filterData = [...new Set(filterData)];
-  console.log(filterData);
   return filterData;
 };
 
@@ -32,7 +30,7 @@ export default defineEventHandler(async event => {
     const currentSearch = urlQuery.search || '';
 
     const postsRef = collection(db, 'posts');
-    const q = sortListMap.get(currentSort)(postsRef);
+    const q = query(postsRef, sortListMap.get(currentSort)());
 
     const snapshot = await getDocs(q);
     let data = [];
