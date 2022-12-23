@@ -98,8 +98,8 @@ const selectedTags = computed({
 const addTag = val => {
   let array = [...selectedTags.value];
 
-  const filterSameCategories = array.filter(tag => tag === val);
-  if (filterSameCategories.length === 0) {
+  const filterSametags = array.filter(tag => tag === val);
+  if (filterSametags.length === 0) {
     array.push(val);
     selectedTags.value = array;
   }

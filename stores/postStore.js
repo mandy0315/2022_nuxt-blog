@@ -10,7 +10,7 @@ const postStore = defineStore('postStore', {
       coverPicture: [],
       content: '',
       status: 'draft',
-      categories: [],
+      tags: [],
       update_time: ''
     }
   }),

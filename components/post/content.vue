@@ -2,9 +2,9 @@
   <div class="text-c-gray-800">
     <h1 class="pb-2 text-3xl font-bold">{{ title }}</h1>
     <div class="flex justify-between">
-      <div v-if="categories.length > 0" class="-ml-1">
-        <span v-for="item in categories" :key="item">
-          <the-tag :name="item" :hasLinks="hasLinks" :link="`/categories/${item.toLowerCase()}`" class="inline-block" />
+      <div v-if="tags.length > 0" class="-ml-1">
+        <span v-for="item in tags" :key="item">
+          <the-tag :name="item" :hasLinks="hasLinks" :link="`/tags/${item.toLowerCase()}`" class="inline-block" />
         </span>
       </div>
       <div class="self-end text-sm text-c-brown-600">
@@ -26,7 +26,7 @@ const props = defineProps({
     type: String,
     default: '標題'
   },
-  categories: {
+  tags: {
     type: Array,
     default: () => []
   },

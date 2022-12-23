@@ -7,7 +7,7 @@
       <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
       <form-file-input v-model:value="coverPictureChoosed" title="封面圖" class="col-span-1" />
       <form-tags-combobox
-        v-model:tags="categoriesChoosed"
+        v-model:tags="tagsChoosed"
         title="分類"
         placeholder="請輸入分類"
         :tagList="['Vue', 'Nuxt3', 'SCSS']"
@@ -96,10 +96,10 @@ const titleFill = computed({
   }
 });
 // 分類
-const categoriesChoosed = computed({
-  get: () => $postStore.conditions.categories,
+const tagsChoosed = computed({
+  get: () => $postStore.conditions.tags,
   set: val => {
-    $postStore.updateConditionsItem('categories', val);
+    $postStore.updateConditionsItem('tags', val);
   }
 });
 // 摘要

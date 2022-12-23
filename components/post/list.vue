@@ -16,14 +16,9 @@
           </span>
         </div>
 
-        <div v-if="categories.length > 0" class="pl-3">
-          <span v-for="item in categories" :key="item">
-            <the-tag
-              :name="item"
-              :hasLinks="hasLinks"
-              :link="`/categories/${item.toLowerCase()}`"
-              class="inline-block"
-            />
+        <div v-if="tags.length > 0" class="pl-3">
+          <span v-for="item in tags" :key="item">
+            <the-tag :name="item" :hasLinks="hasLinks" :link="`/tags/${item.toLowerCase()}`" class="inline-block" />
           </span>
         </div>
       </div>
@@ -47,7 +42,7 @@ const props = defineProps({
     type: Array,
     default: []
   },
-  categories: {
+  tags: {
     type: Array,
     default: []
   },
