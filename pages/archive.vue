@@ -21,7 +21,7 @@ useHead({
 const tagList = useState('tagList', () => []);
 
 const getTagList = async () => {
-  const { data } = await useFetch('/api/firebase/archive/tags', {
+  const { data } = await useFetch('/api/firebase/archive/getAllTags', {
     method: 'get',
     initialCache: false
   });

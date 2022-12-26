@@ -1,4 +1,4 @@
-import { collection, query, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, getDocs, orderBy, where } from 'firebase/firestore';
 import { db } from '@/server/utils/useFirebase';
 import pagination from '@/server/utils/usePagination';
 
@@ -30,14 +30,12 @@ export default defineEventHandler(async event => {
     const currentSearch = urlQuery.search || '';
 
     const postsRef = collection(db, 'posts');
-    const q = query(postsRef, sortListMap.get(currentSort)());
+    const q = query(postsRef, where('status', '==', currentState), sortListMap.get(currentSort)()); // firestore 管理去建立索引
 
     const snapshot = await getDocs(q);
     let data = [];
     snapshot.forEach(doc => {
-      if (doc.data().status === currentState) {
-        data.push(doc.data());
-      }
+      data.push(doc.data());
     });
 
     if (currentSearch !== '') {
