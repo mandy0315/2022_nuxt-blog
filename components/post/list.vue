@@ -18,7 +18,7 @@
 
         <div v-if="tags.length > 0" class="pl-3">
           <span v-for="item in tags" :key="item">
-            <the-tag :name="item" :hasLinks="hasLinks" :link="`/tags/${item.toLowerCase()}`" class="inline-block" />
+            <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />
           </span>
         </div>
       </div>

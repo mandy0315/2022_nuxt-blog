@@ -1,33 +1,30 @@
 <template>
-  <component
-    :is="hasLinks ? 'a' : 'span'"
-    :href="link"
-    class="relative m-1 inline-flex items-center rounded py-0.5 px-3"
-    :class="
-      hasLinks
-        ? 'border border-solid border-c-brown-600 text-c-brown-600 hover:bg-c-brown-600 hover:text-white'
-        : 'bg-c-brown-600 text-white'
-    "
-    @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"
+  <span
+    class="relative m-1 inline-flex items-center rounded border border-solid border-c-brown-600 py-0.5 px-3"
+    :class="tagStyle"
+    @click="hasCloseIcon ? emit('handleDeleteTag', name) : hasLinks ? clickLink() : ''"
   >
-    <span class="inline-block text-xs">
+    <span class="inline-block text-sm">
       {{ firstWordToUpperCase }}
     </span>
+    <span v-if="number" class="ml-1 self-start text-xs">{{ number }}</span>
     <span v-if="hasCloseIcon" class="pl-3">
       <Icon icon="ion:ios-close" class="absolute top-0 right-0 inline-block text-xl" />
     </span>
-  </component>
+  </span>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   name: {
     type: String,
     default: ''
   },
-  link: {
-    type: String,
-    default: ''
+  number: {
+    type: Number,
+    default: 0
   },
   hasLinks: {
     type: Boolean,
@@ -36,10 +33,37 @@ const props = defineProps({
   hasCloseIcon: {
     type: Boolean,
     default: false
+  },
+  isActive: {
+    type: Boolean,
+    default: false
   }
 });
 const emit = defineEmits(['handleDeleteTag']);
 const firstWordToUpperCase = computed(() => props.name.replace(/^./, props.name[0].toUpperCase()));
+
+const clickLink = () => {
+  if (props.name !== 'all') {
+    navigateTo({
+      path: '/archive',
+      query: {
+        tag: props.name
+      }
+    });
+  } else {
+    navigateTo({
+      path: '/archive'
+    });
+  }
+};
+
+const tagStyle = computed(() => {
+  return props.hasLinks && props.isActive
+    ? 'cursor-pointer bg-c-brown-600 text-white'
+    : props.hasLinks
+    ? 'cursor-pointer  text-c-brown-600 hover:bg-c-brown-600 hover:text-white'
+    : 'cursor-default bg-c-brown-600 text-white';
+});
 </script>
 
 <style lang="scss" scoped></style>

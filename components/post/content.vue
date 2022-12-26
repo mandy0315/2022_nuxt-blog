@@ -4,7 +4,7 @@
     <div class="flex justify-between">
       <div v-if="tags.length > 0" class="-ml-1">
         <span v-for="item in tags" :key="item">
-          <the-tag :name="item" :hasLinks="hasLinks" :link="`/tags/${item.toLowerCase()}`" class="inline-block" />
+          <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />
         </span>
       </div>
       <div class="self-end text-sm text-c-brown-600">
