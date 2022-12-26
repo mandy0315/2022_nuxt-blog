@@ -22,13 +22,22 @@ export default defineEventHandler(async event => {
     // 篩選每個 tag 數量
     const notRepeatTags = [...new Set(tags)];
     const data = [];
+    let obj = {
+      name: '',
+      count: 0
+    };
+
+    const tagsLen = tags.length;
+    obj.name = 'all';
+    obj.count = tagsLen;
+    data.push(obj);
+
     notRepeatTags.forEach(tag => {
       let filtersTagCount = tags.filter(tag2 => tag2 === tag).length;
-      let obj = {
-        name: tag,
-        count: filtersTagCount
-      };
-      data.push(obj);
+      let copyObj = { ...obj };
+      copyObj.name = tag;
+      copyObj.count = filtersTagCount;
+      data.push(copyObj);
     });
 
     return {
