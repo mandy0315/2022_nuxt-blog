@@ -53,7 +53,7 @@
           </template>
           <template v-else-if="currentPostList.length === 0">
             <tr>
-              <td colspan="2" class="h-80 text-center text-lg text-c-gray-800">目前沒有資料，請重新搜尋</td>
+              <td colspan="2"><post-no-case /></td>
             </tr>
           </template>
         </tbody>

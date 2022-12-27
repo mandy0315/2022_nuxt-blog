@@ -54,9 +54,7 @@ export default defineEventHandler(async event => {
   } catch (error) {
     return {
       success: true,
-      result: {
-        articleList: []
-      }
+      result: {}
     };
   }
 });

@@ -6,14 +6,17 @@
     <section class="px-10">
       <theSearch class="mx-auto max-w-md" />
       <theSortList class="ml-auto" />
-      <ul v-if="currentPostList.length > 0" class="w-full pb-6">
-        <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
-          <post-list v-bind="item" :hasLinks="true" />
-        </li>
-      </ul>
-      <div v-if="+totalPages">
-        <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
-      </div>
+      <template v-if="currentPostList.length > 0">
+        <ul class="w-full pb-6">
+          <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
+            <post-list v-bind="item" :hasLinks="true" />
+          </li>
+        </ul>
+        <div v-if="+totalPages">
+          <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
+        </div>
+      </template>
+      <template v-else-if="currentPostList.length === 0"><post-no-case /></template>
     </section>
   </div>
 </template>
