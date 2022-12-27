@@ -5,7 +5,7 @@
 /* components 新增元件 */
 @layer components{
   .c-container{
-    @apply w-full max-w-[1200px] mx-auto;
+    @apply w-full max-w-[1200px] mx-auto px-4;
   }
   .c-form{
     @apply border-c-gray-400 border-solid border px-2 py-1 ;
