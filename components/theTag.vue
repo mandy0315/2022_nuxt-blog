@@ -44,14 +44,14 @@ const firstWordToUpperCase = computed(() => props.name.replace(/^./, props.name[
 
 const clickLink = () => {
   if (props.name !== 'all') {
-    navigateTo({
+    return navigateTo({
       path: '/archive',
       query: {
         tag: props.name
       }
     });
   } else {
-    navigateTo({
+    return navigateTo({
       path: '/archive'
     });
   }

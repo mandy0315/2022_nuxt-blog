@@ -23,7 +23,7 @@ const postStore = defineStore('postStore', {
         method: 'get',
         initialCache: false
       });
-      data.value.success && Object.assign($store.conditions, data.value.result);
+      data.value.success && Object.assign($store.conditions, data.value.result?.data);
 
       return data.value;
     },
@@ -131,7 +131,7 @@ const postSearchStore = defineStore('postSearchStore', {
       $store.params.page = 1;
       $store.params.sort = +sort;
 
-      navigateTo({
+      return navigateTo({
         path,
         query: $store.getURLParams()
       });
@@ -142,7 +142,7 @@ const postSearchStore = defineStore('postSearchStore', {
       const { path } = $route;
       $store.params.page = +page;
 
-      navigateTo({
+      return navigateTo({
         path,
         query: $store.getURLParams()
       });
@@ -154,7 +154,7 @@ const postSearchStore = defineStore('postSearchStore', {
       $store.params.page = 1;
       $store.params.search = currentSearch;
 
-      navigateTo({
+      return navigateTo({
         path: currentPath ? currentPath : path,
         query: $store.getURLParams()
       });
