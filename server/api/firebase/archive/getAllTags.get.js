@@ -9,8 +9,10 @@ export default defineEventHandler(async event => {
 
     // 取得所有 tags
     const tags = [];
+    const postList = [];
     snapshot.forEach(doc => {
       const item = doc.data();
+      postList.push(item);
       item.tags.forEach(tag => {
         tags.push(tag);
       });
@@ -21,29 +23,29 @@ export default defineEventHandler(async event => {
 
     // 篩選每個 tag 數量
     const notRepeatTags = [...new Set(tags)];
-    const data = [];
+    const tagList = [];
     let obj = {
       name: '',
       count: 0
     };
 
-    const tagsLen = tags.length;
+    const postsLen = postList.length;
     obj.name = 'all';
-    obj.count = tagsLen;
-    data.push(obj);
+    obj.count = postsLen;
+    tagList.push(obj);
 
     notRepeatTags.forEach(tag => {
       let filtersTagCount = tags.filter(tag2 => tag2 === tag).length;
       let copyObj = { ...obj };
       copyObj.name = tag;
       copyObj.count = filtersTagCount;
-      data.push(copyObj);
+      tagList.push(copyObj);
     });
 
     return {
       success: true,
       result: {
-        data
+        data: tagList
       }
     };
   } catch (error) {
