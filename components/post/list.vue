@@ -1,12 +1,14 @@
 <template>
   <div class="flex w-full items-center">
     <div class="flex-1 pr-4">
-      <component
-        :is="hasLinks ? 'a' : 'h3'"
-        class="block pb-2 text-2xl font-bold text-c-brown-600"
-        :class="{ 'hover:underline': hasLinks }"
-        >{{ title }}</component
+      <nuxt-link
+        v-if="hasLinks"
+        :to="`/post-${id}`"
+        class="block cursor-pointer pb-2 text-2xl font-bold text-c-gray-800 hover:text-c-brown-600 hover:underline"
+        >{{ title }}</nuxt-link
       >
+      <h3 v-else class="pb-2 text-2xl font-bold text-c-gray-800">{{ title }}</h3>
+
       <p class="line-clamp-2">{{ summary }}</p>
       <div class="mr-2 flex items-center pt-6">
         <div class="inline-block self-center border-r border-solid border-c-gray-400 pr-3 text-sm text-c-gray-800">
@@ -37,6 +39,10 @@ const props = defineProps({
   title: {
     type: String,
     default: '標題'
+  },
+  id: {
+    type: String,
+    default: ''
   },
   coverPicture: {
     type: Array,

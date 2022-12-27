@@ -65,5 +65,3 @@ const tagStyle = computed(() => {
     : 'cursor-default bg-c-brown-600 text-white';
 });
 </script>
-
-<style lang="scss" scoped></style>

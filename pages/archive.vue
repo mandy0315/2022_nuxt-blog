@@ -4,13 +4,13 @@
       <h1 class="c-title pb-3">檔案</h1>
       <ul v-for="year in postsByYear" :key="year">
         <h2 class="py-3 text-2xl font-bold text-c-brown-600">{{ year }}</h2>
-        <li v-for="post in postList">
-          <template v-if="post.year.includes(year)">
+        <li v-for="post in postList" :key="post.id">
+          <nuxt-link v-if="post.year.includes(year)" :to="`/post-${post.id}`">
             <div class="group block cursor-pointer py-1 px-2 text-xl hover:bg-c-gray-100">
               <span class="pr-2 text-sm text-c-gray-400">{{ post.date }}</span
               ><span class="group-hover:text-c-brown-600">{{ post.title }}</span>
             </div>
-          </template>
+          </nuxt-link>
         </li>
       </ul>
     </div>
