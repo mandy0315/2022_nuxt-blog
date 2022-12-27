@@ -1,21 +1,37 @@
 <template>
-  <div class="text-c-gray-800">
-    <h1 class="pb-2 text-3xl font-bold">{{ title }}</h1>
-    <div class="flex justify-between">
-      <div v-if="tags.length > 0" class="-ml-1">
-        <span v-for="item in tags" :key="item">
-          <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />
-        </span>
+  <div class="flex">
+    <article class="mr-4 grow text-c-gray-800">
+      <h1 :id="`#${title}`" class="c-title pb-3">{{ title }}</h1>
+      <section class="mr-2 flex items-center">
+        <div class="inline-block self-center text-sm text-c-gray-400">
+          <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
+          <span class="align-middle">
+            {{ dateFormat(update_time) }}
+          </span>
+        </div>
+        <div
+          v-if="tags.length > 0"
+          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-400 before:align-middle before:content-['']"
+        >
+          <span v-for="item in tags" :key="item">
+            <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />
+          </span>
+        </div>
+      </section>
+      <!-- image -->
+      <section v-if="coverPicture.length > 0" class="block max-w-xl py-4">
+        <post-image :link="coverPicture[0].link" :title="coverPicture[0].name" />
+      </section>
+      <!-- content -->
+      <section class="pt-8">
+        <v-md-preview class="preview-custom" :text="content" />
+      </section>
+    </article>
+    <div v-if="hasAnchors" class="w-60">
+      文章索引
+      <div>
+        <a :href="`#${title}`">{{ title }}</a>
       </div>
-      <div class="self-end text-sm text-c-brown-600">
-        <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
-        <span class="align-middle">
-          {{ dateFormat(update_time) }}
-        </span>
-      </div>
-    </div>
-    <div class="pt-8">
-      <v-md-preview class="preview-custom" :text="content" />
     </div>
   </div>
 </template>
@@ -30,6 +46,10 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  coverPicture: {
+    type: Array,
+    default: () => []
+  },
   content: {
     type: String,
     default: '輸入內容'
@@ -41,10 +61,12 @@ const props = defineProps({
   hasLinks: {
     type: Boolean,
     default: false
+  },
+  hasAnchors: {
+    type: Boolean,
+    default: false
   }
 });
 
 const { dateFormat } = useDateTime();
 </script>
-
-<style lang="scss" scoped></style>
