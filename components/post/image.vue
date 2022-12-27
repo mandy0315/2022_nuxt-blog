@@ -1,6 +1,6 @@
 <template>
-  <div class="overflow-hidden rounded">
-    <img :src="link" :alt="title" class="h-full w-full object-cover" />
+  <div class="relative h-0 w-full overflow-hidden rounded bg-white pb-[56.25%]">
+    <img :src="link" :alt="title" class="absolute h-full w-full object-cover object-center" />
   </div>
 </template>
 

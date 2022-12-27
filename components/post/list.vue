@@ -11,26 +11,26 @@
 
       <p class="line-clamp-2">{{ summary }}</p>
       <div class="mr-2 flex items-center pt-6">
-        <div class="inline-block self-center border-r border-solid border-c-gray-400 pr-3 text-sm text-c-gray-800">
+        <div class="inline-block self-center text-sm text-c-gray-400">
           <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
           <span class="align-middle">
             {{ dateFormat(update_time) }}
           </span>
         </div>
 
-        <div v-if="tags.length > 0" class="pl-3">
+        <div
+          v-if="tags.length > 0"
+          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-400 before:align-middle before:content-['']"
+        >
           <span v-for="item in tags" :key="item">
             <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />
           </span>
         </div>
       </div>
     </div>
-    <post-image
-      v-if="coverPicture.length > 0"
-      class="h-[125px] w-[215px]"
-      :link="coverPicture[0].link"
-      :title="coverPicture[0].name"
-    />
+    <section v-if="coverPicture.length > 0" class="w-60">
+      <post-image class="rounded" :link="coverPicture[0].link" :title="coverPicture[0].name" />
+    </section>
   </div>
 </template>
 
