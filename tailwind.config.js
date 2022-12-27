@@ -7,7 +7,7 @@ const customColors = {
   'c-gray-600': '#575757',
   'c-gray-400': '#919191',
   'c-gray-200': '#D4D4D4',
-  'c-gray-100': '#EAEAEA',
+  'c-gray-100': '#F5F5F5',
   'c-brown-900': '#3d2a20',
   'c-brown-800': '#4d3224',
   'c-brown-600': '#BC9C73',

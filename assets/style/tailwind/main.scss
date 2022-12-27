@@ -28,7 +28,7 @@
       @apply rounded-sm border-red-600 text-red-600 bg-white hover:bg-red-600 hover:text-white;
     }
   }
-  .c-dashboard-title{
+  .c-title{
     @apply pl-3 relative text-3xl text-c-gray-800 font-bold inline-block before:content-[''] before:absolute before:w-1 before:h-8 before:bg-c-brown-600 before:-left-0;
   }
 }

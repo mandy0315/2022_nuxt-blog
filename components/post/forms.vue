@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="c-dashboard-title">
+    <h1 class="c-title">
       {{ editId === '' ? '文章新增' : '文章編輯' }}
     </h1>
     <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
@@ -49,7 +49,7 @@
 
             <ul
               v-if="isOpen"
-              class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-100 bg-white py-2 shadow-lg"
+              class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-200 bg-white py-2 shadow-lg"
             >
               <li
                 v-for="item in submitList"
