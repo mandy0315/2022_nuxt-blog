@@ -1,7 +1,7 @@
 <template>
-  <header>
+  <header ref="header_el" class="relative">
     <header-top-nav />
-    <div class="w-full bg-c-brown-800 text-white shadow">
+    <div class="w-full bg-c-brown-800 text-white shadow" :class="{ 'an-slide-down fixed z-10 ': isScroll }">
       <div class="c-container flex items-center">
         <nuxt-link to="/" class="flex items-center">
           <div class="mr-2 inline-block h-10 w-10 align-middle">
@@ -17,7 +17,7 @@
             :to="item.link"
             :key="item.link"
             class="relative mx-2 text-base hover:text-c-yellow-200"
-            :class="{ ' nav-link-lock text-c-yellow-200': currentPath === item.link }"
+            :class="{ 'nav-link-lock text-c-yellow-200': currentPath === item.link }"
           >
             {{ item.name }}
           </nuxt-link>
@@ -54,10 +54,28 @@ const currentPath = ref('');
 watchEffect(() => {
   currentPath.value = $route.path;
 });
+
+// header 滾動
+const header_el = ref(null);
+const isScroll = ref(false);
+const handleMobileScroll = () => (isScroll.value = window.scrollY > header_el.value.offsetHeight + 10);
+onMounted(() => window.addEventListener('scroll', handleMobileScroll));
+onUnmounted(() => window.removeEventListener('scroll', handleMobileScroll));
 </script>
 
 <style lang="scss" scoped>
 .nav-link-lock {
   @apply after:absolute after:left-0 after:-bottom-3 after:inline-block after:h-1 after:w-full after:bg-c-yellow-200 after:content-[''];
+}
+.an-slide-down {
+  animation: slide-down 400ms linear 1 both;
+}
+@keyframes slide-down {
+  from {
+    @apply -top-1/4;
+  }
+  to {
+    @apply top-0;
+  }
 }
 </style>
