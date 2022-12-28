@@ -1,6 +1,5 @@
 .v-md-editor{
-  box-shadow: none!important;
-  @apply border border-c-gray-400 border-solid;
+  @apply border border-c-gray-400 border-solid shadow-none #{!important};
 }
 
 .block-embed {
@@ -8,6 +7,8 @@
     @apply w-full h-60;
   }
 }
+
+// 自訂 toolbar 按鈕
 .v-md-icon-iframe{
   &::before{
     background: url('/static/icons/iframe.svg') no-repeat bottom;
@@ -21,8 +22,32 @@
   }
 }
 
-.v-md-editor-preview.preview-custom{
-  .github-markdown-body{
-    padding: 0px;
+.v-md-editor-preview {
+  // 標題文字樣式
+  .github-markdown-body {
+    h2,h3,h4,h5,h6,a{
+      @apply font-normal text-c-gray-800 block;
+    }
+    p{
+      @apply text-c-gray-600 font-normal;
+    }
+    // 錨點
+    .header-anchor{
+      &::after{
+        @apply content-['#'] ml-2 inline-block text-xl opacity-0 text-c-brown-600;
+      }
+      &:hover{
+        @apply no-underline;
+        &::after{
+          @apply opacity-100;
+        }
+      }
+    }
+  }
+  // 預覽模式
+  &.preview-custom{
+    .github-markdown-body{
+      @apply p-0;
+    }
   }
 }

@@ -16,6 +16,7 @@ specifiers:
   formidable: v2
   highlight.js: ^11.6.0
   isomorphic-dompurify: ^0.23.0
+  markdown-it-anchor: ^8.6.6
   markdown-it-playground: ^0.0.5
   nuxt: ^3.0.0
   pinia: ^2.0.24
@@ -31,6 +32,7 @@ dependencies:
   formidable: 2.0.1
   highlight.js: 11.7.0
   isomorphic-dompurify: 0.23.0
+  markdown-it-anchor: 8.6.6
   markdown-it-playground: 0.0.5
   nuxt: 3.0.0_eslint@8.28.0+sass@1.56.1
   pinia: 2.0.27
@@ -5861,6 +5863,13 @@ packages:
       markdown-it: '*'
     dependencies:
       markdown-it: 8.4.2
+    dev: false
+
+  /markdown-it-anchor/8.6.6:
+    resolution: {integrity: sha512-jRW30YGywD2ESXDc+l17AiritL0uVaSnWsb26f+68qaW9zgbIIr1f4v2Nsvc0+s0Z2N3uX6t/yAw7BwCQ1wMsA==}
+    peerDependencies:
+      '@types/markdown-it': '*'
+      markdown-it: '*'
     dev: false
 
   /markdown-it-attrs/4.1.4_markdown-it@12.3.2:

@@ -11,6 +11,7 @@ import hljs from './highlight';
 
 // markdownIt 插件
 import markdownItPlayground from 'markdown-it-playground';
+import markdownItAnchor from 'markdown-it-anchor';
 // import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 // import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
@@ -53,6 +54,11 @@ export default defineNuxtPlugin(nuxtApp => {
     },
     extend(md) {
       md.use(markdownItPlayground);
+      md.use(markdownItAnchor, {
+        level: 2,
+        slugify: s => decodeURIComponent(s.trim().toLowerCase().replace(/\s+/g, '-')),
+        permalink: markdownItAnchor.permalink.headerLink({ safariReaderFix: true })
+      });
     }
   });
 
