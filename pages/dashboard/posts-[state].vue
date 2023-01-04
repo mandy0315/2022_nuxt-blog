@@ -69,7 +69,7 @@
 import { $vfm } from 'vue-final-modal';
 import { usePostStore, usePostSearchStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
-import PostContent from '@/components/post/content.vue';
+import PostContent from '@/components/post/content/index.vue';
 
 useHead({ title: '文章管理' });
 definePageMeta({

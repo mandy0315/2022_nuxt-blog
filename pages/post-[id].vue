@@ -1,6 +1,6 @@
 <template>
   <div class="c-container">
-    <post-content v-bind="caseConditions" :hasLinks="true" :hasAnchors="true" />
+    <post-content v-bind="caseConditions" :hasTagLinks="true" :hasToc="true" />
   </div>
 </template>
 
