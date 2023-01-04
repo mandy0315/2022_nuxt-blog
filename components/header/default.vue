@@ -1,27 +1,37 @@
 <template>
   <header ref="header_el" class="relative">
     <header-top-nav />
-    <div class="w-full bg-c-brown-800 text-white shadow" :class="{ 'an-slide-down fixed z-10 ': isScroll }">
-      <div class="c-container flex items-center">
-        <nuxt-link to="/" class="flex items-center">
-          <div class="mr-2 inline-block h-10 w-10 align-middle">
-            <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
-          </div>
-          <span class="text-base">{{ webTitle }}</span>
-        </nuxt-link>
-
-        <header-search class="ml-auto mr-1" />
-        <nav>
-          <nuxt-link
-            v-for="item in topBarNav"
-            :to="item.link"
-            :key="item.link"
-            class="relative mx-2 text-base hover:text-c-yellow-200"
-            :class="{ 'nav-link-lock text-c-yellow-200': currentPath === item.link }"
-          >
-            {{ item.name }}
+    <!-- header-bottom -->
+    <div class="h-10">
+      <div
+        ref="headerBottom_el"
+        class="w-full bg-c-brown-800 text-white shadow"
+        :class="{ 'an-slide-down fixed top-0 z-10': isShow }"
+      >
+        <div class="c-container flex items-center">
+          <nuxt-link to="/" class="flex items-center">
+            <div class="mr-2 inline-block h-10 w-10 align-middle">
+              <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
+            </div>
+            <span class="text-base">{{ webTitle }}</span>
           </nuxt-link>
-        </nav>
+
+          <header-search class="ml-auto mr-1" />
+          <nav>
+            <nuxt-link
+              v-for="item in menuList"
+              :to="item.link"
+              :key="item.link"
+              class="relative mx-2 text-base hover:text-c-yellow-200"
+              :class="{
+                'text-c-yellow-200 after:absolute after:left-0 after:-bottom-3 after:inline-block after:h-1 after:w-full after:bg-c-yellow-200 after:content-[attr(after)]':
+                  currentPath === item.link
+              }"
+            >
+              {{ item.name }}
+            </nuxt-link>
+          </nav>
+        </div>
       </div>
     </div>
   </header>
@@ -30,7 +40,7 @@
 <script setup>
 import { useMainStore } from '@/stores/index';
 
-const topBarNav = [
+const menuList = [
   {
     link: '/',
     name: '文章'
@@ -48,25 +58,30 @@ const topBarNav = [
 const $mainStore = useMainStore();
 const webTitle = computed(() => $mainStore.webTitle);
 
+// 取得目前網址的路徑
 const $route = useRoute();
 const currentPath = ref('');
+watchEffect(() => (currentPath.value = $route.path));
 
-watchEffect(() => {
-  currentPath.value = $route.path;
-});
+const updateEls = () => {
+  $mainStore.els.header_el = header_el.value;
+  $mainStore.els.headerBottom_el = headerBottom_el.value;
+};
 
-// header 滾動
+// 滾動後 fixed headerBottom
 const header_el = ref(null);
-const isScroll = ref(false);
-const handleMobileScroll = () => (isScroll.value = window.scrollY > header_el.value.offsetHeight + 10);
-onMounted(() => window.addEventListener('scroll', handleMobileScroll));
-onUnmounted(() => window.removeEventListener('scroll', handleMobileScroll));
+const headerBottom_el = ref(null);
+const isShow = ref(false);
+const handleScrollShow = () => (isShow.value = window.scrollY > header_el.value.offsetHeight + 10);
+
+onMounted(() => {
+  updateEls();
+  window.addEventListener('scroll', handleScrollShow);
+});
+onUnmounted(() => window.removeEventListener('scroll', handleScrollShow));
 </script>
 
 <style lang="scss" scoped>
-.nav-link-lock {
-  @apply after:absolute after:left-0 after:-bottom-3 after:inline-block after:h-1 after:w-full after:bg-c-yellow-200 after:content-[''];
-}
 .an-slide-down {
   animation: slide-down 400ms linear 1 both;
 }
