@@ -93,16 +93,18 @@ const setToken = async event => {
 };
 
 const getNewToken = async () => {
+  const config = useRuntimeConfig();
+
   const res = await $fetch('https://api.imgur.com/oauth2/token', {
     method: 'POST',
     headers: {
       contentType: 'multipart/form-data'
     },
     body: {
-      refresh_token: process.env.IMGUR_REFRESH_TOKEN,
-      client_id: process.env.IMGUR_CLIENT_ID,
-      client_secret: process.env.IMGUR_CLIENT_SECRET,
-      grant_type: process.env.IMGUR_GRANT_TYPE
+      refresh_token: config.IMGUR_REFRESH_TOKEN,
+      client_id: config.IMGUR_CLIENT_ID,
+      client_secret: config.IMGUR_CLIENT_SECRET,
+      grant_type: config.IMGUR_GRANT_TYPE
     }
   }).catch(error => {
     const data = error.response._data;

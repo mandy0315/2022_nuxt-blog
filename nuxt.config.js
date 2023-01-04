@@ -1,4 +1,5 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
+import config from './config.js';
 
 export default defineNuxtConfig({
   '@': '/<rootDir>', // 別名
@@ -28,7 +29,7 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   css: ['@/assets/style/base.scss'],
-  runtimeConfig: {}, // 環境變數
+  runtimeConfig: config, // 新增環境變數
   imports: {
     dirs: [
       // 掃描整個目錄下的檔案
