@@ -1,8 +1,8 @@
 @import './tailwind/main';
 @import './v-md-editor';
 
-body {
-  @apply w-full relative  text-c-gray-800;
+body,html{
+  @apply w-full relative  text-c-gray-800 scroll-smooth;
   font-family: 'Microsoft JhengHei', PingFang, STHeiti, sans-serif, serif;
 }
 
