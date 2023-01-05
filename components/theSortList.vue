@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-48">
+  <div class="relative z-10 w-48">
     <div
       ref="container_el"
       class="relative cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
