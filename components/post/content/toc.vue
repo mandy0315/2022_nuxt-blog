@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'fixed top-20': isScrollFixed }">
+  <div v-if="tocList.length !== 0" :class="{ 'fixed top-20': isScrollFixed }">
     <p class="pb-1 text-sm text-c-gray-400">文章索引</p>
     <div v-if="tocList.length > 0" class="px-2">
       <div
@@ -23,6 +23,7 @@ import { useMainStore } from '@/stores/index';
 const mdPreview_el = useState('mdPreview_el');
 const tocList = useState('tocList', () => []);
 const getTocList = () => {
+  tocList.value = [];
   let data = [];
 
   const anchors = mdPreview_el.value.$el.querySelectorAll('h2,h3,h4,h5,h6');
