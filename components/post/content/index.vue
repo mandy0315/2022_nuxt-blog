@@ -25,7 +25,9 @@
       <!-- content -->
       <div class="pt-8">
         <v-md-preview ref="mdPreview_el" class="preview-custom" :text="content" />
-        <post-content-comment />
+        <client-only>
+          <post-content-comment :postTitle="title" />
+        </client-only>
       </div>
     </article>
     <aside v-if="hasToc" class="w-60">

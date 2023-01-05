@@ -10,7 +10,6 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@giscus/vue": "^2.2.6",
     "@kangc/v-md-editor": "^2.3.15",
     "dayjs": "^1.11.6",
     "firebase": "^9.14.0",
