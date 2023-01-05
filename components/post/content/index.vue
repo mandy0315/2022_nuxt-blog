@@ -25,9 +25,11 @@
       <!-- content -->
       <div class="pt-8">
         <v-md-preview ref="mdPreview_el" class="preview-custom" :text="content" />
-        <client-only>
-          <post-content-comment :postTitle="title" />
-        </client-only>
+        <template v-if="hasComment">
+          <client-only>
+            <post-content-comment :postTitle="title" />
+          </client-only>
+        </template>
       </div>
     </article>
     <aside v-if="hasToc" class="w-60">
@@ -65,6 +67,10 @@ const props = defineProps({
     default: false
   },
   hasToc: {
+    type: Boolean,
+    default: false
+  },
+  hasComment: {
     type: Boolean,
     default: false
   }
