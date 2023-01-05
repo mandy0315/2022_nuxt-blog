@@ -13,11 +13,9 @@
             <div class="mr-2 inline-block h-10 w-10 align-middle">
               <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
             </div>
-            <span class="text-base">{{ webTitle }}</span>
+            <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
           </nuxt-link>
-
-          <header-search class="ml-auto mr-1" />
-          <nav>
+          <nav class="pl-2">
             <nuxt-link
               v-for="item in menuList"
               :to="item.link"
@@ -31,6 +29,8 @@
               {{ item.name }}
             </nuxt-link>
           </nav>
+
+          <header-search class="ml-auto mr-1" />
         </div>
       </div>
     </div>
@@ -39,15 +39,10 @@
 
 <script setup>
 import { useMainStore } from '@/stores/index';
-
 const menuList = [
   {
-    link: '/',
-    name: '文章'
-  },
-  {
     link: '/archive',
-    name: '檔案'
+    name: '文章列表'
   },
   {
     link: '/about',
@@ -55,14 +50,14 @@ const menuList = [
   }
 ];
 
-const $mainStore = useMainStore();
-const webTitle = computed(() => $mainStore.webTitle);
+const config = useRuntimeConfig();
 
 // 取得目前網址的路徑
 const $route = useRoute();
 const currentPath = ref('');
 watchEffect(() => (currentPath.value = $route.path));
 
+const $mainStore = useMainStore();
 const updateEls = () => {
   $mainStore.els.header_el = header_el.value;
   $mainStore.els.headerBottom_el = headerBottom_el.value;
