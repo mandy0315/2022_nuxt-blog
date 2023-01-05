@@ -1,7 +1,7 @@
 <template>
   <div class="c-container">
     <section class="py-10">
-      <h1 class="text-center text-4xl font-bold">{{ webTitle }}</h1>
+      <h1 class="text-center text-4xl font-bold">Mandy's 技術與生活筆記</h1>
     </section>
     <section class="px-10">
       <theSearch class="mx-auto max-w-md" />
@@ -22,13 +22,10 @@
 </template>
 
 <script setup>
-import { useMainStore, usePostSearchStore } from '@/stores/index';
+import { usePostSearchStore } from '@/stores/index';
 
-const $mainStore = useMainStore();
 const $postSearchStore = usePostSearchStore();
 const $route = useRoute();
-
-const webTitle = computed(() => $mainStore.webTitle);
 
 const currentPostList = computed(() => $postSearchStore.postList.articleList);
 const totalPages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
