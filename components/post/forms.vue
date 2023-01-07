@@ -81,7 +81,7 @@ const editId = computed(() => $route.params.id || '');
 
 // 判斷是文章編輯還是文章編輯
 if (editId.value) {
-  const res = await $postStore.getCasePost(editId.value);
+  const res = await $postStore.getPostsCase(editId.value);
 
   !res.success && $router.push({ path: `/dashboard/posts-public` });
 } else {
@@ -92,35 +92,35 @@ if (editId.value) {
 const titleFill = computed({
   get: () => $postStore.conditions.title,
   set: val => {
-    $postStore.updateConditionsItem('title', val);
+    $postStore.updateCondition('title', val);
   }
 });
 // 分類
 const tagsChoosed = computed({
   get: () => $postStore.conditions.tags,
   set: val => {
-    $postStore.updateConditionsItem('tags', val);
+    $postStore.updateCondition('tags', val);
   }
 });
 // 摘要
 const summaryFill = computed({
   get: () => $postStore.conditions.summary,
   set: val => {
-    $postStore.updateConditionsItem('summary', val);
+    $postStore.updateCondition('summary', val);
   }
 });
 // 內容
 const contentFill = computed({
   get: () => $postStore.conditions.content,
   set: val => {
-    $postStore.updateConditionsItem('content', val);
+    $postStore.updateCondition('content', val);
   }
 });
 //
 const coverPictureChoosed = computed({
   get: () => $postStore.conditions.coverPicture,
   set: val => {
-    $postStore.updateConditionsItem('coverPicture', val);
+    $postStore.updateCondition('coverPicture', val);
   }
 });
 
@@ -147,13 +147,13 @@ const currSubmitName = computed(() => submitList.filter(item => item.status === 
 const statusChoosed = computed({
   get: () => $postStore.conditions.status,
   set: val => {
-    $postStore.updateConditionsItem('status', val);
+    $postStore.updateCondition('status', val);
   }
 });
 
 // 送出表單
 const sendForm = async () => {
-  const res = await $postStore.updateCasePost();
+  const res = await $postStore.savePostsCase();
   res.success && $router.push({ path: '/dashboard/post-edit-finish' });
 };
 </script>

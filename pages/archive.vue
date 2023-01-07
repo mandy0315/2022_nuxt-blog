@@ -51,7 +51,7 @@ const getTagList = async () => {
 };
 
 const { dateFormat } = useDateTime();
-const getPostList = async queryStr => {
+const getPostsList = async queryStr => {
   const queryByTag = queryStr.tag || '';
 
   const { data } = await useFetch('/api/firebase/archive/getPosts', {
@@ -78,10 +78,10 @@ const getPostList = async queryStr => {
 watch(
   () => $route.query,
   () => {
-    getPostList($route.query);
+    getPostsList($route.query);
   }
 );
 
-getPostList($route.query);
+getPostsList($route.query);
 getTagList();
 </script>

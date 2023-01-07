@@ -11,6 +11,6 @@ const $postStore = usePostStore();
 const caseConditions = computed(() => $postStore.conditions);
 
 const { params } = useRoute();
-const res = await $postStore.getCasePost(params.id);
+const res = await $postStore.getPostsCase(params.id);
 !res.success && (await navigateTo('/')); // 沒有 id 回首頁
 </script>

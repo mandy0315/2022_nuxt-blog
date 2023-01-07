@@ -108,14 +108,14 @@ const currentPage = computed({
 });
 
 const deletePost = async id => {
-  const data = await $postStore.deleteCasePost(id);
+  const data = await $postStore.deletePostsCase(id);
   if (data.success) {
     $postSearchStore.setCurrentPage(1);
   }
 };
 
 const openPreviewPost = async id => {
-  const res = await $postStore.getCasePost(id);
+  const res = await $postStore.getPostsCase(id);
   res.success &&
     $vfm.show({
       component: CustomModal,
@@ -135,7 +135,7 @@ const openPreviewPost = async id => {
 
 const setPostList = () => {
   $route.query.publishState = currentState.value === 'public' ? 'On' : 'Off';
-  $postSearchStore.getPostList($route.query);
+  $postSearchStore.getPostsList($route.query);
 };
 
 watch(

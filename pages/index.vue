@@ -38,9 +38,9 @@ const currentPage = computed({
 watch(
   () => $route.query,
   () => {
-    $postSearchStore.getPostList($route.query);
+    $postSearchStore.getPostsList($route.query);
   }
 );
 
-$postSearchStore.getPostList($route.query);
+$postSearchStore.getPostsList($route.query);
 </script>

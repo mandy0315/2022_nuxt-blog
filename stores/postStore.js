@@ -16,7 +16,7 @@ const postStore = defineStore('postStore', {
   }),
   getters: {},
   actions: {
-    async getCasePost(id = '') {
+    async getPostsCase(id = '') {
       const $store = this;
 
       const { data } = await useFetch(`/api/firebase/posts/getPost/${id}`, {
@@ -27,7 +27,7 @@ const postStore = defineStore('postStore', {
 
       return data.value;
     },
-    async updateCasePost() {
+    async savePostsCase() {
       const $store = this;
       // 更新時間
       const { nowToISO, nowDataTime } = useDateTime();
@@ -37,7 +37,7 @@ const postStore = defineStore('postStore', {
 
       // 新增還是更新資料
       const { data } = id
-        ? await useFetch(`/api/firebase/posts/setPost/${id}`, {
+        ? await useFetch(`/api/firebase/posts/updatePost/${id}`, {
             method: 'put',
             body: $store.conditions,
             initialCache: false
@@ -50,7 +50,7 @@ const postStore = defineStore('postStore', {
 
       return data.value;
     },
-    async deleteCasePost(id = '') {
+    async deletePostsCase(id = '') {
       const { data } = await useFetch(`/api/firebase/posts/deletePost/${id}`, {
         method: 'delete',
         initialCache: false
@@ -58,7 +58,7 @@ const postStore = defineStore('postStore', {
       return data.value;
     },
 
-    updateConditionsItem(item, val) {
+    updateCondition(item, val) {
       const $store = this;
       $store.conditions[item] = val;
     }
@@ -109,7 +109,7 @@ const postSearchStore = defineStore('postSearchStore', {
 
       return params;
     },
-    async getPostList(queryStr) {
+    async getPostsList(queryStr) {
       const $store = this;
 
       $store.resetStateParams();
