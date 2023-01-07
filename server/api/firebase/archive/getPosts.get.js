@@ -4,7 +4,6 @@ import { db } from '@/server/utils/useFirebase';
 export default defineEventHandler(async event => {
   try {
     const urlQuery = getQuery(event);
-    console.log(urlQuery.tag);
     const currentTag = urlQuery.tag;
 
     const postsRef = collection(db, 'posts');
