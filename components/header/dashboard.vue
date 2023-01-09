@@ -7,7 +7,7 @@
           <div class="mr-2 inline-block h-10 w-10 align-middle">
             <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
           </div>
-          <span class="text-base">{{ webTitle }}</span>
+          <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>
         <div class="ml-auto">
           <button>登出</button>
@@ -17,8 +17,5 @@
   </header>
 </template>
 <script setup>
-import { useMainStore } from '@/stores/index';
-
-const $mainStore = useMainStore();
-const webTitle = computed(() => $mainStore.webTitle);
+const config = useRuntimeConfig();
 </script>
