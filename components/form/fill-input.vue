@@ -1,7 +1,7 @@
 <template>
   <label>
     <p class="pb-1 pr-4 text-lg">{{ title }}</p>
-    <input v-model="text" type="text" class="c-form w-full rounded" :placeholder="placeholder" />
+    <input v-model.lazy="text" type="text" class="c-form w-full rounded" :placeholder="placeholder" />
   </label>
 </template>
 
