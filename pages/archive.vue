@@ -43,7 +43,7 @@ const postsByYear = computed(() => {
 });
 
 const getTagList = async () => {
-  const { data } = await useFetch('/api/firebase/archive/getAllTags', {
+  const { data } = await useFetch('/api/firebase/archive/tagList', {
     method: 'get',
     initialCache: false
   });
@@ -54,7 +54,7 @@ const { dateFormat } = useDateTime();
 const getPostsList = async queryStr => {
   const queryByTag = queryStr.tag || '';
 
-  const { data } = await useFetch('/api/firebase/archive/getPosts', {
+  const { data } = await useFetch('/api/firebase/archive/postList', {
     method: 'get',
     params: {
       tag: queryByTag
