@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, query, doc, setDoc } from 'firebase/firestore';
 import { db } from '@/server/utils/useFirebase';
 
 export default defineEventHandler(async event => {
@@ -23,4 +23,11 @@ export default defineEventHandler(async event => {
   // } catch (error) {
   //   throw createError({ statusCode: 500, statusMessage: error.message });
   // }
+  const dd = collection(db, 'user', '0FPqgwLWwOAsVN7mXhp2', 'posts');
+
+  const querySnapshot = await getDocs(dd);
+  querySnapshot.forEach(doc => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, ' => ', doc.data());
+  });
 });
