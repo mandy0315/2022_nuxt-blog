@@ -20,6 +20,7 @@ specifiers:
   markdown-it-playground: ^0.0.5
   nuxt: ^3.0.0
   pinia: ^2.0.24
+  pinia-plugin-persistedstate: ^3.0.2
   prettier: ^2.7.1
   prettier-plugin-tailwindcss: ^0.1.13
   sass: ^1.55.0
@@ -36,6 +37,7 @@ dependencies:
   markdown-it-playground: 0.0.5
   nuxt: 3.0.0_eslint@8.28.0+sass@1.56.1
   pinia: 2.0.27
+  pinia-plugin-persistedstate: 3.0.2_pinia@2.0.27
   vue-final-modal: 3.4.11
 
 devDependencies:
@@ -6753,6 +6755,14 @@ packages:
   /pify/4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
     engines: {node: '>=6'}
+    dev: false
+
+  /pinia-plugin-persistedstate/3.0.2_pinia@2.0.27:
+    resolution: {integrity: sha512-84vPyUhPA/8Pr+1mT1ioNb2d8z4tvdgYRqMQf8xyauOVBKjo0ZcRBwPQBV7ZAJG43Kwar43nXG2jU+ZMvAFFRQ==}
+    peerDependencies:
+      pinia: ^2.0.0
+    dependencies:
+      pinia: 2.0.27
     dev: false
 
   /pinia/2.0.27:

@@ -20,6 +20,7 @@
     "markdown-it-playground": "^0.0.5",
     "nuxt": "^3.0.0",
     "pinia": "^2.0.24",
+    "pinia-plugin-persistedstate": "^3.0.2",
     "vue-final-modal": "3"
   },
   "devDependencies": {
