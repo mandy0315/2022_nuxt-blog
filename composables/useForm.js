@@ -23,13 +23,12 @@ export default function ({ initValues = {}, validateRules = {} }) {
     result.isError ? (errors[key] = result.errorMsg) : delete errors[key];
   };
   const checkAllError = () => {
-    let isError = false;
-
     for (let key in values) {
       checkError(key);
     }
 
-    isError = !Object.keys(errors).length === 0;
+    const isError = Object.keys(errors).length > 0;
+
     return {
       isError
     };
