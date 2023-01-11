@@ -10,7 +10,7 @@
           <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>
         <div class="ml-auto">
-          <button>登出</button>
+          <button @click.prevent="handleSignout">登出</button>
         </div>
       </div>
     </div>
@@ -18,4 +18,12 @@
 </template>
 <script setup>
 const config = useRuntimeConfig();
+// TODO handleSignout未完
+const handleSignout = async () => {
+  const { data } = await useFetch('/api/firebase/member/signout', {
+    method: 'post',
+    initialCache: false
+  });
+  console.log(data.value?.success);
+};
 </script>
