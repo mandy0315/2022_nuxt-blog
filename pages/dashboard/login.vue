@@ -6,11 +6,29 @@
       <p>請檢查帳號與密碼是否有錯誤</p>
     </div>
     <div>
-      <form-fill-input v-model:value="accountFill" title="帳號" placeholder="請輸入信箱" />
+      <form-fill-input v-model:value="accountFill" title="帳號" placeholder="請輸入信箱" inputType="email" />
       <p v-if="errors['account']" class="pt-1 text-sm text-red-600">{{ errors['account'] }}</p>
     </div>
     <div>
-      <form-fill-input v-model:value="passwordFill" title="密碼" placeholder="請輸入密碼" />
+      <form-fill-input
+        v-model:value="passwordFill"
+        title="密碼"
+        placeholder="請輸入密碼"
+        :inputType="`${!isShowPasswordValue ? 'password' : 'text'}`"
+      >
+        <span
+          @click="isShowPasswordValue = !isShowPasswordValue"
+          class="absolute top-1 right-2 cursor-pointer p-1 text-xl"
+        >
+          <template v-if="!isShowPasswordValue">
+            <Icon icon="mdi:eye-outline" class="text-c-gray-600" />
+          </template>
+          <template v-else>
+            <Icon icon="mdi:eye-off-outline" class="text-c-gray-600" />
+          </template>
+        </span>
+      </form-fill-input>
+
       <p v-if="errors['password']" class="pt-1 text-sm text-red-600">{{ errors['password'] }}</p>
     </div>
 
@@ -31,6 +49,8 @@ definePageMeta({
 });
 
 const $mainStore = useMainStore();
+
+const isShowPasswordValue = useState('isShowPasswordValue', () => false);
 
 // 驗證
 const { values, errors, checkError, checkAllError } = useForm({
