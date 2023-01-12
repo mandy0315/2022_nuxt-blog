@@ -1,7 +1,10 @@
 <template>
   <label>
     <p class="pb-1 pr-4 text-lg">{{ title }}</p>
-    <input v-model.lazy="text" type="text" class="c-form w-full rounded" :placeholder="placeholder" />
+    <div class="relative">
+      <input v-model.lazy="text" :type="inputType" class="c-form w-full rounded" :placeholder="placeholder" />
+      <slot></slot>
+    </div>
   </label>
 </template>
 
@@ -18,10 +21,15 @@ const props = defineProps({
   value: {
     type: String,
     default: ''
+  },
+  inputType: {
+    type: String,
+    default: 'text'
   }
 });
 
 const emit = defineEmits(['update:value']);
+
 const text = computed({
   get: () => props.value,
   set: val => emit('update:value', val)
