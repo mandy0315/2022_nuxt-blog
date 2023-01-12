@@ -1,8 +1,18 @@
 <template>
   <label>
-    <p class="pb-1 pr-4 text-lg">{{ title }}</p>
+    <div class="flex items-center">
+      <p class="pb-1 pr-4 text-lg">{{ title }}</p>
+      <div class="ml-auto">
+        <slot name="title-right"></slot>
+      </div>
+    </div>
     <div class="relative">
-      <input v-model.lazy="text" :type="inputType" class="c-form w-full rounded" :placeholder="placeholder" />
+      <input
+        v-model.lazy="text"
+        :type="inputType"
+        class="c-form w-full rounded focus:border-c-brown-600"
+        :placeholder="placeholder"
+      />
       <slot></slot>
     </div>
   </label>

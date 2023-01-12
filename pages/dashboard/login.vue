@@ -1,21 +1,28 @@
 <template>
   <div class="mx-auto max-w-[320px] pt-4">
-    <h1 class="text-2xl font-bold text-c-brown-600">Hello ~ 歡迎登入</h1>
+    <div class="mb-4">
+      <h1 class="pb-1 text-2xl font-bold text-c-brown-600">登入會員</h1>
+      <p class="text-sm text-c-gray-800">沒有註冊頁喔～ 只有一個帳戶可使用！</p>
+    </div>
     <div v-if="isLoginfailed" class="bg-c-yellow-200/40 px-4 py-2">
       <h2 class="text-lg">登入失敗！</h2>
       <p>請檢查帳號與密碼是否有錯誤</p>
     </div>
-    <div>
+    <div class="mb-2">
       <form-fill-input v-model:value="accountFill" title="帳號" placeholder="請輸入信箱" inputType="email" />
       <p v-if="errors['account']" class="pt-1 text-sm text-red-600">{{ errors['account'] }}</p>
     </div>
-    <div>
+    <div class="mb-4">
       <form-fill-input
         v-model:value="passwordFill"
         title="密碼"
         placeholder="請輸入密碼"
         :inputType="`${!isShowPasswordValue ? 'password' : 'text'}`"
       >
+        <template #title-right>
+          <nuxt-link to="/dashboard/password-reset" class="c-text-button text-sm">忘記密碼</nuxt-link>
+        </template>
+
         <span
           @click="isShowPasswordValue = !isShowPasswordValue"
           class="absolute top-1 right-2 cursor-pointer p-1 text-xl"
@@ -32,11 +39,7 @@
       <p v-if="errors['password']" class="pt-1 text-sm text-red-600">{{ errors['password'] }}</p>
     </div>
 
-    <div @click="handleSignIn" class="c-rounded-button c-rounded-button-brown my-4 w-full rounded-sm text-center">
-      登入
-    </div>
-
-    <!-- <button @click.prevent="handleResetPassword">忘記密碼</button> -->
+    <div @click="handleSignIn" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">登入</div>
   </div>
 </template>
 
