@@ -10,20 +10,44 @@
           <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>
         <div class="ml-auto">
-          <button @click.prevent="handleSignout">登出</button>
+          <button @click.prevent="userLogout">登出</button>
         </div>
       </div>
     </div>
   </header>
 </template>
 <script setup>
+import { signOut } from 'firebase/auth';
+
 const config = useRuntimeConfig();
-// TODO handleSignout未完
-const handleSignout = async () => {
-  const { data } = await useFetch('/api/firebase/member/signout', {
-    method: 'post',
-    initialCache: false
+
+const clearAccessTokenBySession = () => {
+  const accessToken = useCookie('access_token');
+
+  return new Promise(async (resolve, reject) => {
+    const { data, error } = await useFetch('/api/firebase/member/sessionLogout', {
+      method: 'post',
+      body: { accessToken: accessToken.value },
+      initialCache: false
+    });
+    if (data.value) {
+      resolve(data.value?.status);
+    } else {
+      reject(error.value);
+    }
   });
-  console.log(data.value?.success);
+};
+
+const userLogout = async () => {
+  const { auth } = useFirebaseClient();
+  try {
+    await signOut(auth);
+    const status = await clearAccessTokenBySession();
+    if (status === 'success') {
+      return navigateTo('/login');
+    }
+  } catch (error) {
+    console.log('登出有誤', error);
+  }
 };
 </script>
