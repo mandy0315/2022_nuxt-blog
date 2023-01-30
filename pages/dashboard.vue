@@ -8,6 +8,7 @@
 definePageMeta({
   layout: 'dashboard',
   middleware: [
+    'auth',
     (to, form) => {
       if (to.path === '/dashboard') {
         return navigateTo('/dashboard/posts-public');

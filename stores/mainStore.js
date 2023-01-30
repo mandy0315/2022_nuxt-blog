@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
+
 const defaultMemberInfo = {
-  email: null,
+  account: null,
   name: null,
-  uid: null
+  id: null
 };
 export default defineStore('mainStore', {
   state: () => ({
@@ -11,12 +12,41 @@ export default defineStore('mainStore', {
     memberInfo: { ...defaultMemberInfo }
   }),
   getters: {
-    isLogin: state => state.memberInfo.uid !== null
+    isLogin: state => state.memberInfo.account !== null
   },
   actions: {
-    updateMemberInfo(item, val) {
+    async checkMemberStatus() {
       const $store = this;
-      $store.memberInfo[item] = val;
+
+      const res = await $fetch('/api/firebase/member/checkMemberState', {
+        method: 'get'
+      });
+      if (res.status === 'success') {
+        if ($store.memberInfo.id !== res.info.uid) {
+          const obj = {
+            account: res.info.email,
+            name: res.info.name,
+            id: res.info.uid
+          };
+          Object.assign($store.memberInfo, obj);
+        }
+      } else {
+        Object.assign($store.memberInfo, defaultMemberInfo);
+      }
+    },
+    async handleUserLogout() {
+      const $store = this;
+
+      const { data, error } = await useFetch('/api/firebase/member/sessionLogout', {
+        method: 'post',
+        initialCache: false
+      });
+      if (res.status === 'success') {
+        return isDashboardPages ? navigateTo('/login') : navigateTo('/');
+      } else {
+        console.log(error.value.data.statusCode);
+        throw createError({ statusCode: error.value.data.statusCode, statusMessage: error.value.data.message });
+      }
     }
   }
 });

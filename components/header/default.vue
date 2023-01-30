@@ -30,6 +30,10 @@
             </nuxt-link>
           </nav>
 
+          <div class="ml-auto">
+            <button @click.prevent="handleUserLogout()">登出</button>
+          </div>
+
           <header-search class="ml-auto mr-1" />
         </div>
       </div>
@@ -50,6 +54,9 @@ const menuList = [
   }
 ];
 
+const $mainStore = useMainStore();
+const { handleUserLogout } = $mainStore;
+
 const config = useRuntimeConfig();
 
 // 取得目前網址的路徑
@@ -57,7 +64,6 @@ const $route = useRoute();
 const currentPath = ref('');
 watchEffect(() => (currentPath.value = $route.path));
 
-const $mainStore = useMainStore();
 const updateEls = () => {
   $mainStore.els.header_el = header_el.value;
   $mainStore.els.headerBottom_el = headerBottom_el.value;

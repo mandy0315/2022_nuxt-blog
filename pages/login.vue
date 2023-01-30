@@ -39,21 +39,19 @@
       <p v-if="errors['password']" class="pt-1 text-sm text-red-600">{{ errors['password'] }}</p>
     </div>
 
-    <div @click="userLogin" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">登入</div>
+    <div @click="handleUserLogin" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">登入</div>
   </div>
 </template>
 
 <script setup>
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, inMemoryPersistence, setPersistence } from 'firebase/auth';
 
 useHead({ title: '會員登入' });
 definePageMeta({
-  layout: false,
-  middleware: [(to, form) => {}]
+  layout: false
 });
 
 const isShowPasswordValue = useState('isShowPasswordValue', () => false);
-const isLoginfailed = useState('isLoginfailed', () => false);
 
 // 驗證
 const { values, errors, checkError, checkAllError } = useForm({
@@ -89,22 +87,21 @@ const passwordFill = computed({
   }
 });
 
-const saveAccessTokenToSession = accessToken => {
-  return new Promise(async (resolve, reject) => {
-    const { data, error } = await useFetch('/api/firebase/member/sessionLogin', {
-      method: 'post',
-      body: { accessToken },
-      initialCache: false
-    });
-    if (data.value) {
-      resolve(data.value?.status);
-    } else {
-      reject(error.value);
-    }
+// 登入事件
+const isLoginfailed = useState('isLoginfailed', () => false);
+
+const saveAccessTokenToSession = async accessToken => {
+  const { data, error } = await useFetch('/api/firebase/member/sessionLogin', {
+    method: 'post',
+    body: { accessToken },
+    initialCache: false
   });
+  if (error.value) {
+    throw createError({ statusCode: error.value.data.statusCode, statusMessage: error.value.data.message });
+  }
 };
 
-const userLogin = async () => {
+const handleUserLogin = async () => {
   isLoginfailed.value = false;
 
   const { isError } = checkAllError();
@@ -113,7 +110,6 @@ const userLogin = async () => {
   // 判斷唯一會員
   const config = useRuntimeConfig();
   if (values.account !== config.public.WEBSITE_ONlY_MEMBER) {
-    console.log('ee');
     isLoginfailed.value = true;
     return false;
   }
@@ -122,13 +118,14 @@ const userLogin = async () => {
   let accessToken = '';
   const { auth } = useFirebaseClient();
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, values.account, values.password); // 登入
+    await setPersistence(auth, inMemoryPersistence); // 持久化
+
+    const userCredential = await signInWithEmailAndPassword(auth, values.account, values.password);
     accessToken = userCredential.user.accessToken;
-    const status = await saveAccessTokenToSession(accessToken);
-    if (status === 'success') {
-      isLoginfailed.value = false;
-      return navigateTo('/dashboard');
-    }
+
+    await saveAccessTokenToSession(accessToken);
+    isLoginfailed.value = false;
+    return navigateTo('/dashboard');
   } catch (error) {
     if (accessToken) {
       signOut(auth).then(() => {
