@@ -1,6 +1,5 @@
 <template>
   <header>
-    <header-top-nav />
     <div class="w-full bg-c-brown-800 text-white shadow">
       <div class="c-container flex items-center text-sm text-white">
         <nuxt-link to="/dashboard/posts-public" class="flex items-center">

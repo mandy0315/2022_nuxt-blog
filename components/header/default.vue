@@ -1,6 +1,5 @@
 <template>
   <header ref="header_el" class="relative">
-    <header-top-nav />
     <!-- header-bottom -->
     <div class="h-10">
       <div
@@ -33,8 +32,6 @@
           <div class="ml-auto">
             <button @click.prevent="handleUserLogout()">登出</button>
           </div>
-
-          <header-search class="ml-auto mr-1" />
         </div>
       </div>
     </div>
