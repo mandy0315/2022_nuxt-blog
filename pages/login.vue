@@ -44,6 +44,7 @@
 </template>
 
 <script setup>
+import { useMainStore } from '@/stores/index';
 import { signInWithEmailAndPassword, inMemoryPersistence, setPersistence } from 'firebase/auth';
 
 useHead({ title: '會員登入' });
@@ -52,6 +53,7 @@ definePageMeta({
 });
 
 const $router = useRouter();
+const $mainStore = useMainStore();
 
 const isShowPasswordValue = useState('isShowPasswordValue', () => false);
 
@@ -127,6 +129,7 @@ const handleUserLogin = async () => {
     await sessionLogin(accessToken);
     isLoginfailed.value = false;
 
+    await $mainStore.checkMemberStatus();
     return $router.go(-1);
   } catch (error) {
     isLoginfailed.value = true;

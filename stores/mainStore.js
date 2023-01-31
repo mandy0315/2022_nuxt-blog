@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 const defaultMemberInfo = {
   account: null,
   name: null,
-  id: null
+  id: null,
+  photoURL: null
 };
 export default defineStore('mainStore', {
   state: () => ({
@@ -28,7 +29,8 @@ export default defineStore('mainStore', {
           const obj = {
             account: res.info.email,
             name: res.info.name,
-            id: res.info.uid
+            id: res.info.uid,
+            photoURL: res.info.picture
           };
           Object.assign($store.memberInfo, obj);
         }
@@ -49,7 +51,7 @@ export default defineStore('mainStore', {
         if ($store.isDashboardPages) {
           navigateTo('/login');
         } else {
-          $store.checkMemberStatus();
+          await $store.checkMemberStatus();
         }
       }
     }

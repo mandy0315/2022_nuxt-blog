@@ -8,8 +8,12 @@
           </div>
           <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>
-        <div class="ml-auto">
+        <div class="ml-auto flex items-center">
           <template v-if="isLogin">
+            <p class="pr-2 text-base">{{ memberInfo.name }}</p>
+            <div class="h-10 w-10 overflow-hidden rounded-full">
+              <img :src="memberInfo.photoURL" alt="" />
+            </div>
             <button @click.prevent="handleUserLogout()">登出</button>
           </template>
           <template v-else>
@@ -28,4 +32,5 @@ const $mainStore = useMainStore();
 
 const { handleUserLogout } = $mainStore;
 const isLogin = computed(() => $mainStore.isLogin);
+const memberInfo = computed(() => $mainStore.memberInfo);
 </script>

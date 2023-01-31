@@ -12,7 +12,6 @@ export default defineEventHandler(async event => {
     await setCookie(event, 'access_token', sessionCookie, {
       maxAge: expiresIn,
       secure: true,
-      httpOnly: true,
       path: '/'
     }); // maxAge 秒為單位
 
