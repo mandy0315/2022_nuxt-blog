@@ -44,12 +44,14 @@
 </template>
 
 <script setup>
-import { signInWithEmailAndPassword, signOut, inMemoryPersistence, setPersistence } from 'firebase/auth';
+import { signInWithEmailAndPassword, inMemoryPersistence, setPersistence } from 'firebase/auth';
 
 useHead({ title: '會員登入' });
 definePageMeta({
   layout: false
 });
+
+const $router = useRouter();
 
 const isShowPasswordValue = useState('isShowPasswordValue', () => false);
 
@@ -90,7 +92,7 @@ const passwordFill = computed({
 // 登入事件
 const isLoginfailed = useState('isLoginfailed', () => false);
 
-const saveAccessTokenToSession = async accessToken => {
+const sessionLogin = async accessToken => {
   const { data, error } = await useFetch('/api/firebase/member/sessionLogin', {
     method: 'post',
     body: { accessToken },
@@ -115,23 +117,18 @@ const handleUserLogin = async () => {
   }
 
   // firebase 登入
-  let accessToken = '';
   const { auth } = useFirebaseClient();
   try {
     await setPersistence(auth, inMemoryPersistence); // 持久化
 
     const userCredential = await signInWithEmailAndPassword(auth, values.account, values.password);
-    accessToken = userCredential.user.accessToken;
+    const accessToken = userCredential.user.accessToken;
 
-    await saveAccessTokenToSession(accessToken);
+    await sessionLogin(accessToken);
     isLoginfailed.value = false;
-    return navigateTo('/dashboard');
+
+    return $router.go(-1);
   } catch (error) {
-    if (accessToken) {
-      signOut(auth).then(() => {
-        console.log('有錯誤！登出');
-      });
-    }
     isLoginfailed.value = true;
   }
 };

@@ -5,13 +5,18 @@
 </template>
 
 <script setup>
+import { useMainStore } from '@/stores/index';
+
 definePageMeta({
   layout: 'dashboard',
   middleware: [
-    'auth',
     (to, form) => {
-      if (to.path === '/dashboard') {
-        return navigateTo('/dashboard/posts-public');
+      if (process.server) {
+        const $mainStore = useMainStore();
+
+        if ($mainStore.isLogin && to.path === '/dashboard') {
+          return navigateTo('/dashboard/posts-public');
+        }
       }
     }
   ]

@@ -30,7 +30,12 @@
           </nav>
 
           <div class="ml-auto">
-            <button @click.prevent="handleUserLogout()">登出</button>
+            <template v-if="isLogin">
+              <button @click.prevent="handleUserLogout()">登出</button>
+            </template>
+            <template v-else>
+              <nuxt-link to="/login">登入</nuxt-link>
+            </template>
           </div>
         </div>
       </div>
@@ -53,6 +58,8 @@ const menuList = [
 
 const $mainStore = useMainStore();
 const { handleUserLogout } = $mainStore;
+
+const isLogin = computed(() => $mainStore.isLogin);
 
 const config = useRuntimeConfig();
 

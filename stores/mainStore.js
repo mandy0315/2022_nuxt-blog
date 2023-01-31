@@ -12,14 +12,16 @@ export default defineStore('mainStore', {
     memberInfo: { ...defaultMemberInfo }
   }),
   getters: {
-    isLogin: state => state.memberInfo.account !== null
+    isLogin: state => !!state.memberInfo.account
   },
   actions: {
     async checkMemberStatus() {
       const $store = this;
+      const accessToken = useCookie('access_token');
 
       const res = await $fetch('/api/firebase/member/checkMemberState', {
-        method: 'get'
+        method: 'post',
+        body: { accessToken: accessToken.value }
       });
       if (res.status === 'success') {
         if ($store.memberInfo.id !== res.info.uid) {
@@ -30,22 +32,25 @@ export default defineStore('mainStore', {
           };
           Object.assign($store.memberInfo, obj);
         }
+        return res.status;
       } else {
         Object.assign($store.memberInfo, defaultMemberInfo);
+        return res.status;
       }
     },
     async handleUserLogout() {
       const $store = this;
 
-      const { data, error } = await useFetch('/api/firebase/member/sessionLogout', {
+      const { data } = await useFetch('/api/firebase/member/sessionLogout', {
         method: 'post',
         initialCache: false
       });
-      if (res.status === 'success') {
-        return isDashboardPages ? navigateTo('/login') : navigateTo('/');
-      } else {
-        console.log(error.value.data.statusCode);
-        throw createError({ statusCode: error.value.data.statusCode, statusMessage: error.value.data.message });
+      if (data.value.status === 'success') {
+        if ($store.isDashboardPages) {
+          navigateTo('/login');
+        } else {
+          $store.checkMemberStatus();
+        }
       }
     }
   }

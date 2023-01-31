@@ -1,9 +1,16 @@
 import { useMainStore } from '@/stores/index';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  const $mainStore = useMainStore();
+  if (process.server) {
+    const $mainStore = useMainStore();
 
-  $mainStore.isDashboardPages = /^\/dashboard/g.test(to.path); // 是否是後台頁面
+    // 是否是後台頁面
+    $mainStore.isDashboardPages = /^\/dashboard/g.test(to.path);
 
-  await $mainStore.checkMemberStatus();
+    // 判斷會員
+    const memberStatus = await $mainStore.checkMemberStatus();
+    if (memberStatus === 'notsuccess' && $mainStore.isDashboardPages) {
+      return navigateTo('/login');
+    }
+  }
 });

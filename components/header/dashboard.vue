@@ -9,7 +9,12 @@
           <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>
         <div class="ml-auto">
-          <button @click.prevent="handleUserLogout()">登出</button>
+          <template v-if="isLogin">
+            <button @click.prevent="handleUserLogout()">登出</button>
+          </template>
+          <template v-else>
+            <nuxt-link to="/login">登入</nuxt-link>
+          </template>
         </div>
       </div>
     </div>
@@ -22,4 +27,5 @@ const config = useRuntimeConfig();
 const $mainStore = useMainStore();
 
 const { handleUserLogout } = $mainStore;
+const isLogin = computed(() => $mainStore.isLogin);
 </script>
