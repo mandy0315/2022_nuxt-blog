@@ -154,6 +154,6 @@ const statusChoosed = computed({
 // 送出表單
 const sendForm = async () => {
   const res = await $postStore.savePostsCase();
-  res.success && $router.push({ path: '/dashboard/post-edit-finish' });
+  //res.success
 };
 </script>
