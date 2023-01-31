@@ -19,5 +19,3 @@ const props = defineProps({
 const $mainStore = useMainStore();
 const isDashboardPages = computed(() => $mainStore.isDashboardPages);
 </script>
-
-<style lang="scss" scoped></style>
