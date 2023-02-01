@@ -6,7 +6,7 @@ const postsStore = defineStore('postsStore', {
   state: () => ({
     conditions: {
       id: '',
-      user_id: '',
+      member_id: '',
       title: '',
       summary: '',
       content: '',
@@ -41,7 +41,7 @@ const postsStore = defineStore('postsStore', {
 
       // 新增會員id
       const memberId = $mainStore.memberInfo.id;
-      $store.conditions['user_Id'] = memberId;
+      $store.conditions.member_id = memberId;
 
       // 新增還是更新資料
       const { data } = id
