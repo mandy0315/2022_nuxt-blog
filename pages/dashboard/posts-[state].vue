@@ -67,7 +67,7 @@
 
 <script setup>
 import { $vfm } from 'vue-final-modal';
-import { usePostStore, usePostSearchStore } from '@/stores/index';
+import { usePostsStore, usePostsListStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content/index.vue';
 
@@ -92,30 +92,30 @@ const postsStateList = [
   }
 ];
 
-const $postStore = usePostStore();
-const $postSearchStore = usePostSearchStore();
+const $postsStore = usePostsStore();
+const $postsListStore = usePostsListStore();
 const $route = useRoute();
 
 const currentState = computed(() => $route.params.state);
-const caseConditions = computed(() => $postStore.conditions);
+const caseConditions = computed(() => $postsStore.conditions);
 
-const currentPostList = computed(() => $postSearchStore.postList.articleList);
-const totalPages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
+const currentPostList = computed(() => $postsListStore.postList.articleList);
+const totalPages = computed(() => $postsListStore.postList?.pageInfo?.pages);
 
 const currentPage = computed({
-  get: () => +$postSearchStore.params.page,
-  set: val => $postSearchStore.setCurrentPage(val)
+  get: () => +$postsListStore.params.page,
+  set: val => $postsListStore.setCurrentPage(val)
 });
 
 const deletePost = async id => {
-  const data = await $postStore.deletePostsCase(id);
+  const data = await $postsStore.deletePostsCase(id);
   if (data.success) {
-    $postSearchStore.setCurrentPage(1);
+    $postsListStore.setCurrentPage(1);
   }
 };
 
 const openPreviewPost = async id => {
-  const res = await $postStore.getPostsCase(id);
+  const res = await $postsStore.getPostsCase(id);
   res.success &&
     $vfm.show({
       component: CustomModal,
@@ -135,7 +135,7 @@ const openPreviewPost = async id => {
 
 const setPostList = () => {
   $route.query.publishState = currentState.value === 'public' ? 'On' : 'Off';
-  $postSearchStore.getPostsList($route.query);
+  $postsListStore.getMemberPostsList($route.query);
 };
 
 watch(
@@ -145,6 +145,6 @@ watch(
   }
 );
 
-$postStore.$reset();
+// $postsStore.$reset();
 setPostList();
 </script>

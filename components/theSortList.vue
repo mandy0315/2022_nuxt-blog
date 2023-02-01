@@ -29,10 +29,10 @@
   </div>
 </template>
 <script setup>
-import { usePostSearchStore } from '@/stores/index';
+import { usePostsListStore } from '@/stores/index';
 
 const { toggleList, isOpen, setContainer } = useToggle();
-const $postSearchStore = usePostSearchStore();
+const $postsListStore = usePostsListStore();
 
 const container_el = ref(null);
 onMounted(() => {
@@ -52,7 +52,7 @@ const sortListByKeys = computed(() => {
 });
 
 const currSort = computed({
-  get: () => +$postSearchStore.params.sort,
-  set: val => $postSearchStore.setCurrentSort(val)
+  get: () => +$postsListStore.params.sort,
+  set: val => $postsListStore.setCurrentSort(val)
 });
 </script>

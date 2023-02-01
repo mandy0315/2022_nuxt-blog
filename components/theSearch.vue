@@ -41,13 +41,13 @@
 </template>
 
 <script setup>
-import { usePostSearchStore } from '@/stores/index';
+import { usePostsListStore } from '@/stores/index';
 
-const $postSearchStore = usePostSearchStore();
-const { setCurrentSearch } = $postSearchStore;
+const $postsListStore = usePostsListStore();
+const { setCurrentSearch } = $postsListStore;
 
 const currentSearch = computed({
-  get: () => $postSearchStore.params.search,
-  set: val => ($postSearchStore.params.search = val)
+  get: () => $postsListStore.params.search,
+  set: val => ($postsListStore.params.search = val)
 });
 </script>

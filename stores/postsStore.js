@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
+import mainStore from './mainStore';
 import useDateTime from '@/utils/useDateTime';
 
-const postStore = defineStore('postStore', {
+const postsStore = defineStore('postsStore', {
   state: () => ({
     conditions: {
       id: '',
@@ -57,7 +58,6 @@ const postStore = defineStore('postStore', {
       });
       return data.value;
     },
-
     updateCondition(item, val) {
       const $store = this;
       $store.conditions[item] = val;
@@ -71,7 +71,7 @@ const defaultParams = {
   sort: null, // 文章時間 0:desc ; 1:asc
   page: 1
 };
-const postSearchStore = defineStore('postSearchStore', {
+const postsListStore = defineStore('postsListStore', {
   state: () => ({
     params: { ...defaultParams },
     postList: {
@@ -81,7 +81,54 @@ const postSearchStore = defineStore('postSearchStore', {
   }),
   getters: {},
   actions: {
-    resetStateParams() {
+    updateURLParams() {
+      const $store = this;
+      const params = { ...$store.params };
+
+      for (let key in params) {
+        if (!params[key] || key === 'publishState') {
+          delete params[key];
+        }
+      }
+
+      return params;
+    },
+    setCurrentSort(sort) {
+      const $store = this;
+      const $route = useRoute();
+      const { path } = $route;
+      $store.params.page = 1;
+      $store.params.sort = +sort;
+
+      return navigateTo({
+        path,
+        query: $store.updateURLParams()
+      });
+    },
+    setCurrentPage(page) {
+      const $store = this;
+      const $route = useRoute();
+      const { path } = $route;
+      $store.params.page = +page;
+
+      return navigateTo({
+        path,
+        query: $store.updateURLParams()
+      });
+    },
+    setCurrentSearch({ currentPath = '', currentSearch = '' }) {
+      const $store = this;
+      const $route = useRoute();
+      const { path } = $route;
+      $store.params.page = 1;
+      $store.params.search = currentSearch;
+
+      return navigateTo({
+        path: currentPath ? currentPath : path,
+        query: $store.updateURLParams()
+      });
+    },
+    resetParams() {
       const $store = this;
       Object.assign($store.params, defaultParams);
     },
@@ -97,22 +144,10 @@ const postSearchStore = defineStore('postSearchStore', {
       }
       return params;
     },
-    getURLParams() {
-      const $store = this;
-      const params = { ...$store.params };
-
-      for (let key in params) {
-        if (!params[key] || key === 'publishState') {
-          delete params[key];
-        }
-      }
-
-      return params;
-    },
     async getPostsList(queryStr) {
       const $store = this;
 
-      $store.resetStateParams();
+      $store.resetParams();
 
       const { data } = await useFetch('/api/firebase/posts/list', {
         method: 'get',
@@ -124,42 +159,23 @@ const postSearchStore = defineStore('postSearchStore', {
         $store.postList.pageInfo = data.value.result?.pageInfo;
       }
     },
-    setCurrentSort(sort) {
+    async getMemberPostsList(queryStr) {
       const $store = this;
-      const $route = useRoute();
-      const { path } = $route;
-      $store.params.page = 1;
-      $store.params.sort = +sort;
+      const $mainStore = mainStore();
 
-      return navigateTo({
-        path,
-        query: $store.getURLParams()
-      });
-    },
-    setCurrentPage(page) {
-      const $store = this;
-      const $route = useRoute();
-      const { path } = $route;
-      $store.params.page = +page;
+      $store.resetParams();
 
-      return navigateTo({
-        path,
-        query: $store.getURLParams()
+      const { data } = await useFetch(`/api/firebase/posts/${$mainStore.memberInfo.id}/list`, {
+        method: 'get',
+        params: $store.getParams(queryStr),
+        initialCache: false
       });
-    },
-    setCurrentSearch({ currentPath = '', currentSearch = '' }) {
-      const $store = this;
-      const $route = useRoute();
-      const { path } = $route;
-      $store.params.page = 1;
-      $store.params.search = currentSearch;
-
-      return navigateTo({
-        path: currentPath ? currentPath : path,
-        query: $store.getURLParams()
-      });
+      if (data.value.success) {
+        $store.postList.articleList = data.value.result?.articleList;
+        $store.postList.pageInfo = data.value.result?.pageInfo;
+      }
     }
   }
 });
 
-export { postStore, postSearchStore };
+export { postsStore, postsListStore };

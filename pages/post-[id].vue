@@ -5,12 +5,12 @@
 </template>
 
 <script setup>
-import { usePostStore } from '@/stores/index';
+import { usePostsStore } from '@/stores/index';
 
-const $postStore = usePostStore();
-const caseConditions = computed(() => $postStore.conditions);
+const $postsStore = usePostsStore();
+const caseConditions = computed(() => $postsStore.conditions);
 
 const { params } = useRoute();
-const res = await $postStore.getPostsCase(params.id);
+const res = await $postsStore.getPostsCase(params.id);
 !res.success && (await navigateTo('/')); // 沒有 id 回首頁
 </script>

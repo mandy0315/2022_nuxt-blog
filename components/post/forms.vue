@@ -68,11 +68,11 @@
 </template>
 
 <script setup>
-import { usePostStore } from '@/stores/index';
+import { usePostsStore } from '@/stores/index';
 
 const $route = useRoute();
 const $router = useRouter();
-const $postStore = usePostStore();
+const $postsStore = usePostsStore();
 
 const { toolbarConfig, toolbarCustom } = editorToolbar(); // 內容編輯工具列
 const { isOpen, toggleList, setContainer } = useToggle();
@@ -81,46 +81,46 @@ const editId = computed(() => $route.params.id || '');
 
 // 判斷是文章編輯還是文章編輯
 if (editId.value) {
-  const res = await $postStore.getPostsCase(editId.value);
+  const res = await $postsStore.getPostsCase(editId.value);
 
   !res.success && $router.push({ path: `/dashboard/posts-public` });
 } else {
-  $postStore.$reset();
+  $postsStore.$reset();
 }
 
 // 標題
 const titleFill = computed({
-  get: () => $postStore.conditions.title,
+  get: () => $postsStore.conditions.title,
   set: val => {
-    $postStore.updateCondition('title', val);
+    $postsStore.updateCondition('title', val);
   }
 });
 // 分類
 const tagsChoosed = computed({
-  get: () => $postStore.conditions.tags,
+  get: () => $postsStore.conditions.tags,
   set: val => {
-    $postStore.updateCondition('tags', val);
+    $postsStore.updateCondition('tags', val);
   }
 });
 // 摘要
 const summaryFill = computed({
-  get: () => $postStore.conditions.summary,
+  get: () => $postsStore.conditions.summary,
   set: val => {
-    $postStore.updateCondition('summary', val);
+    $postsStore.updateCondition('summary', val);
   }
 });
 // 內容
 const contentFill = computed({
-  get: () => $postStore.conditions.content,
+  get: () => $postsStore.conditions.content,
   set: val => {
-    $postStore.updateCondition('content', val);
+    $postsStore.updateCondition('content', val);
   }
 });
 //
 const coverPictureChoosed = computed({
-  get: () => $postStore.conditions.coverPicture,
+  get: () => $postsStore.conditions.coverPicture,
   set: val => {
-    $postStore.updateCondition('coverPicture', val);
+    $postsStore.updateCondition('coverPicture', val);
   }
 });
 
@@ -140,20 +140,20 @@ const submitList = [
     status: 'public'
   }
 ];
-const currStatus = computed(() => $postStore.conditions.status);
+const currStatus = computed(() => $postsStore.conditions.status);
 const currSubmitName = computed(() => submitList.filter(item => item.status === currStatus.value)[0].name);
 
 // 狀態
 const statusChoosed = computed({
-  get: () => $postStore.conditions.status,
+  get: () => $postsStore.conditions.status,
   set: val => {
-    $postStore.updateCondition('status', val);
+    $postsStore.updateCondition('status', val);
   }
 });
 
 // 送出表單
 const sendForm = async () => {
-  const res = await $postStore.savePostsCase();
+  const res = await $postsStore.savePostsCase();
   //res.success
 };
 </script>

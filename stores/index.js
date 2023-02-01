@@ -1,6 +1,6 @@
 import mainStore from './mainStore';
-import { postStore, postSearchStore } from './postStore';
+import { postsStore, postsListStore } from './postsStore';
 
 export const useMainStore = mainStore;
-export const usePostStore = postStore;
-export const usePostSearchStore = postSearchStore;
+export const usePostsStore = postsStore;
+export const usePostsListStore = postsListStore;

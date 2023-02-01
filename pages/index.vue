@@ -22,25 +22,25 @@
 </template>
 
 <script setup>
-import { usePostSearchStore } from '@/stores/index';
+import { usePostsListStore } from '@/stores/index';
 
-const $postSearchStore = usePostSearchStore();
+const $postsListStore = usePostsListStore();
 const $route = useRoute();
 
-const currentPostList = computed(() => $postSearchStore.postList.articleList);
-const totalPages = computed(() => $postSearchStore.postList?.pageInfo?.pages);
+const currentPostList = computed(() => $postsListStore.postList.articleList);
+const totalPages = computed(() => $postsListStore.postList?.pageInfo?.pages);
 
 const currentPage = computed({
-  get: () => +$postSearchStore.params.page,
-  set: val => $postSearchStore.setCurrentPage(val)
+  get: () => +$postsListStore.params.page,
+  set: val => $postsListStore.setCurrentPage(val)
 });
 
 watch(
   () => $route.query,
   () => {
-    $postSearchStore.getPostsList($route.query);
+    $postsListStore.getPostsList($route.query);
   }
 );
 
-$postSearchStore.getPostsList($route.query);
+$postsListStore.getPostsList($route.query);
 </script>
