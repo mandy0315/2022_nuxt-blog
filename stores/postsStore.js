@@ -13,6 +13,7 @@ const postsStore = defineStore('postsStore', {
       status: 'draft',
       tags: [],
       coverPicture: [],
+      created_at: '',
       update_time: ''
     }
   }),
@@ -34,10 +35,14 @@ const postsStore = defineStore('postsStore', {
       const $mainStore = mainStore();
 
       // 更新時間
+      const id = $store.conditions.id;
       const { nowToISO, nowDataTime } = useDateTime();
       const time = nowToISO(nowDataTime);
+      if (!id) {
+        // 建立文章時間
+        $store.conditions.created_at = time;
+      }
       $store.conditions.update_time = time;
-      const id = $store.conditions.id;
 
       // 新增會員id
       const memberId = $mainStore.memberInfo.id;
