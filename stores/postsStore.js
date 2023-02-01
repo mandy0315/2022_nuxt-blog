@@ -6,12 +6,13 @@ const postsStore = defineStore('postsStore', {
   state: () => ({
     conditions: {
       id: '',
+      user_id: '',
       title: '',
       summary: '',
-      coverPicture: [],
       content: '',
       status: 'draft',
       tags: [],
+      coverPicture: [],
       update_time: ''
     }
   }),
@@ -30,11 +31,17 @@ const postsStore = defineStore('postsStore', {
     },
     async savePostsCase() {
       const $store = this;
+      const $mainStore = mainStore();
+
       // 更新時間
       const { nowToISO, nowDataTime } = useDateTime();
       const time = nowToISO(nowDataTime);
       $store.conditions.update_time = time;
       const id = $store.conditions.id;
+
+      // 新增會員id
+      const memberId = $mainStore.memberInfo.id;
+      $store.conditions['user_Id'] = memberId;
 
       // 新增還是更新資料
       const { data } = id
