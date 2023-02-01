@@ -5,10 +5,9 @@ export default defineEventHandler(async event => {
     const { db } = firebaseServer();
     const body = await readBody(event);
 
-    const postsRef = db.collection('posts');
-    const postsDoc = postsRef.doc();
-    body.id = postsDoc.id; // 取的 id
-    await postsDoc.set(body);
+    const postsRef = db.collection('posts').doc();
+    body.id = postsRef.id; // 取的 id
+    await postsRef.set(body);
 
     return { status: 'success' };
   } catch (error) {
