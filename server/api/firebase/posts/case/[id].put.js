@@ -1,16 +1,16 @@
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/server/utils/useFirebase';
+import firebaseServer from '@/server/utils/useFirebaseServer';
 
 export default defineEventHandler(async event => {
   try {
-    const params = getRouterParams(event);
+    const { db } = firebaseServer();
+    const params = await getRouterParams(event);
     const body = await readBody(event);
 
-    const docRef = doc(db, 'posts', params.id);
-    await updateDoc(docRef, body);
+    const postsRef = db.collection('posts').doc(params.id);
+    await postsRef.update(body);
 
-    return { success: true, id: body.id };
+    return { status: 'success' };
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+    throw createError({ statusCode: 500, message: '編輯文章失敗' });
   }
 });
