@@ -1,16 +1,17 @@
-import { collection, setDoc, doc } from 'firebase/firestore';
-import { db } from '@/server/utils/useFirebase';
+import firebaseServer from '@/server/utils/useFirebaseServer';
 
 export default defineEventHandler(async event => {
   try {
+    const { db } = firebaseServer();
     const body = await readBody(event);
 
-    const docRef = doc(collection(db, 'posts'));
-    body.id = docRef.id;
-    await setDoc(docRef, body);
+    const postsRef = db.collection('posts');
+    const postsDoc = postsRef.doc();
+    body.id = postsDoc.id; // 取的 id
+    await postsDoc.set(body);
 
-    return { success: true, id: body.id };
+    return { status: 'success' };
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+    throw createError({ statusCode: 500, message: '編輯文章失敗' });
   }
 });
