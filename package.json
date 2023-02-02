@@ -22,6 +22,7 @@
     "markdown-it-playground": "^0.0.5",
     "nuxt": "^3.0.0",
     "pinia": "^2.0.24",
+    "vant": "^4.0.9",
     "vue-final-modal": "3"
   },
   "devDependencies": {

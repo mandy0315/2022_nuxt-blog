@@ -25,6 +25,7 @@ specifiers:
   prettier: ^2.7.1
   prettier-plugin-tailwindcss: ^0.1.13
   sass: ^1.55.0
+  vant: ^4.0.9
   vue-final-modal: '3'
 
 dependencies:
@@ -40,6 +41,7 @@ dependencies:
   markdown-it-playground: 0.0.5
   nuxt: 3.0.0_eslint@8.28.0+sass@1.56.1
   pinia: 2.0.27
+  vant: 4.0.9
   vue-final-modal: 3.4.11
 
 devDependencies:
@@ -1779,6 +1781,10 @@ packages:
 
   /@vant/use/1.4.3:
     resolution: {integrity: sha512-rSnETN7P9qT1WbItMpQxBqe3cHeK2ZFYp1sCxWUXaTeI71TqA8sOdzC36ledZ36NQgFNTch9fsRPYOkrCgZfQA==}
+    dev: false
+
+  /@vant/use/1.4.4:
+    resolution: {integrity: sha512-VFAU7oO3mAN/mA+xB0bRt36Ve2EVUyywmwH149qlRRrTBu1XwxoA8J7Kwpr1CoX9GTaoMsZle/+j3e2UtvsP3g==}
     dev: false
 
   /@vercel/nft/0.22.1:
@@ -9330,6 +9336,15 @@ packages:
       '@vant/icons': 1.8.0
       '@vant/popperjs': 1.3.0
       '@vant/use': 1.4.3
+    dev: false
+
+  /vant/4.0.9:
+    resolution: {integrity: sha512-hUTiZ3eIq6GIpLffnexUDLgVnIUB55knYHovuU9kslvwuQQSRVl58f2SdR2bB0Dmlpm+6NEGcPiyEw3RZxUrkQ==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@vant/popperjs': 1.3.0
+      '@vant/use': 1.4.4
     dev: false
 
   /vary/1.1.2:

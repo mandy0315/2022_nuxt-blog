@@ -59,6 +59,8 @@
 </template>
 
 <script setup>
+import { showFailToast } from 'vant';
+
 import { usePostsStore } from '@/stores/index';
 
 const $route = useRoute();
@@ -137,7 +139,11 @@ const statusChoosed = computed({
 
 // 送出表單
 const sendForm = async () => {
-  const res = await $postsStore.savePostsCase();
-  //res.success
+  const result = await $postsStore.savePostsCase();
+  if (result.status === 'success') {
+    console.log('success');
+  } else {
+    showFailToast(result.message);
+  }
 };
 </script>

@@ -48,7 +48,7 @@ const postsStore = defineStore('postsStore', {
       $store.conditions.member_id = memberId;
 
       // 新增還是更新資料
-      const { data } = id
+      const { data, error } = id
         ? await useFetch(`/api/firebase/posts/case/${id}`, {
             method: 'put',
             body: $store.conditions,
@@ -59,8 +59,8 @@ const postsStore = defineStore('postsStore', {
             body: $store.conditions,
             initialCache: false
           });
-
-      return data.value;
+      console.log(error.value.data);
+      return error.value ? error.value.data : data.value;
     },
     async deletePostsCase(id = '') {
       const { data } = await useFetch(`/api/firebase/posts/case/${id}`, {
