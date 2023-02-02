@@ -9,7 +9,7 @@
       >
       <h3 v-else class="pb-2 text-2xl font-bold text-c-gray-800">{{ title }}</h3>
 
-      <p class="line-clamp-2">{{ summary }}</p>
+      <p class="line-clamp-2">{{ contentToSummary() }}</p>
       <div class="mr-2 flex items-center pt-6">
         <div class="inline-block self-center text-sm text-c-gray-400">
           <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
@@ -52,10 +52,6 @@ const props = defineProps({
     type: Array,
     default: []
   },
-  summary: {
-    type: String,
-    default: '摘要'
-  },
   content: {
     type: String,
     default: '內容'
@@ -70,4 +66,12 @@ const props = defineProps({
   }
 });
 const { dateFormat } = useDateTime();
+
+const { $convertTohtml } = useNuxtApp();
+const contentToSummary = () => {
+  const markdownToHtml = $convertTohtml(props.content);
+  let replaceHtml = markdownToHtml.replace(/<\/?.+?\/?>|{{{\/?.+?\/?}}}/g, '');
+  replaceHtml.replace(/\s*/g, '');
+  return replaceHtml;
+};
 </script>

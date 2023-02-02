@@ -1,66 +1,57 @@
 <template>
-  <div>
-    <h1 class="c-title">
-      {{ editId === '' ? '文章新增' : '文章編輯' }}
-    </h1>
-    <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-      <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
-      <form-file-input v-model:value="coverPictureChoosed" title="封面圖" class="col-span-1" />
-      <form-tags-combobox
-        v-model:tags="tagsChoosed"
-        title="分類"
-        placeholder="請輸入分類"
-        :tagList="['Vue', 'Nuxt3', 'SCSS']"
-        class="col-span-2"
+  <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
+    <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
+    <form-file-input v-model:value="coverPictureChoosed" title="封面圖" class="col-span-1" />
+    <form-tags-combobox
+      v-model:tags="tagsChoosed"
+      title="分類"
+      placeholder="請輸入分類"
+      :tagList="['Vue', 'Nuxt3', 'SCSS']"
+      class="col-span-2"
+    />
+    <div class="col-span-2">
+      <p class="pb-1 pr-4 text-lg">內容</p>
+      <v-md-editor
+        class="test"
+        height="400px"
+        v-model="contentFill"
+        placeholder="使用 Markdown 語法，填寫你的內容..."
+        :toolbar="toolbarCustom"
+        :left-toolbar="toolbarConfig.leftToolbar"
+        :right-toolbar="toolbarConfig.rightToolbar"
+        :disabled-menus="['h/h1']"
       />
-      <form-fill-textarea v-model:value="summaryFill" title="摘要" placeholder="請輸入摘要" class="col-span-2" />
-      <div class="col-span-2">
-        <p class="pb-1 pr-4 text-lg">內容</p>
-        <v-md-editor
-          class="test"
-          height="400px"
-          v-model="contentFill"
-          placeholder="使用 Markdown 語法，填寫你的內容..."
-          :toolbar="toolbarCustom"
-          :left-toolbar="toolbarConfig.leftToolbar"
-          :right-toolbar="toolbarConfig.rightToolbar"
-          :disabled-menus="['h/h1']"
-        />
-      </div>
+    </div>
 
-      <!-- button -->
-      <div class="col-span-2 ml-auto">
-        <div class="relative flex w-36">
-          <button
-            @click.prevent="sendForm"
-            class="c-rounded-button c-rounded-button-brown grow rounded-r-none rounded-l"
-          >
-            {{ currSubmitName }}
-          </button>
-          <div
-            class="c-rounded-button c-rounded-button-brown cursor-pointer rounded-l-none rounded-r border-l border-solid border-white px-2"
-            ref="container_el"
-            @click="toggleList"
-          >
-            <i>
-              <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="pointer-events-none inline-block" />
-              <Icon v-else icon="material-symbols:arrow-drop-up" class="pointer-events-none inline-block" />
-            </i>
+    <!-- button -->
+    <div class="col-span-2 ml-auto">
+      <div class="relative flex w-36">
+        <button @click.prevent="sendForm" class="c-rounded-button c-rounded-button-brown grow rounded-r-none rounded-l">
+          {{ currSubmitName }}
+        </button>
+        <div
+          class="c-rounded-button c-rounded-button-brown cursor-pointer rounded-l-none rounded-r border-l border-solid border-white px-2"
+          ref="container_el"
+          @click="toggleList"
+        >
+          <i>
+            <Icon v-if="isOpen" icon="material-symbols:arrow-drop-down" class="pointer-events-none inline-block" />
+            <Icon v-else icon="material-symbols:arrow-drop-up" class="pointer-events-none inline-block" />
+          </i>
 
-            <ul
-              v-if="isOpen"
-              class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-200 bg-white py-2 shadow-lg"
+          <ul
+            v-if="isOpen"
+            class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-200 bg-white py-2 shadow-lg"
+          >
+            <li
+              v-for="item in submitList"
+              :key="item.status"
+              class="block w-full px-3 py-2 text-left text-lg text-c-gray-800 hover:opacity-50"
+              @click="statusChoosed = item.status"
             >
-              <li
-                v-for="item in submitList"
-                :key="item.status"
-                class="block w-full px-3 py-2 text-left text-lg text-c-gray-800 hover:opacity-50"
-                @click="statusChoosed = item.status"
-              >
-                {{ item.name }}
-              </li>
-            </ul>
-          </div>
+              {{ item.name }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -100,13 +91,6 @@ const tagsChoosed = computed({
   get: () => $postsStore.conditions.tags,
   set: val => {
     $postsStore.updateCondition('tags', val);
-  }
-});
-// 摘要
-const summaryFill = computed({
-  get: () => $postsStore.conditions.summary,
-  set: val => {
-    $postsStore.updateCondition('summary', val);
   }
 });
 // 內容

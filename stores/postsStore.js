@@ -8,7 +8,6 @@ const postsStore = defineStore('postsStore', {
       id: '',
       member_id: '',
       title: '',
-      summary: '',
       content: '',
       status: 'draft',
       tags: [],

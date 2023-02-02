@@ -1,4 +1,4 @@
-import VMdEditor from '@kangc/v-md-editor';
+import VMdEditor, { xss } from '@kangc/v-md-editor';
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
 import '@kangc/v-md-editor/lib/style/base-editor.css';
 import '@kangc/v-md-editor/lib/style/preview.css';
@@ -68,4 +68,10 @@ export default defineNuxtPlugin(nuxtApp => {
 
   nuxtApp.vueApp.use(VMdEditor); // 導入 Vue
   nuxtApp.vueApp.use(VMdPreview);
+
+  return {
+    provide: {
+      convertTohtml: content => xss.process(VMdEditor.vMdParser.themeConfig.markdownParser.render(content))
+    }
+  };
 });

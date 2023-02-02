@@ -1,3 +1,4 @@
+import { markdownToTxt } from '@/server/utils/useMarkdown';
 import { collection, query, getDocs, orderBy, where } from 'firebase/firestore';
 import { db } from '@/server/utils/useFirebase';
 import pagination from '@/server/utils/usePagination';
@@ -12,7 +13,7 @@ const getSearchFilterData = (data, currentSearch) => {
   // 比對字串
   strArray.forEach(str => {
     data.forEach(item => {
-      if (item.title.includes(str) || item.summary.includes(str)) {
+      if (item.title.includes(str) || markdownToTxt(item.content).includes(str)) {
         filterData.push(item);
       }
     });
