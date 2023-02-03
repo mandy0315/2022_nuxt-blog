@@ -44,12 +44,12 @@ const getTocList = () => {
 
 // 目錄滾動固定
 const $mainStore = useMainStore();
-const isScrollFixed = useState('isScrollFixed', () => false);
+const isScrollFixed = ref(false);
 const headerHeight = computed(() => $mainStore.els.header_el.offsetHeight);
 const setTocFixed = () => (isScrollFixed.value = window.scrollY > headerHeight.value + 10);
 
 // 偵測目前段落
-const currentSection = useState('currentSection', () => '');
+const currentSection = ref('');
 const setCurrentSection = () => {
   const scrollTop = window.scrollY;
   tocList.value.forEach(anchor => {

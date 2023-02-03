@@ -39,8 +39,8 @@ definePageMeta({
   layout: false
 });
 
-const isSendEmailFailed = useState('isSendEmailFailed', () => false);
-const isSendFinish = useState('isSendFinish', () => false);
+const isSendEmailFailed = ref(false);
+const isSendFinish = ref(false);
 
 const { values, errors, checkError, checkAllError } = useForm({
   initValues: {
@@ -63,9 +63,6 @@ const emailFill = computed({
 });
 
 const sendEmail = async () => {
-  isSendEmailFailed.value = false;
-  isSendFinish.value = false;
-
   const { isError } = checkAllError();
   if (isError) return false;
 

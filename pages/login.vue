@@ -55,7 +55,7 @@ definePageMeta({
 const $router = useRouter();
 const $mainStore = useMainStore();
 
-const isShowPasswordValue = useState('isShowPasswordValue', () => false);
+const isShowPasswordValue = ref(false);
 
 // 驗證
 const { values, errors, checkError, checkAllError } = useForm({
@@ -92,7 +92,7 @@ const passwordFill = computed({
 });
 
 // 登入事件
-const isLoginfailed = useState('isLoginfailed', () => false);
+const isLoginfailed = ref(false);
 
 const sessionLogin = async accessToken => {
   const { data, error } = await useFetch('/api/firebase/member/sessionLogin', {
