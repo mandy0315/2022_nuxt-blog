@@ -79,7 +79,6 @@
 
 <script setup>
 import { showFailToast } from 'vant';
-
 import { usePostsStore } from '@/stores/index';
 
 const $route = useRoute();
@@ -143,6 +142,10 @@ const coverPictureChoosed = computed({
   set: val => {
     $postsStore.updateCondition('coverPicture', val);
   }
+});
+onMounted(() => {
+  values.title = $postsStore.conditions.title;
+  values.content = $postsStore.conditions.content;
 });
 
 // 按鈕選擇
