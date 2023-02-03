@@ -59,7 +59,6 @@ const postsStore = defineStore('postsStore', {
             body: $store.conditions,
             initialCache: false
           });
-      console.log(error.value.data);
       return error.value ? error.value.data : data.value;
     },
     async deletePostsCase(id = '') {
