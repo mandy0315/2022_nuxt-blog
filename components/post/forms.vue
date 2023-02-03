@@ -10,7 +10,10 @@
     </template>
     <template v-else>
       <div class="my-4 grid grid-cols-2 gap-4 rounded bg-white px-6 pb-10 pt-6">
-        <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
+        <span>
+          <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
+          <p v-if="errors['title']" class="pt-1 text-sm text-red-600">{{ errors['title'] }}</p>
+        </span>
         <form-file-input v-model:value="coverPictureChoosed" title="封面圖" class="col-span-1" />
         <form-tags-combobox
           v-model:tags="tagsChoosed"
@@ -31,6 +34,7 @@
             :right-toolbar="toolbarConfig.rightToolbar"
             :disabled-menus="['h/h1']"
           />
+          <p v-if="errors['content']" class="pt-1 text-sm text-red-600">{{ errors['content'] }}</p>
         </div>
 
         <!-- button -->
@@ -96,10 +100,24 @@ if (editId.value) {
   $postsStore.$reset();
 }
 
+// 驗證
+const { values, errors, checkError, checkAllError } = useForm({
+  initValues: {
+    title: '',
+    content: ''
+  },
+  validateRules: {
+    title: [{ required: true, errorMsg: '必填請輸入標題' }],
+    content: [{ required: true, errorMsg: '必填請輸入內容' }]
+  }
+});
+
 // 標題
 const titleFill = computed({
   get: () => $postsStore.conditions.title,
   set: val => {
+    values.title = val;
+    checkError('title');
     $postsStore.updateCondition('title', val);
   }
 });
@@ -114,10 +132,12 @@ const tagsChoosed = computed({
 const contentFill = computed({
   get: () => $postsStore.conditions.content,
   set: val => {
+    values.content = val;
+    checkError('content');
     $postsStore.updateCondition('content', val);
   }
 });
-//
+// 封面圖
 const coverPictureChoosed = computed({
   get: () => $postsStore.conditions.coverPicture,
   set: val => {
@@ -152,10 +172,12 @@ const statusChoosed = computed({
   }
 });
 
-const isSendFinish = ref(false);
-
 // 送出表單
+const isSendFinish = ref(false);
 const sendForm = async () => {
+  const { isError } = checkAllError();
+  if (isError) return false;
+
   const result = await $postsStore.savePostsCase();
   if (result.status === 'success') {
     isSendFinish.value = true;
