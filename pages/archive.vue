@@ -14,13 +14,13 @@
         </li>
       </ul>
     </div>
-    <div class="w-72">
+    <!-- <div class="w-72">
       <ul v-if="tagList.length > 0">
         <li v-for="tag in tagList" :key="tag.name" class="inline-block">
           <theTag :name="tag.name" :number="tag.count" :isActive="currentTag === tag.name" />
         </li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -29,7 +29,7 @@ useHead({
   title: '檔案'
 });
 const tagList = useState('tagList', () => []);
-const postList = useState('postList', () => []);
+// const postList = useState('postList', () => []);
 
 const $route = useRoute();
 const currentTag = computed(() => $route.query.tag || 'all');
@@ -51,29 +51,29 @@ const getTagList = async () => {
 };
 
 const { dateFormat } = useDateTime();
-const getPostsList = async queryStr => {
-  const queryByTag = queryStr.tag || '';
+// const getPostsList = async queryStr => {
+//   const queryByTag = queryStr.tag || '';
 
-  const { data } = await useFetch('/api/firebase/archive/postList', {
-    method: 'get',
-    params: {
-      tag: queryByTag
-    },
-    initialCache: false
-  });
+//   const { data } = await useFetch('/api/firebase/archive/postList', {
+//     method: 'get',
+//     params: {
+//       tag: queryByTag
+//     },
+//     initialCache: false
+//   });
 
-  if (data.value.success) {
-    let posts = data.value.result?.data;
+//   if (data.value.success) {
+//     let posts = data.value.result?.data;
 
-    posts.forEach(post => {
-      const year = dateFormat(post.update_time, 'YYYY');
-      const date = dateFormat(post.update_time, 'MM/DD');
-      post.date = date; // 新增文章日期欄位
-      post.year = year; // 新增文章年份欄位
-    });
-    postList.value = posts;
-  }
-};
+//     posts.forEach(post => {
+//       const year = dateFormat(post.update_time, 'YYYY');
+//       const date = dateFormat(post.update_time, 'MM/DD');
+//       post.date = date; // 新增文章日期欄位
+//       post.year = year; // 新增文章年份欄位
+//     });
+//     postList.value = posts;
+//   }
+// };
 
 watch(
   () => $route.query,
@@ -83,5 +83,5 @@ watch(
 );
 
 getPostsList($route.query);
-getTagList();
+// getTagList();
 </script>

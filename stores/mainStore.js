@@ -47,7 +47,7 @@ export default defineStore('mainStore', {
         method: 'post',
         initialCache: false
       });
-      if (data.value.status === 'success') {
+      if (data.value?.status === 'success') {
         if ($store.isDashboardPages) {
           navigateTo('/login');
         } else {

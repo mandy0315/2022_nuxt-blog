@@ -173,6 +173,7 @@ const postsListStore = defineStore('postsListStore', {
         $store.postList.articleList = data.value.data?.articleList;
         $store.postList.pageInfo = data.value.data?.pageInfo;
       } else {
+        console.log(error.value?.data);
         showFailToast(error.value?.data?.statusMessage);
       }
     }

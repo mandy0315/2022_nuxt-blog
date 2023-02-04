@@ -2,7 +2,7 @@
   <span
     class="relative m-1 inline-flex items-center rounded border border-solid border-c-brown-600 py-0.5 px-3"
     :class="tagStyle"
-    @click="hasCloseIcon ? emit('handleDeleteTag', name) : hasLinks ? clickLink() : ''"
+    @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"
   >
     <span class="inline-block text-sm">
       {{ firstWordToUpperCase }}
@@ -41,21 +41,6 @@ const props = defineProps({
 });
 const emit = defineEmits(['handleDeleteTag']);
 const firstWordToUpperCase = computed(() => props.name.replace(/^./, props.name[0].toUpperCase()));
-
-const clickLink = () => {
-  if (props.name !== 'all') {
-    return navigateTo({
-      path: '/archive',
-      query: {
-        tag: props.name
-      }
-    });
-  } else {
-    return navigateTo({
-      path: '/archive'
-    });
-  }
-};
 
 const tagStyle = computed(() => {
   return props.hasLinks && props.isActive
