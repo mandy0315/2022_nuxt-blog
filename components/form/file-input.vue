@@ -51,7 +51,7 @@ const props = defineProps({
   }
 });
 
-const { clickUploadImages, errorMsg, removeCurrImage } = useUpload();
+const { clickUploadImages, errorMsg, removeCurrImage } = useUploadImage();
 const imageList = computed({
   get: () => props.value,
   set: val => emit('update:value', val)

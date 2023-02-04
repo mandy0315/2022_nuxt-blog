@@ -95,7 +95,7 @@ onMounted(() => {
   // 錨點滑動
   const $route = useRoute();
   const { hash } = $route;
-  const { scrollToSection } = useScroll();
+  const { scrollToSection } = useScrollTo();
   if (hash) {
     const str = hash.replace('#', '');
     const target = document.getElementById(str);

@@ -3,7 +3,7 @@
     <div class="flex-1 pr-4">
       <nuxt-link
         v-if="hasLinks"
-        :to="`/post-${id}`"
+        :to="`/post/${id}`"
         class="block cursor-pointer pb-2 text-2xl font-bold text-c-gray-800 hover:text-c-brown-600 hover:underline"
         >{{ title }}</nuxt-link
       >
