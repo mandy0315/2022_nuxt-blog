@@ -10,6 +10,7 @@ import { useMainStore } from '@/stores/index';
 definePageMeta({
   layout: 'dashboard',
   middleware: [
+    'auth',
     (to, form) => {
       const $mainStore = useMainStore();
 

@@ -2,7 +2,7 @@
   <header>
     <div class="w-full bg-c-brown-800 text-white shadow">
       <div class="c-container flex items-center text-sm text-white">
-        <nuxt-link to="/dashboard/posts-public" class="flex items-center">
+        <nuxt-link to="/" class="flex items-center">
           <div class="mr-2 inline-block h-10 w-10 align-middle">
             <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
           </div>
