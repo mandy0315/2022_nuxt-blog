@@ -1,12 +1,12 @@
 import { markdownToTxt } from '@/server/utils/useMarkdown';
-import { collection, query, getDocs, orderBy, where } from 'firebase/firestore';
-import { db } from '@/server/utils/useFirebase';
+import firebaseServer from '@/server/utils/useFirebaseServer';
 import pagination from '@/server/utils/usePagination';
 
 const sortListMap = new Map([
-  [0, () => orderBy('update_time', 'desc')],
-  [1, () => orderBy('update_time')]
+  [0, 'desc'],
+  [1, 'asc']
 ]);
+
 const getSearchFilterData = (data, currentSearch) => {
   const strArray = currentSearch.split(' ');
   let filterData = [];
@@ -30,10 +30,13 @@ export default defineEventHandler(async event => {
     const currentSort = +urlQuery.sort || 0; // 預設排序: 時間新->舊
     const currentSearch = urlQuery.search || '';
 
-    const postsRef = collection(db, 'posts');
-    const q = query(postsRef, where('status', '==', currentState), sortListMap.get(currentSort)()); // firestore 管理去建立索引
-
-    const snapshot = await getDocs(q);
+    // firebase
+    const { db } = firebaseServer();
+    const postsRef = db.collection('posts');
+    const snapshot = await postsRef
+      .where('status', '==', currentState)
+      .orderBy('update_time', sortListMap.get(currentSort))
+      .get();
     let data = [];
     snapshot.forEach(doc => {
       data.push(doc.data());
@@ -46,13 +49,13 @@ export default defineEventHandler(async event => {
     const result = pagination({ currPage: currentPage, perPage: 2, articles: data });
 
     return {
-      success: true,
-      result: {
+      status: 'success',
+      data: {
         pageInfo: result.pageInfo,
         articleList: result.data
       }
     };
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+    throw createError({ statusCode: 500, statusMessage: '取得失敗，請稍候' });
   }
 });

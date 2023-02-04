@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import mainStore from './mainStore';
 import useDateTime from '@/utils/useDateTime';
+import { showFailToast } from 'vant';
 
 const postsStore = defineStore('postsStore', {
   state: () => ({
@@ -156,33 +157,23 @@ const postsListStore = defineStore('postsListStore', {
     },
     async getPostsList(queryStr) {
       const $store = this;
-
-      $store.resetParams();
-
-      const { data } = await useFetch('/api/firebase/posts/list', {
-        method: 'get',
-        params: $store.getParams(queryStr),
-        initialCache: false
-      });
-      if (data.value.success) {
-        $store.postList.articleList = data.value.result?.articleList;
-        $store.postList.pageInfo = data.value.result?.pageInfo;
-      }
-    },
-    async getMemberPostsList(queryStr) {
-      const $store = this;
       const $mainStore = mainStore();
 
       $store.resetParams();
 
-      const { data } = await useFetch(`/api/firebase/posts/${$mainStore.memberInfo.id}/list`, {
+      const fetchURL = $mainStore.isDashboardPages
+        ? `/api/firebase/posts/${$mainStore.memberInfo.id}/list`
+        : '/api/firebase/posts/list';
+      const { data, error } = await useFetch(fetchURL, {
         method: 'get',
         params: $store.getParams(queryStr),
         initialCache: false
       });
-      if (data.value.success) {
-        $store.postList.articleList = data.value.result?.articleList;
-        $store.postList.pageInfo = data.value.result?.pageInfo;
+      if (data.value?.status === 'success') {
+        $store.postList.articleList = data.value.data?.articleList;
+        $store.postList.pageInfo = data.value.data?.pageInfo;
+      } else {
+        showFailToast(error.value?.data?.statusMessage);
       }
     }
   }

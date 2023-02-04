@@ -135,7 +135,7 @@ const openPreviewPost = async id => {
 
 const setPostList = () => {
   $route.query.publishState = currentState.value === 'public' ? 'On' : 'Off';
-  $postsListStore.getMemberPostsList($route.query);
+  $postsListStore.getPostsList($route.query);
 };
 
 watch(
