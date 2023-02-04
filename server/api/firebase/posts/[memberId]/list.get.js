@@ -34,15 +34,17 @@ export default defineEventHandler(async event => {
     const params = getRouterParams(event);
     const { db } = firebaseServer();
     const postsRef = db.collection('posts');
-    //      .where('member_id', '==', params.memberId)
+
     const snapshot = await postsRef
       .where('status', '==', currentState)
+      .where('member_id', '==', params.memberId)
       .orderBy('update_time', sortListMap.get(currentSort))
       .get();
     let data = [];
     snapshot.forEach(doc => {
       data.push(doc.data());
     });
+    console.log('data', data);
 
     if (currentSearch !== '') {
       data = getSearchFilterData(data, currentSearch);
