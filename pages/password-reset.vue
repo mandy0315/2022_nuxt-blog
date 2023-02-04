@@ -42,7 +42,7 @@ definePageMeta({
 const isSendEmailFailed = ref(false);
 const isSendFinish = ref(false);
 
-const { values, errors, checkError, checkAllError } = useForm({
+const { values, errors, checkError, checkAllError } = useFormVerify({
   initValues: {
     email: ''
   },

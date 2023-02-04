@@ -58,7 +58,7 @@ const $mainStore = useMainStore();
 const isShowPasswordValue = ref(false);
 
 // 驗證
-const { values, errors, checkError, checkAllError } = useForm({
+const { values, errors, checkError, checkAllError } = useFormVerify({
   initValues: {
     account: '',
     password: ''

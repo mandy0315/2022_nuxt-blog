@@ -100,7 +100,7 @@ if (editId.value) {
 }
 
 // 驗證
-const { values, errors, checkError, checkAllError } = useForm({
+const { values, errors, checkError, checkAllError } = useFormVerify({
   initValues: {
     title: '',
     content: ''
