@@ -1,40 +1,41 @@
 import firebaseServer from '@/server/utils/useFirebaseServer';
-import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@/server/utils/useFirebase';
 
+const getTagsFromFirebase = async () => {
+  const { db } = firebaseServer();
+  const postsRef = db.collection('posts');
+
+  const snapshot = await postsRef.where('status', '==', 'public').get();
+
+  const tags = [];
+  snapshot.forEach(doc => {
+    const item = doc.data();
+    item.tags.forEach(tag => {
+      tags.push(tag);
+    });
+  });
+
+  return tags;
+};
+const getPostCountByTags = (deleteRepeatTags, tags) => {
+  const data = [];
+  deleteRepeatTags.forEach(tag => {
+    const filtersTagCount = tags.filter(tag2 => tag2 === tag).length; // 每個標籤文章數
+    const obj = { name: tag, count: filtersTagCount };
+    data.push(obj);
+  });
+  return data;
+};
 export default defineEventHandler(async event => {
   try {
-    const { db } = firebaseServer();
-    const postsRef = db.collection('posts');
+    const tags = await getTagsFromFirebase();
 
-    const snapshot = await postsRef.where('status', '==', 'public').get();
-
-    // firebase 取得所有標籤
-    const tags = [];
-    snapshot.forEach(doc => {
-      const item = doc.data();
-      item.tags.forEach(tag => {
-        tags.push(tag);
-      });
-    });
-
-    // 標籤排序
-    tags.sort((a, b) => {
+    const tagsSortToLenAsc = tags.sort((a, b) => {
       return a.length - b.length;
     });
 
-    // 刪除重複 tag
-    const deleteRepeatTags = [...new Set(tags)];
+    const deleteRepeatTags = [...new Set(tagsSortToLenAsc)];
 
-    // 每個標籤文章數
-    const data = [];
-    deleteRepeatTags.forEach(tag => {
-      let filtersTagCount = tags.filter(tag2 => tag2 === tag).length;
-      const obj = { name: '', count: 0 };
-      obj.name = tag;
-      obj.count = filtersTagCount;
-      data.push(obj);
-    });
+    const data = getPostCountByTags(deleteRepeatTags, tags);
 
     return {
       status: 'success',
