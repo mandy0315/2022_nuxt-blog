@@ -41,19 +41,11 @@ import { useMainStore } from '@/stores/index';
 const menuList = [
   {
     link: '/archive',
-    name: '文章列表'
-  },
-  {
-    link: '/about',
-    name: '關於我'
+    name: '筆記列表'
   }
 ];
 
 const $mainStore = useMainStore();
-const { handleUserLogout } = $mainStore;
-
-const isLogin = computed(() => $mainStore.isLogin);
-const memberInfo = computed(() => $mainStore.memberInfo);
 
 const config = useRuntimeConfig();
 
