@@ -15,8 +15,8 @@
           <nuxt-link :to="`/dashboard/post/manage-${item.state}`">{{ item.name }}</nuxt-link>
         </li>
       </ul>
-      <theSearch class="w-86 ml-auto mr-4 h-9 w-80" />
-      <theSortList />
+      <post-list-search class="w-86 ml-auto mr-4 h-9 w-80" />
+      <post-list-sort />
     </div>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
@@ -53,7 +53,7 @@
           </template>
           <template v-else-if="currentPostList.length === 0">
             <tr>
-              <td colspan="2"><post-no-case /></td>
+              <td colspan="2"><post-list-no-case /></td>
             </tr>
           </template>
         </tbody>

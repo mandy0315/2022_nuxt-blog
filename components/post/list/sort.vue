@@ -5,9 +5,7 @@
       class="relative cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
       @click="toggleList"
     >
-      <Icon icon="fluent:arrow-sort-20-filled" class="item mr-1 inline-block" /><span class="mr-2 align-middle"
-        >時間:</span
-      >
+      <Icon icon="fluent:arrow-sort-20-filled" class="item mr-1 inline-block" />
       <span class="inline-block align-middle font-bold text-c-gray-800">{{ sortListMap.get(currSort) }}</span>
       <i class="pointer-events-none absolute right-0 top-1">
         <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-up" class="inline-block text-xl" />

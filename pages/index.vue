@@ -5,7 +5,7 @@
     </section>
     <section class="grid grid-cols-12 gap-10">
       <div class="col-span-9">
-        <theSortList class="ml-auto" />
+        <post-list-sort class="ml-auto" />
         <template v-if="currentPostList.length > 0">
           <ul class="w-full pb-6">
             <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-gray-400 py-5">
@@ -16,10 +16,10 @@
             <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
           </div>
         </template>
-        <template v-else-if="currentPostList.length === 0"><post-no-case /></template>
+        <template v-else-if="currentPostList.length === 0"><post-list-no-case /></template>
       </div>
       <div class="col-span-3">
-        <the-aside />
+        <aside-default />
       </div>
     </section>
   </div>
