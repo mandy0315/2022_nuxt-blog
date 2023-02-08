@@ -1,5 +1,5 @@
 const api = {
-  storage: '/api/image/pictureToStorage',
+  // storage: '/api/image/pictureToStorage',
   imgur: '/api/image/pictureToImgur'
 };
 export default function () {
