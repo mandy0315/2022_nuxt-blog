@@ -21,14 +21,34 @@ const postsStore = defineStore('postsStore', {
   actions: {
     async getPostsCase(id = '') {
       const $store = this;
+      let postsCase = {
+        status: '',
+        conditions: {}
+      };
 
-      const { data } = await useFetch(`/api/firebase/post/case/${id}`, {
+      const { data, error } = await useFetch(`/api/firebase/post/case/${id}`, {
         method: 'get',
         initialCache: false
       });
-      data.value.success && Object.assign($store.conditions, data.value.result?.data);
 
-      return data.value;
+      const conditionsOfCase = data.value?.data?.conditions;
+      const isHasConditions = Object.keys(conditionsOfCase).length > 0;
+
+      if (data.value?.status === 'success' && isHasConditions) {
+        postsCase.status = 'success';
+        postsCase.conditions = conditionsOfCase;
+
+        Object.assign($store.conditions, conditionsOfCase);
+      } else if (data.value?.status === 'success' && !isHasConditions) {
+        postsCase.status = 'notconditions';
+        postsCase.message = '文章沒有資料';
+      } else {
+        console.log(error.value?.data);
+        postsCase.status = 'notsuccess';
+        postsCase.message = error.value?.data?.message;
+      }
+
+      return postsCase;
     },
     async savePostsCase() {
       const $store = this;

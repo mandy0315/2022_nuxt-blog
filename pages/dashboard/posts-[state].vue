@@ -70,6 +70,7 @@ import { $vfm } from 'vue-final-modal';
 import { usePostsStore, usePostsListStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content/index.vue';
+import { showFailToast } from 'vant';
 
 useHead({ title: '文章管理' });
 definePageMeta({
@@ -115,8 +116,8 @@ const deletePost = async id => {
 };
 
 const openPreviewPost = async id => {
-  const res = await $postsStore.getPostsCase(id);
-  res.success &&
+  const postsCase = await $postsStore.getPostsCase(id);
+  if (postsCase.status === 'success') {
     $vfm.show({
       component: CustomModal,
       bind: {
@@ -131,6 +132,9 @@ const openPreviewPost = async id => {
         }
       }
     });
+  } else {
+    showFailToast(postsCase.message);
+  }
 };
 
 const setPostList = () => {

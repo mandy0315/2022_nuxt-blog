@@ -6,11 +6,15 @@
 
 <script setup>
 import { usePostsStore } from '@/stores/index';
+import { showFailToast } from 'vant';
 
 const $postsStore = usePostsStore();
 const caseConditions = computed(() => $postsStore.conditions);
 
 const { params } = useRoute();
-const res = await $postsStore.getPostsCase(params.id);
-!res.success && (await navigateTo('/')); // 沒有 id 回首頁
+const postsCase = await $postsStore.getPostsCase(params.id);
+if (postsCase.status !== 'success') {
+  showFailToast(postsCase.message);
+  await navigateTo('/');
+}
 </script>

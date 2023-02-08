@@ -82,7 +82,6 @@ import { showFailToast } from 'vant';
 import { usePostsStore } from '@/stores/index';
 
 const $route = useRoute();
-const $router = useRouter();
 const $postsStore = usePostsStore();
 
 const { toolbarConfig, toolbarCustom } = editorToolbar(); // 內容編輯工具列
@@ -92,9 +91,12 @@ const editId = computed(() => $route.params.id || '');
 
 // 判斷是文章編輯還是文章編輯
 if (editId.value) {
-  const res = await $postsStore.getPostsCase(editId.value);
+  const postsCase = await $postsStore.getPostsCase(editId.value);
 
-  !res.success && $router.push({ path: `/dashboard/posts-public` });
+  if (postsCase.status !== 'success') {
+    showFailToast(postsCase.message);
+    await navigateTo('/dashboard/posts-public');
+  }
 } else {
   $postsStore.$reset();
 }
