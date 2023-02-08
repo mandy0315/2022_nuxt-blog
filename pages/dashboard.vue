@@ -15,7 +15,7 @@ definePageMeta({
       const $mainStore = useMainStore();
 
       if ($mainStore.isLogin && to.path === '/dashboard') {
-        return navigateTo('/dashboard/posts-public');
+        return navigateTo('/dashboard/post/manage-public');
       }
     }
   ]

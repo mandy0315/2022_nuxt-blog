@@ -2,7 +2,7 @@
   <div class="c-container">
     <div class="flex items-center justify-between">
       <h1 class="c-title">文章管理</h1>
-      <nuxt-link to="/dashboard/post-edit" class="c-rounded-button c-rounded-button-brown">+ 新增文章</nuxt-link>
+      <nuxt-link to="/dashboard/post/edit" class="c-rounded-button c-rounded-button-brown">+ 新增文章</nuxt-link>
     </div>
     <div class="flex items-end">
       <ul class="mt-6 inline-block">
@@ -12,7 +12,7 @@
           class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
           :class="currentState === item.state ? 'opacity-100' : 'opacity-50'"
         >
-          <nuxt-link :to="`/dashboard/posts-${item.state}`">{{ item.name }}</nuxt-link>
+          <nuxt-link :to="`/dashboard/post/manage-${item.state}`">{{ item.name }}</nuxt-link>
         </li>
       </ul>
       <theSearch class="w-86 ml-auto mr-4 h-9 w-80" />
@@ -34,7 +34,7 @@
               </td>
               <td class="p-4">
                 <nuxt-link
-                  :to="`/dashboard/post-edit/${item.id}`"
+                  :to="`/dashboard/post/edit/${item.id}`"
                   class="c-border-button c-border-button-brown my-1 w-full text-center"
                 >
                   編輯
@@ -77,7 +77,7 @@ definePageMeta({
   middleware: [
     (to, form) => {
       if (!['public', 'draft'].includes(to.params.state)) {
-        return navigateTo('/dashboard/posts-public');
+        return navigateTo('/dashboard/post/manage-public');
       }
     }
   ]

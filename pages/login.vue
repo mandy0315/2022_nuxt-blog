@@ -145,7 +145,7 @@ const handleUserLogin = async () => {
   const userLogin = await userLoginFromFirebase();
   if (userLogin.status === 'success') {
     await $mainStore.checkMemberStatus();
-    return navigateTo('/dashboard/posts-public');
+    return navigateTo('/dashboard/post/manage-public');
   } else {
     isPasswordByFailed.value = 'Firebase: Error (auth/wrong-password).' === userLogin.message;
 

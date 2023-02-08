@@ -40,6 +40,10 @@
 import { useMainStore } from '@/stores/index';
 const menuList = [
   {
+    link: '/',
+    name: '首頁'
+  },
+  {
     link: '/archive',
     name: '筆記列表'
   }

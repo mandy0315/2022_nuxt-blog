@@ -95,7 +95,7 @@ if (editId.value) {
 
   if (postsCase.status !== 'success') {
     showFailToast(postsCase.message);
-    await navigateTo('/dashboard/posts-public');
+    await navigateTo('/dashboard/post/manage-public');
   }
 } else {
   $postsStore.$reset();
