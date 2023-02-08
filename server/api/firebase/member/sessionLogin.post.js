@@ -17,7 +17,6 @@ export default defineEventHandler(async event => {
 
     return { status: 'success' };
   } catch (error) {
-    console.log(error);
     throw createError({
       statusCode: 401,
       message: '登入授權失敗'

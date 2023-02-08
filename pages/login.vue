@@ -6,7 +6,7 @@
     </div>
     <div v-if="isLoginfailed" class="bg-c-yellow-200/40 px-4 py-2">
       <h2 class="text-lg">登入失敗！</h2>
-      <p>請檢查帳號與密碼是否有錯誤</p>
+      <p>請確認帳號或密碼是否有錯誤</p>
     </div>
     <div class="mb-2">
       <form-fill-input v-model:value="accountFill" title="帳號" placeholder="請輸入信箱" inputType="email" />
@@ -93,9 +93,10 @@ const passwordFill = computed({
 
 // 登入事件
 const isLoginfailed = ref(false);
+const loginfailedOfMessage = ref('');
 
 const sessionLogin = async accessToken => {
-  const { data, error } = await useFetch('/api/firebase/member/sessionLogin', {
+  const { error } = await useFetch('/api/firebase/member/sessionLogin', {
     method: 'post',
     body: { accessToken },
     initialCache: false
@@ -104,34 +105,49 @@ const sessionLogin = async accessToken => {
     throw createError({ statusCode: error.value.data.statusCode, statusMessage: error.value.data.message });
   }
 };
+const userLoginFromFirebase = async () => {
+  const { auth } = useFirebaseClient();
+  let userLogin = {
+    status: ''
+  };
+  try {
+    await setPersistence(auth, inMemoryPersistence); // 持久化
+
+    const userCredential = await signInWithEmailAndPassword(auth, values.account, values.password); // 信箱密碼登入
+
+    const accessToken = userCredential.user.accessToken; // 使用者 token
+    await sessionLogin(accessToken);
+
+    userLogin.status = 'success';
+    return userLogin;
+  } catch (error) {
+    console.log(error.data);
+    userLogin.status = 'notsuccess';
+    return userLogin;
+  }
+};
 
 const handleUserLogin = async () => {
-  isLoginfailed.value = false;
+  isLoginfailed.value = false; // 登入失敗初始化
 
+  // 驗證
   const { isError } = checkAllError();
   if (isError) return false;
 
   // 判斷唯一會員
   const config = useRuntimeConfig();
+
   if (values.account !== config.public.WEBSITE_ONlY_MEMBER) {
     isLoginfailed.value = true;
     return false;
   }
 
-  // firebase 登入
-  const { auth } = useFirebaseClient();
-  try {
-    await setPersistence(auth, inMemoryPersistence); // 持久化
-
-    const userCredential = await signInWithEmailAndPassword(auth, values.account, values.password);
-    const accessToken = userCredential.user.accessToken;
-
-    await sessionLogin(accessToken);
-    isLoginfailed.value = false;
-
+  // 登入
+  const userLogin = await userLoginFromFirebase();
+  if (userLogin.status === 'success') {
     await $mainStore.checkMemberStatus();
-    return $router.go(-1);
-  } catch (error) {
+    return navigateTo('/dashboard/posts-public');
+  } else {
     isLoginfailed.value = true;
   }
 };
