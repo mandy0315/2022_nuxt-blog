@@ -1,12 +1,13 @@
 import firebaseServer from '@/server/utils/useFirebaseServer';
 
 export default defineEventHandler(async event => {
-  try {
-    const { db } = firebaseServer();
-    const params = await getRouterParams(event);
-    const body = await readBody(event);
+  const { db } = firebaseServer();
+  const params = await getRouterParams(event);
+  const body = await readBody(event);
 
-    const postsRef = db.collection('posts').doc(params.id);
+  const postId = params.id;
+  try {
+    const postsRef = db.collection('posts').doc(postId);
     await postsRef.update(body);
 
     return { status: 'success' };
