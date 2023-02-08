@@ -53,6 +53,9 @@ const postsStore = defineStore('postsStore', {
     async savePostsCase() {
       const $store = this;
       const $mainStore = mainStore();
+      let postsCase = {
+        status: ''
+      };
 
       // 更新時間
       const id = $store.conditions.id;
@@ -80,7 +83,15 @@ const postsStore = defineStore('postsStore', {
             body: $store.conditions,
             initialCache: false
           });
-      return error.value ? error.value.data : data.value;
+      if (data.value?.status === 'success') {
+        postsCase.status = 'success';
+      } else {
+        console.log(error.value?.data);
+        postsCase.status = 'notsuccess';
+        postsCase.message = error.value?.data?.message;
+      }
+
+      return postsCase;
     },
     async deletePostsCase(id = '') {
       let postsCase = {

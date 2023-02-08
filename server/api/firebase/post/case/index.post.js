@@ -1,10 +1,9 @@
 import firebaseServer from '@/server/utils/useFirebase';
 
 export default defineEventHandler(async event => {
+  const { db } = firebaseServer();
+  const body = await readBody(event);
   try {
-    const { db } = firebaseServer();
-    const body = await readBody(event);
-
     const postsRef = db.collection('posts').doc();
     body.id = postsRef.id; // 取的 id
     await postsRef.set(body);

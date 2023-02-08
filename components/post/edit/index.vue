@@ -183,11 +183,11 @@ const sendForm = async () => {
   const { isError } = checkAllError();
   if (isError) return false;
 
-  const result = await $postsStore.savePostsCase();
-  if (result.status === 'success') {
+  const postsCase = await $postsStore.savePostsCase();
+  if (postsCase.status === 'success') {
     isSendFinish.value = true;
   } else {
-    showFailToast(result.message);
+    showFailToast(postsCase.message);
   }
 };
 </script>
