@@ -31,7 +31,7 @@ import { usePostsListStore } from '@/stores/index';
 const $postsListStore = usePostsListStore();
 const $route = useRoute();
 
-const currentPostList = computed(() => $postsListStore.postList.articleList);
+const currentPostList = computed(() => $postsListStore.postList.list);
 const totalPages = computed(() => $postsListStore.postList?.pageInfo?.pages);
 
 const currentPage = computed({

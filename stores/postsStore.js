@@ -86,7 +86,7 @@ const postsListStore = defineStore('postsListStore', {
   state: () => ({
     params: { ...defaultParams },
     postList: {
-      articleList: [],
+      list: [],
       pageInfo: {}
     }
   }),
@@ -170,7 +170,7 @@ const postsListStore = defineStore('postsListStore', {
         initialCache: false
       });
       if (data.value?.status === 'success') {
-        $store.postList.articleList = data.value.data?.articleList;
+        $store.postList.list = data.value.data?.list;
         $store.postList.pageInfo = data.value.data?.pageInfo;
       } else {
         console.log(error.value?.data);

@@ -66,7 +66,7 @@ export default defineEventHandler(async event => {
       status: 'success',
       data: {
         pageInfo: result.pageInfo,
-        articleList: result.data
+        list: result.data
       }
     };
   } catch (error) {

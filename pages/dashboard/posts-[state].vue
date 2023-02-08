@@ -99,7 +99,7 @@ const $route = useRoute();
 const currentState = computed(() => $route.params.state);
 const caseConditions = computed(() => $postsStore.conditions);
 
-const currentPostList = computed(() => $postsListStore.postList.articleList);
+const currentPostList = computed(() => $postsListStore.postList.list);
 const totalPages = computed(() => $postsListStore.postList?.pageInfo?.pages);
 
 const currentPage = computed({

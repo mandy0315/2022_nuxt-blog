@@ -2,10 +2,27 @@ import { markdownToTxt } from '@/server/utils/useMarkdown';
 import firebaseServer from '@/server/utils/useFirebaseServer';
 import pagination from '@/server/utils/usePagination';
 
-const sortListMap = new Map([
-  [0, 'desc'],
-  [1, 'asc']
-]);
+const getPostListFromFirebase = async (currentState, currentSort) => {
+  const { db } = firebaseServer();
+  const postsRef = db.collection('posts');
+
+  const sortListMap = new Map([
+    [0, 'desc'],
+    [1, 'asc']
+  ]);
+
+  const snapshot = await postsRef
+    .where('status', '==', currentState)
+    .orderBy('update_time', sortListMap.get(currentSort))
+    .get();
+
+  const postList = [];
+  snapshot.forEach(doc => {
+    postList.push(doc.data());
+  });
+
+  return postList;
+};
 
 const getSearchFilterData = (data, currentSearch) => {
   const strArray = currentSearch.split(' ');
@@ -23,36 +40,26 @@ const getSearchFilterData = (data, currentSearch) => {
 };
 
 export default defineEventHandler(async event => {
-  try {
-    const urlQuery = getQuery(event);
-    const currentState = urlQuery.publishState === 'On' ? 'public' : 'draft';
-    const currentPage = +urlQuery.page;
-    const currentSort = +urlQuery.sort || 0; // 預設排序: 時間新->舊
-    const currentSearch = urlQuery.search || '';
+  const urlQuery = getQuery(event);
+  const currentState = urlQuery.publishState === 'On' ? 'public' : 'draft'; // 狀態
+  const currentPage = +urlQuery.page || 1; // 頁數
+  const currentSort = +urlQuery.sort || 0; // 排序
+  const currentSearch = urlQuery.search || ''; // 搜尋
 
-    // firebase
-    const { db } = firebaseServer();
-    const postsRef = db.collection('posts');
-    const snapshot = await postsRef
-      .where('status', '==', currentState)
-      .orderBy('update_time', sortListMap.get(currentSort))
-      .get();
-    let data = [];
-    snapshot.forEach(doc => {
-      data.push(doc.data());
-    });
+  try {
+    let postList = await getPostListFromFirebase(currentState, currentSort);
 
     if (currentSearch !== '') {
-      data = getSearchFilterData(data, currentSearch);
+      postList = getSearchFilterData(postList, currentSearch);
     }
 
-    const result = pagination({ currPage: currentPage, perPage: 2, articles: data });
+    const result = pagination({ currPage: currentPage, perPage: 2, articles: postList });
 
     return {
       status: 'success',
       data: {
         pageInfo: result.pageInfo,
-        articleList: result.data
+        list: result.data
       }
     };
   } catch (error) {
