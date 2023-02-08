@@ -1,13 +1,16 @@
-import { doc, deleteDoc } from 'firebase/firestore';
-import { db } from '@/server/utils/useFirebase';
+import firebaseServer from '@/server/utils/useFirebaseServer';
 
 export default defineEventHandler(async event => {
-  try {
-    const params = getRouterParams(event);
-    await deleteDoc(doc(db, 'posts', params.id));
+  const { db } = firebaseServer();
+  const params = getRouterParams(event);
 
-    return { success: true };
+  const postId = params.id;
+  try {
+    const postsRef = db.collection('posts').doc(postId);
+    await postsRef.delete();
+
+    return { status: 'success' };
   } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: error.message });
+    throw createError({ statusCode: 500, message: '刪除文章失敗' });
   }
 });

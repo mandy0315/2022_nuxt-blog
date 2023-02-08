@@ -83,11 +83,24 @@ const postsStore = defineStore('postsStore', {
       return error.value ? error.value.data : data.value;
     },
     async deletePostsCase(id = '') {
-      const { data } = await useFetch(`/api/firebase/post/case/${id}`, {
+      let postsCase = {
+        status: '',
+        message: ''
+      };
+
+      const { data, error } = await useFetch(`/api/firebase/post/case/${id}`, {
         method: 'delete',
         initialCache: false
       });
-      return data.value;
+      if (data.value.status === 'success') {
+        postsCase.status = data.value.status;
+        postsCase.message = '刪除文章成功';
+      } else {
+        postsCase.status = 'notsuccess';
+        postsCase.message = error.value?.data?.message;
+      }
+
+      return postsCase;
     },
     updateCondition(item, val) {
       const $store = this;

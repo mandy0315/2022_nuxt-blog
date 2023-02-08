@@ -70,7 +70,7 @@ import { $vfm } from 'vue-final-modal';
 import { usePostsStore, usePostsListStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content/index.vue';
-import { showFailToast } from 'vant';
+import { showFailToast, showSuccessToast, showConfirmDialog, closeDialog } from 'vant';
 
 useHead({ title: '文章管理' });
 definePageMeta({
@@ -109,10 +109,26 @@ const currentPage = computed({
 });
 
 const deletePost = async id => {
-  const data = await $postsStore.deletePostsCase(id);
-  if (data.success) {
-    $postsListStore.setCurrentPage(1);
-  }
+  const beforeClose = async action => {
+    if (action === 'confirm') {
+      closeDialog();
+      const postsCase = await $postsStore.deletePostsCase(id);
+      if (postsCase.status === 'success') {
+        showSuccessToast(postsCase.message);
+        $postsListStore.setCurrentPage(1);
+      } else {
+        showFailToast(postsCase.message);
+      }
+    } else {
+      closeDialog();
+    }
+  };
+  await showConfirmDialog({
+    title: '請確認是否要刪除筆記?',
+    message: '確認刪除後，無法再復原文章，請慎重考慮',
+    confirmButtonText: '確認',
+    beforeClose
+  });
 };
 
 const openPreviewPost = async id => {
