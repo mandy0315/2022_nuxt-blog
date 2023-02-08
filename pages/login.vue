@@ -2,15 +2,12 @@
   <div class="mx-auto max-w-[320px] pt-4">
     <div class="mb-4">
       <h1 class="pb-1 text-2xl font-bold text-c-brown-600">登入會員</h1>
-      <p class="text-sm text-c-gray-800">沒有註冊頁喔～ 只有一個帳戶可使用！</p>
-    </div>
-    <div v-if="isLoginfailed" class="bg-c-yellow-200/40 px-4 py-2">
-      <h2 class="text-lg">登入失敗！</h2>
-      <p>請確認帳號或密碼是否有錯誤</p>
+      <p class="text-sm text-c-gray-800">沒有註冊頁喔～ 只有一個帳號可使用！</p>
     </div>
     <div class="mb-2">
       <form-fill-input v-model:value="accountFill" title="帳號" placeholder="請輸入信箱" inputType="email" />
       <p v-if="errors['account']" class="pt-1 text-sm text-red-600">{{ errors['account'] }}</p>
+      <p v-else-if="isOnlyOneMemberByFailed" class="pt-1 text-sm text-red-600">只有一個帳號可使用！請檢查是否有錯誤</p>
     </div>
     <div class="mb-4">
       <form-fill-input
@@ -37,6 +34,7 @@
       </form-fill-input>
 
       <p v-if="errors['password']" class="pt-1 text-sm text-red-600">{{ errors['password'] }}</p>
+      <p v-else-if="isPasswordByFailed" class="pt-1 text-sm text-red-600">請檢查密碼是否有錯誤</p>
     </div>
 
     <div @click="handleUserLogin" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">登入</div>
@@ -46,13 +44,13 @@
 <script setup>
 import { useMainStore } from '@/stores/index';
 import { signInWithEmailAndPassword, inMemoryPersistence, setPersistence } from 'firebase/auth';
+import { showFailToast } from 'vant';
 
 useHead({ title: '會員登入' });
 definePageMeta({
   layout: false
 });
 
-const $router = useRouter();
 const $mainStore = useMainStore();
 
 const isShowPasswordValue = ref(false);
@@ -92,8 +90,8 @@ const passwordFill = computed({
 });
 
 // 登入事件
-const isLoginfailed = ref(false);
-const loginfailedOfMessage = ref('');
+const isPasswordByFailed = ref(false);
+const isOnlyOneMemberByFailed = ref(false);
 
 const sessionLogin = async accessToken => {
   const { error } = await useFetch('/api/firebase/member/sessionLogin', {
@@ -119,16 +117,17 @@ const userLoginFromFirebase = async () => {
     await sessionLogin(accessToken);
 
     userLogin.status = 'success';
-    return userLogin;
   } catch (error) {
-    console.log(error.data);
+    console.log(error.message);
     userLogin.status = 'notsuccess';
-    return userLogin;
+    userLogin.message = error.message;
   }
+  return userLogin;
 };
 
 const handleUserLogin = async () => {
-  isLoginfailed.value = false; // 登入失敗初始化
+  isPasswordByFailed.value = false; // 登入失敗初始化
+  isOnlyOneMemberByFailed.value = false;
 
   // 驗證
   const { isError } = checkAllError();
@@ -138,7 +137,7 @@ const handleUserLogin = async () => {
   const config = useRuntimeConfig();
 
   if (values.account !== config.public.WEBSITE_ONlY_MEMBER) {
-    isLoginfailed.value = true;
+    isOnlyOneMemberByFailed.value = true;
     return false;
   }
 
@@ -148,7 +147,9 @@ const handleUserLogin = async () => {
     await $mainStore.checkMemberStatus();
     return navigateTo('/dashboard/posts-public');
   } else {
-    isLoginfailed.value = true;
+    isPasswordByFailed.value = 'Firebase: Error (auth/wrong-password).' === userLogin.message;
+
+    !isPasswordByFailed.value && showFailToast('登入失敗');
   }
 };
 </script>
