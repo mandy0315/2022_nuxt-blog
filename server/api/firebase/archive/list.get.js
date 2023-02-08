@@ -1,5 +1,5 @@
 import useDateTime from '@/utils/useDateTime';
-import firebaseServer from '@/server/utils/useFirebaseServer';
+import firebaseServer from '@/server/utils/useFirebase';
 
 const getPostListFromFirebase = async () => {
   const { db } = firebaseServer();

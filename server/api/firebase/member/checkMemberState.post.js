@@ -1,4 +1,4 @@
-import firebaseServer from '@/server/utils/useFirebaseServer';
+import firebaseServer from '@/server/utils/useFirebase';
 
 export default defineEventHandler(async event => {
   const { auth } = firebaseServer();

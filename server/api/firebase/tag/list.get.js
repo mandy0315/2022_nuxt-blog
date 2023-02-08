@@ -1,4 +1,4 @@
-import firebaseServer from '@/server/utils/useFirebaseServer';
+import firebaseServer from '@/server/utils/useFirebase';
 
 const getTagsFromFirebase = async () => {
   const { db } = firebaseServer();

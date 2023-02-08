@@ -1,5 +1,5 @@
 import { markdownToTxt } from '@/server/utils/useMarkdown';
-import firebaseServer from '@/server/utils/useFirebaseServer';
+import firebaseServer from '@/server/utils/useFirebase';
 import pagination from '@/server/utils/usePagination';
 
 const getPostListFromFirebase = async ({ currentState, currentSort, memberId }) => {
