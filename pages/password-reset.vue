@@ -16,13 +16,10 @@
         <p class="text-sm text-c-gray-800">輸入信箱寄出後，你的信箱將會收到一封信，點開連結後即可重設你的密碼。</p>
         <p class="text-xs text-c-brown-600">(注意：信件可能會在垃圾信件中)</p>
       </div>
-      <div v-if="isSendEmailFailed" class="bg-c-yellow-200/40 px-4 py-2">
-        <h2 class="text-lg">寄出失敗！</h2>
-        <p>請檢查信箱是否有錯誤</p>
-      </div>
       <div class="mb-4">
         <form-fill-input v-model:value="emailFill" placeholder="請輸入信箱" inputType="email" />
         <p v-if="errors['email']" class="pt-1 text-sm text-red-600">{{ errors['email'] }}</p>
+        <p v-if="isSendEmailFailed" class="pt-1 text-sm text-red-600">請檢查信箱是否有錯誤</p>
       </div>
 
       <button @click="sendEmail" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">
@@ -38,9 +35,6 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 definePageMeta({
   layout: false
 });
-
-const isSendEmailFailed = ref(false);
-const isSendFinish = ref(false);
 
 const { values, errors, checkError, checkAllError } = useFormVerify({
   initValues: {
@@ -62,7 +56,11 @@ const emailFill = computed({
   }
 });
 
+const isSendEmailFailed = ref(false);
+const isSendFinish = ref(false);
 const sendEmail = async () => {
+  isSendEmailFailed.value = false;
+
   const { isError } = checkAllError();
   if (isError) return false;
 
@@ -80,8 +78,7 @@ const sendEmail = async () => {
       isSendFinish.value = true;
     })
     .catch(error => {
-      isSendEmailFailed.value = true;
-      console.log('信件寄出錯誤', error);
+      console.log(error.data);
     });
 };
 </script>
