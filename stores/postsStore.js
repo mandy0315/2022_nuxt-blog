@@ -22,7 +22,7 @@ const postsStore = defineStore('postsStore', {
     async getPostsCase(id = '') {
       const $store = this;
 
-      const { data } = await useFetch(`/api/firebase/posts/case/${id}`, {
+      const { data } = await useFetch(`/api/firebase/post/case/${id}`, {
         method: 'get',
         initialCache: false
       });
@@ -50,12 +50,12 @@ const postsStore = defineStore('postsStore', {
 
       // 新增還是更新資料
       const { data, error } = id
-        ? await useFetch(`/api/firebase/posts/case/${id}`, {
+        ? await useFetch(`/api/firebase/post/case/${id}`, {
             method: 'put',
             body: $store.conditions,
             initialCache: false
           })
-        : await useFetch('/api/firebase/posts/case', {
+        : await useFetch('/api/firebase/post/case', {
             method: 'post',
             body: $store.conditions,
             initialCache: false
@@ -63,7 +63,7 @@ const postsStore = defineStore('postsStore', {
       return error.value ? error.value.data : data.value;
     },
     async deletePostsCase(id = '') {
-      const { data } = await useFetch(`/api/firebase/posts/case/${id}`, {
+      const { data } = await useFetch(`/api/firebase/post/case/${id}`, {
         method: 'delete',
         initialCache: false
       });
@@ -162,8 +162,8 @@ const postsListStore = defineStore('postsListStore', {
       $store.resetParams();
 
       const fetchURL = $mainStore.isDashboardPages
-        ? `/api/firebase/posts/${$mainStore.memberInfo.id}/list`
-        : '/api/firebase/posts/list';
+        ? `/api/firebase/post/${$mainStore.memberInfo.id}/list`
+        : '/api/firebase/post/list';
       const { data, error } = await useFetch(fetchURL, {
         method: 'get',
         params: $store.getParams(queryStr),
