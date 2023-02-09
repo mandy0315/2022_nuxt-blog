@@ -1,10 +1,11 @@
 <template>
-  <div class="c-container">
-    <section class="py-10">
-      <h1 class="text-center text-4xl font-bold">Mandy's 技術與生活筆記</h1>
-    </section>
-    <section class="grid grid-cols-12 gap-10">
-      <div class="col-span-9">
+  <div>
+    <nuxt-layout name="default">
+      <template #title>
+        <h1 class="my-10 text-center text-4xl font-bold">Mandy's 技術與生活筆記</h1>
+      </template>
+
+      <div>
         <post-list-sort class="ml-auto" />
         <template v-if="currentPostList.length > 0">
           <ul class="w-full pb-6">
@@ -18,16 +19,16 @@
         </template>
         <template v-else-if="currentPostList.length === 0"><post-list-no-case /></template>
       </div>
-      <div class="col-span-3">
-        <aside-default />
-      </div>
-    </section>
+    </nuxt-layout>
   </div>
 </template>
 
 <script setup>
 import { usePostsListStore } from '@/stores/index';
 
+definePageMeta({
+  layout: false
+});
 const $postsListStore = usePostsListStore();
 const $route = useRoute();
 

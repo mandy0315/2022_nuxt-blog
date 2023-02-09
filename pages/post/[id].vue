@@ -1,5 +1,5 @@
 <template>
-  <div class="c-container">
+  <div>
     <post-content v-bind="caseConditions" :hasTagLinks="true" :hasToc="true" :hasComment="true" />
   </div>
 </template>
@@ -8,6 +8,11 @@
 import { usePostsStore } from '@/stores/index';
 import { showFailToast } from 'vant';
 
+definePageMeta({
+  layout: 'post'
+});
+
+const { dateFormat } = useDateTime();
 const $postsStore = usePostsStore();
 const caseConditions = computed(() => $postsStore.conditions);
 

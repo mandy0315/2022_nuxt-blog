@@ -1,9 +1,15 @@
 <template>
-  <div class="c-container">
-    <div class="mr-4">
-      <h1 class="c-title pb-3">檔案</h1>
-      <div v-if="postListByArchive.length > 0">
-        <h2>{{ postListByArchive[0].year }}年的筆記</h2>
+  <div>
+    <nuxt-layout name="default">
+      <template #title>
+        <h1 class="my-10 text-center text-4xl font-bold">檔案</h1>
+      </template>
+
+      <div v-if="postListByArchive.length > 0" class="col-span-9">
+        <div class="flex justify-between">
+          <h2>{{ postListByArchive[0].year }}年的筆記</h2>
+          <archive-year-select />
+        </div>
         <ul>
           <li v-for="i in postListByArchive[0].list" :key="i.id">
             <nuxt-link :to="`/post/${i.id}`">
@@ -13,13 +19,16 @@
           </li>
         </ul>
       </div>
-    </div>
+    </nuxt-layout>
   </div>
 </template>
 
 <script setup>
 useHead({
   title: '檔案'
+});
+definePageMeta({
+  layout: false
 });
 const postListByArchive = useState('postListByArchive', () => []);
 const yearsByArchive = useState('yearsByArchive', () => []);
