@@ -1,6 +1,7 @@
 <template>
-  <div class="flex">
-    <article ref="postContent_el" class="mr-4 grow">
+  <div ref="postContent_el" class="c-container">
+    <!-- title -->
+    <div class="pb-10">
       <h1 :id="`#${title}`" class="c-title pb-3">{{ title }}</h1>
       <div class="mr-2 flex items-center">
         <div class="inline-block self-center text-sm text-c-gray-400">
@@ -18,39 +19,31 @@
           </span>
         </div>
       </div>
-      <!-- image -->
-      <div v-if="coverPicture.length > 0" class="block max-w-xl py-4">
-        <post-image :link="coverPicture[0].link" :title="coverPicture[0].name" />
-      </div>
-      <!-- content -->
-      <div class="pt-8">
+    </div>
+
+    <!-- content -->
+    <div class="flex">
+      <div class="w-full grow">
         <v-md-preview ref="mdPreview_el" class="preview-custom" :text="content" />
+        <!-- comment -->
         <template v-if="hasComment">
           <client-only>
             <post-content-comment :postTitle="title" />
           </client-only>
         </template>
       </div>
-    </article>
-    <aside v-if="hasToc" class="w-60">
-      <post-content-toc />
-    </aside>
+      <post-content-toc v-if="hasToc" />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { useMainStore } from '@/stores/index';
-
 const props = defineProps({
   title: {
     type: String,
     default: '標題'
   },
   tags: {
-    type: Array,
-    default: () => []
-  },
-  coverPicture: {
     type: Array,
     default: () => []
   },
@@ -77,36 +70,5 @@ const props = defineProps({
 });
 
 const { dateFormat } = useDateTime();
-
 const mdPreview_el = useState('mdPreview_el', () => ref(null));
-
-const $mainStore = useMainStore();
-const headerBottomHeight = computed(() => $mainStore.els.headerBottom_el?.offsetHeight || 0);
-
-// 設定滑動後樣式
-const setScrollMarginStyle = () => {
-  document.querySelectorAll('html,body').forEach(el => {
-    el.style.cssText = `scroll-padding-top: ${headerBottomHeight.value + 10}px;`;
-  });
-};
-
-onMounted(() => {
-  setScrollMarginStyle();
-  // 錨點滑動
-  const $route = useRoute();
-  const { hash } = $route;
-  const { scrollToSection } = useScrollTo();
-  if (hash) {
-    const str = hash.replace('#', '');
-    const target = document.getElementById(str);
-
-    window.setTimeout(() => {
-      target &&
-        scrollToSection({
-          toSection: target,
-          marginTop: headerBottomHeight.value + 10
-        });
-    }, 500);
-  }
-});
 </script>
