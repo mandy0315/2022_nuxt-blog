@@ -9,7 +9,7 @@
       >
       <h3 v-else class="pb-2 text-2xl font-bold text-c-gray-800">{{ title }}</h3>
 
-      <p class="line-clamp-2">{{ contentToSummary() }}</p>
+      <p class="line-clamp-2">{{ contentToSummary }}</p>
       <div class="mr-2 flex items-center pt-6">
         <div class="inline-block self-center text-sm text-c-gray-400">
           <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
@@ -28,8 +28,8 @@
         </div>
       </div>
     </div>
-    <section v-if="coverPicture.length > 0" class="w-60">
-      <post-image class="rounded" :link="coverPicture[0].link" :title="coverPicture[0].name" />
+    <section v-if="Object.keys(contentToCoverPicture).length > 0" class="w-60">
+      <post-image class="rounded" :link="contentToCoverPicture.href" :title="contentToCoverPicture.name" />
     </section>
   </div>
 </template>
@@ -44,21 +44,17 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  coverPicture: {
-    type: Array,
-    default: []
-  },
   tags: {
     type: Array,
     default: []
   },
   content: {
     type: String,
-    default: '內容'
+    default: ''
   },
   update_time: {
     type: String,
-    default: '2022/11/04'
+    default: ''
   },
   hasLinks: {
     type: Boolean,
@@ -68,10 +64,25 @@ const props = defineProps({
 const { dateFormat } = useDateTime();
 
 const { $convertTohtml } = useNuxtApp();
-const contentToSummary = () => {
+
+const contentToSummary = computed(() => {
   const markdownToHtml = $convertTohtml(props.content);
   let replaceHtml = markdownToHtml.replace(/<\/?.+?\/?>|{{{\/?.+?\/?}}}/g, '');
   replaceHtml.replace(/\s*/g, '');
   return replaceHtml;
-};
+});
+
+const contentToCoverPicture = computed(() => {
+  const markdownToHtml = $convertTohtml(props.content);
+  const imageArray = markdownToHtml.match(/<img .+?\/?>/g);
+  if (imageArray) {
+    const attrs = imageArray[0].match(/"([^"]*)" /g);
+    const obj = {
+      href: attrs[0].replace(/"*/g, ''),
+      name: attrs[1].replace(/"*/g, '')
+    };
+    return obj;
+  }
+  return {};
+});
 </script>

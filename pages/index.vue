@@ -47,5 +47,7 @@ watch(
   }
 );
 
-$postsListStore.getPostsList($route.query);
+(async () => {
+  await $postsListStore.getPostsList($route.query);
+})();
 </script>

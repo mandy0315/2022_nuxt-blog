@@ -118,7 +118,8 @@ export default function () {
               const event = await editor.$refs.uploadFile.upload();
               const file = event.target.files[0];
               const data = await uploadFile(file, 'pictureToImgur');
-              insertURL(editor, file.name, data.result?.link);
+              const replaceFileName = data.result?.name.replace(/.(jpg|gif|png|svg)$/g, '');
+              insertURL(editor, replaceFileName, data.result?.link);
             });
           }
         }

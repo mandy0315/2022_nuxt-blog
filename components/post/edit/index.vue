@@ -14,7 +14,6 @@
           <form-fill-input v-model:value="titleFill" title="標題" placeholder="請輸入標題" class="col-span-1" />
           <p v-if="errors['title']" class="pt-1 text-sm text-red-600">{{ errors['title'] }}</p>
         </span>
-        <form-file-input v-model:value="coverPictureChoosed" title="封面圖" class="col-span-1" />
         <form-tags-combobox
           v-model:tags="tagsChoosed"
           title="分類"
@@ -136,13 +135,6 @@ const contentFill = computed({
     values.content = val;
     checkError('content');
     $postsStore.updateCondition('content', val);
-  }
-});
-// 封面圖
-const coverPictureChoosed = computed({
-  get: () => $postsStore.conditions.coverPicture,
-  set: val => {
-    $postsStore.updateCondition('coverPicture', val);
   }
 });
 onMounted(() => {

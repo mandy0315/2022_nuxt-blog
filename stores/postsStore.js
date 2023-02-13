@@ -12,7 +12,6 @@ const postsStore = defineStore('postsStore', {
       content: '',
       status: 'draft',
       tags: [],
-      coverPicture: [],
       created_at: '',
       update_time: ''
     }
