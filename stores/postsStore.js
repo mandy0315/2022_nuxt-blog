@@ -30,24 +30,36 @@ const postsStore = defineStore('postsStore', {
         method: 'get',
         initialCache: false
       });
-
-      const conditionsOfCase = data.value?.data?.conditions;
-      const isHasConditions = Object.keys(conditionsOfCase).length > 0;
-
-      if (data.value?.status === 'success' && isHasConditions) {
+      if (data.value?.status === 'success') {
         postsCase.status = 'success';
-        postsCase.conditions = conditionsOfCase;
-
-        Object.assign($store.conditions, conditionsOfCase);
-      } else if (data.value?.status === 'success' && !isHasConditions) {
-        postsCase.status = 'notconditions';
-        postsCase.message = '文章沒有資料';
+        postsCase.conditions = data.value?.data?.conditions;
+        Object.assign($store.conditions, postsCase.conditions);
       } else {
         console.log(error.value?.data);
         postsCase.status = 'notsuccess';
         postsCase.message = error.value?.data?.message;
       }
 
+      return postsCase;
+    },
+    async deletePostsCase(id = '') {
+      let postsCase = {
+        status: '',
+        message: ''
+      };
+      const { data, error } = await useFetch(`/api/firebase/post/case/${id}`, {
+        method: 'delete',
+        initialCache: false
+      });
+
+      if (data.value?.status === 'success') {
+        postsCase.status = data.value?.status;
+        postsCase.message = '刪除文章成功';
+      } else {
+        console.log(error.value?.data);
+        postsCase.status = 'notsuccess';
+        postsCase.message = error.value?.data?.message;
+      }
       return postsCase;
     },
     async savePostsCase() {
@@ -87,26 +99,6 @@ const postsStore = defineStore('postsStore', {
         postsCase.status = 'success';
       } else {
         console.log(error.value?.data);
-        postsCase.status = 'notsuccess';
-        postsCase.message = error.value?.data?.message;
-      }
-
-      return postsCase;
-    },
-    async deletePostsCase(id = '') {
-      let postsCase = {
-        status: '',
-        message: ''
-      };
-
-      const { data, error } = await useFetch(`/api/firebase/post/case/${id}`, {
-        method: 'delete',
-        initialCache: false
-      });
-      if (data.value.status === 'success') {
-        postsCase.status = data.value.status;
-        postsCase.message = '刪除文章成功';
-      } else {
         postsCase.status = 'notsuccess';
         postsCase.message = error.value?.data?.message;
       }

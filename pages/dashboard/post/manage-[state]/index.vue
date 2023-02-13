@@ -108,11 +108,12 @@ const currentPage = computed({
   set: val => $postsListStore.setCurrentPage(val)
 });
 
-const deletePost = async id => {
+const deletePost = id => {
   const beforeClose = async action => {
     if (action === 'confirm') {
       closeDialog();
       const postsCase = await $postsStore.deletePostsCase(id);
+      console.log('test=>', postsCase);
       if (postsCase.status === 'success') {
         showSuccessToast(postsCase.message);
         $postsListStore.setCurrentPage(1);
@@ -123,7 +124,7 @@ const deletePost = async id => {
       closeDialog();
     }
   };
-  await showConfirmDialog({
+  showConfirmDialog({
     title: '請確認是否要刪除筆記?',
     message: '確認刪除後，無法再復原文章，請慎重考慮',
     confirmButtonText: '確認',
