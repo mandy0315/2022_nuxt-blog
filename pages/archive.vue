@@ -2,15 +2,19 @@
   <div>
     <nuxt-layout name="default">
       <template #title>
-        <h1 class="my-10 text-center text-4xl font-bold">檔案</h1>
+        <h1 class="my-10 text-center text-4xl font-bold">筆記列表-年份</h1>
       </template>
 
       <div v-if="postListByArchive.length > 0" class="col-span-9">
-        <div class="flex justify-between">
-          <h2>{{ postListByArchive[0].year }}年的筆記</h2>
-          <archive-year-select />
+        <div class="flex justify-between border-b">
+          <h2 class="text-3xl font-bold">{{ postListByArchive[0].year }}年的筆記</h2>
+          <the-select-box class="mb-1" v-model:value="currYearByArchive" :selectList="yearsByArchive">
+            <template #title>
+              <Icon icon="ic:outline-format-list-bulleted" class="inline-block text-lg" />
+            </template>
+          </the-select-box>
         </div>
-        <ul>
+        <ul v-if="postListByArchive[0].list.length > 0">
           <li v-for="i in postListByArchive[0].list" :key="i.id">
             <nuxt-link :to="`/post/${i.id}`">
               <span>{{ i.update_at_date }}</span>
@@ -18,29 +22,32 @@
             </nuxt-link>
           </li>
         </ul>
+        <template v-else><post-list-no-case /></template>
       </div>
     </nuxt-layout>
   </div>
 </template>
 
 <script setup>
+import { showFailToast } from 'vant';
 useHead({
   title: '檔案'
 });
 definePageMeta({
   layout: false
 });
+const $route = useRoute();
+
 const postListByArchive = useState('postListByArchive', () => []);
 const yearsByArchive = useState('yearsByArchive', () => []);
+const currYearByArchive = useState('currYearByArchive', () => yearsByArchive.value[0]);
 
-const $route = useRoute();
+const getYearOfParams = queryStr => (queryStr?.year ? { year: queryStr?.year } : {});
 
 const getArchiveList = async queryStr => {
   const { data } = await useFetch('/api/firebase/archive/list', {
     method: 'get',
-    params: {
-      year: '2023'
-    },
+    params: getYearOfParams(queryStr),
     initialCache: false
   });
   if (data.value?.status === 'success') {
@@ -48,9 +55,16 @@ const getArchiveList = async queryStr => {
     yearsByArchive.value = data.value.data?.years;
   } else {
     console.log(error.value?.data);
-    // showFailToast(error.value?.data?.statusMessage);
+    showFailToast(error.value?.data?.statusMessage);
   }
 };
+
+watch(currYearByArchive, val => {
+  return navigateTo({
+    path: $route.path,
+    query: { year: val }
+  });
+});
 
 watch(
   () => $route.query,
