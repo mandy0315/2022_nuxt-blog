@@ -1,12 +1,20 @@
 <template>
   <div>
     <div>
-      <p>關於我</p>
+      <p class="text-lg">關於我</p>
     </div>
     <div>
-      <p>標籤</p>
-      <ul v-if="tagList.length > 0">
-        <li v-for="tag in tagList" :key="tag.name" class="inline-block">
+      <p class="text-lg">最新筆記 <span class="text-sm">( 顯示最新五筆 )</span></p>
+      <ul v-if="postListByAside.length > 0">
+        {{
+          postListByAside
+        }}
+      </ul>
+    </div>
+    <div>
+      <p class="text-lg">標籤</p>
+      <ul v-if="tagListByAside.length > 0">
+        <li v-for="tag in tagListByAside" :key="tag.name" class="inline-block">
           <nuxt-link :to="`/tag/${tag.name}`">
             <theTag :name="tag.name" :number="tag.count" />
           </nuxt-link>
@@ -20,7 +28,8 @@
 <script setup>
 import { showFailToast } from 'vant';
 
-const tagList = useState('tagList', () => []);
+const tagListByAside = useState('tagListByAside', () => []);
+const postListByAside = useState('postListByAside', () => []);
 
 const getTagList = async () => {
   const { data, error } = await useFetch('/api/firebase/tag/list', {
@@ -28,13 +37,24 @@ const getTagList = async () => {
     initialCache: false
   });
   if (data.value?.status === 'success') {
-    tagList.value = data.value?.data?.list;
-    console.log(tagList.value);
+    tagListByAside.value = data.value?.data?.list;
+  } else {
+    console.log(error.value);
+    // showFailToast(error.value?.data?.statusMessage);
+  }
+};
+const getPostsList = async () => {
+  const { data, error } = await useFetch('/api/firebase/post/newPostlist', {
+    method: 'get',
+    initialCache: false
+  });
+  if (data.value?.status === 'success') {
+    postListByAside.value = data.value?.data?.list;
   } else {
     console.log(error.value?.data);
     showFailToast(error.value?.data?.statusMessage);
   }
 };
-
-getTagList();
+// await getTagList();
+await getPostsList();
 </script>
