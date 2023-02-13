@@ -6,9 +6,11 @@
     <div>
       <p class="text-lg">最新筆記 <span class="text-sm">( 顯示最新五筆 )</span></p>
       <ul v-if="postListByAside.length > 0">
-        {{
-          postListByAside
-        }}
+        <li v-for="post in postListByAside" :key="post.id">
+          <nuxt-link :to="`/post/${post.id}`">
+            {{ post.title }}
+          </nuxt-link>
+        </li>
       </ul>
     </div>
     <div>
@@ -31,6 +33,8 @@ import { showFailToast } from 'vant';
 const tagListByAside = useState('tagListByAside', () => []);
 const postListByAside = useState('postListByAside', () => []);
 
+const { dateFormat } = useDateTime();
+
 const getTagList = async () => {
   const { data, error } = await useFetch('/api/firebase/tag/list', {
     method: 'get',
@@ -39,8 +43,8 @@ const getTagList = async () => {
   if (data.value?.status === 'success') {
     tagListByAside.value = data.value?.data?.list;
   } else {
-    console.log(error.value);
-    // showFailToast(error.value?.data?.statusMessage);
+    console.log(error.value?.data);
+    showFailToast(error.value?.data?.message);
   }
 };
 const getPostsList = async () => {
@@ -52,9 +56,12 @@ const getPostsList = async () => {
     postListByAside.value = data.value?.data?.list;
   } else {
     console.log(error.value?.data);
-    showFailToast(error.value?.data?.statusMessage);
+    showFailToast(error.value?.data?.message);
   }
 };
-// await getTagList();
-await getPostsList();
+
+(async () => {
+  await getTagList();
+  await getPostsList();
+})();
 </script>

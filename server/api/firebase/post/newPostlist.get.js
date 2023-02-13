@@ -26,6 +26,6 @@ export default defineEventHandler(async event => {
     };
   } catch (error) {
     console.log(error);
-    throw createError({ statusCode: 500, statusMessage: '取得失敗，請稍候' });
+    throw createError({ statusCode: 500, message: '取得最新筆記失敗' });
   }
 });
