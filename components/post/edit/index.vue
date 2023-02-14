@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="isSendFinish">
-      <h1 class="mb-6 py-8 text-center text-2xl font-bold text-c-brown-600">送出成功！</h1>
+      <h1 class="mb-6 py-8 text-center text-2xl font-bold text-c-brown-200">送出成功！</h1>
       <nuxt-link
         to="/dashboard"
         class="c-rounded-button c-rounded-button-brown mx-auto block w-2/12 rounded text-center"
@@ -62,7 +62,7 @@
                 <li
                   v-for="item in submitList"
                   :key="item.status"
-                  class="block w-full px-3 py-2 text-left text-lg text-c-gray-800 hover:opacity-50"
+                  class="block w-full px-3 py-2 text-left text-lg text-c-black-200 hover:opacity-50"
                   @click="statusChoosed = item.status"
                 >
                   {{ item.name }}

@@ -2,11 +2,11 @@
   <div class="relative z-10 w-48">
     <div
       ref="container_el"
-      class="relative cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
+      class="relative cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-200"
       @click="toggleList"
     >
       <Icon icon="fluent:arrow-sort-20-filled" class="item mr-1 inline-block" />
-      <span class="inline-block align-middle font-bold text-c-gray-800">{{ sortListMap.get(currSort) }}</span>
+      <span class="inline-block align-middle font-bold text-c-black-200">{{ sortListMap.get(currSort) }}</span>
       <i class="pointer-events-none absolute right-0 top-1">
         <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-up" class="inline-block text-xl" />
         <Icon v-else icon="material-symbols:keyboard-arrow-down" class="inline-block text-xl" />
@@ -17,7 +17,7 @@
       <li
         v-for="key in sortListByKeys"
         :key="key"
-        class="cursor-pointer px-3 py-1 text-left text-lg text-c-gray-600"
+        class="cursor-pointer px-3 py-1 text-left text-lg text-c-black-100"
         :class="{ 'bg-c-gray-100': currSort === key }"
         @click="currSort = key"
       >

@@ -1,15 +1,15 @@
 @import './tailwind/main';
 @import './v-md-editor';
 
-
-
-body,html{
-  @apply w-full relative  text-c-gray-800 scroll-smooth;
-  font-family: 'Noto Sans TC', sans-serif ,"微軟正黑體";
+body,
+html {
+  @apply relative w-full  scroll-smooth text-c-black-200;
+  font-family: 'Noto Sans TC', sans-serif, '微軟正黑體';
 }
 
-input,textarea{
-  &:focus{
+input,
+textarea {
+  &:focus {
     @apply outline-none;
   }
 }

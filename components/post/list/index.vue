@@ -4,14 +4,14 @@
       <nuxt-link
         v-if="hasLinks"
         :to="`/post/${id}`"
-        class="block cursor-pointer pb-2 text-2xl font-bold text-c-gray-800 hover:text-c-brown-600 hover:underline"
+        class="block cursor-pointer pb-2 text-2xl font-bold text-c-black-200 hover:text-c-brown-200 hover:underline"
         >{{ title }}</nuxt-link
       >
-      <h3 v-else class="pb-2 text-2xl font-bold text-c-gray-800">{{ title }}</h3>
+      <h3 v-else class="pb-2 text-2xl font-bold text-c-black-200">{{ title }}</h3>
 
       <p class="line-clamp-2">{{ contentToSummary }}</p>
       <div class="mr-2 flex items-center pt-6">
-        <div class="inline-block self-center text-sm text-c-gray-400">
+        <div class="inline-block self-center text-sm text-c-gray-200">
           <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
           <span class="align-middle">
             {{ dateFormat(update_time) }}
@@ -20,7 +20,7 @@
 
         <div
           v-if="tags.length > 0"
-          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-400 before:align-middle before:content-['']"
+          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-200 before:align-middle before:content-['']"
         >
           <span v-for="item in tags" :key="item">
             <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />

@@ -6,13 +6,13 @@
         <Icon v-else icon="material-symbols:keyboard-double-arrow-right-rounded" />
       </button>
       <div v-if="!hiddenToc" class="px-4 py-2">
-        <p class="pb-1 text-sm text-c-gray-400">目錄</p>
+        <p class="pb-1 text-sm text-c-gray-200">目錄</p>
         <template v-if="tocList.length > 0">
           <div
             v-for="anchor in tocList"
             :key="anchor.title"
             class="py-0.5"
-            :class="{ 'text-c-brown-600': currentSection === anchor.title }"
+            :class="{ 'text-c-brown-200': currentSection === anchor.title }"
             :style="{ 'padding-left': `${anchor.indent * 10}px` }"
             @click="currentSection = anchor.title"
           >

@@ -1,6 +1,6 @@
 <template>
   <span
-    class="relative m-1 inline-flex items-center rounded border border-solid border-c-brown-600 py-0.5 px-3"
+    class="relative m-1 inline-flex items-center rounded border border-solid border-c-brown-200 py-0.5 px-3"
     :class="tagStyle"
     @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"
   >
@@ -44,9 +44,9 @@ const firstWordToUpperCase = computed(() => props.name.replace(/^./, props.name[
 
 const tagStyle = computed(() => {
   return props.hasLinks && props.isActive
-    ? 'cursor-pointer bg-c-brown-600 text-white'
+    ? 'cursor-pointer bg-c-brown-200 text-white'
     : props.hasLinks
-    ? 'cursor-pointer  text-c-brown-600 hover:bg-c-brown-600 hover:text-white'
-    : 'cursor-default bg-c-brown-600 text-white';
+    ? 'cursor-pointer  text-c-brown-200 hover:bg-c-brown-200 hover:text-white'
+    : 'cursor-default bg-c-brown-200 text-white';
 });
 </script>

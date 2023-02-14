@@ -4,7 +4,7 @@
     <div class="pb-10">
       <h1 :id="`#${title}`" class="c-title pb-3">{{ title }}</h1>
       <div class="mr-2 flex items-center">
-        <div class="inline-block self-center text-sm text-c-gray-400">
+        <div class="inline-block self-center text-sm text-c-gray-200">
           <Icon icon="ic:baseline-date-range" class="mr-1 inline-block text-base" />
           <span class="align-middle">
             {{ dateFormat(update_time) }}
@@ -12,7 +12,7 @@
         </div>
         <div
           v-if="tags.length > 0"
-          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-400 before:align-middle before:content-['']"
+          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-200 before:align-middle before:content-['']"
         >
           <span v-for="item in tags" :key="item">
             <the-tag :name="item" :hasLinks="hasTagLinks" class="inline-block" />

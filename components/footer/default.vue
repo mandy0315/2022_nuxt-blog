@@ -1,5 +1,5 @@
 <template>
-  <footer class="border-soild border-t border-c-gray-400">
+  <footer class="border-soild border-t border-c-gray-200">
     <div class="c-container flex justify-between py-5">
       <p>Copyright © 2022-2023 {{ config.public.WEBSITE_TITLE }}</p>
       <div>

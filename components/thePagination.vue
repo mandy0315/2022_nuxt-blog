@@ -3,17 +3,17 @@
     <span
       v-if="+totalPages > 1"
       class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
-      :class="+currentPage <= 1 ? 'cursor-not-allowed bg-c-gray-200' : 'bg-c-brown-600'"
+      :class="+currentPage <= 1 ? 'cursor-not-allowed bg-c-gray-200' : 'bg-c-brown-200'"
     >
       <Icon icon="ic:round-keyboard-arrow-left" class="text-2xl text-white" @click="setPagePrev" />
     </span>
 
-    <ul class="mx-3 text-lg text-c-gray-800">
+    <ul class="mx-3 text-lg text-c-black-200">
       <li
         v-for="i in pagerEnd"
         :key="i"
-        class="mx-1 inline-block h-8 w-8 cursor-pointer text-center hover:text-c-brown-600"
-        :class="{ 'font-bold text-c-brown-600 underline': +currentPage === i + pagerAddAmount }"
+        class="mx-1 inline-block h-8 w-8 cursor-pointer text-center hover:text-c-brown-200"
+        :class="{ 'font-bold text-c-brown-200 underline': +currentPage === i + pagerAddAmount }"
         @click.prevent="setCurrentPage(i + pagerAddAmount)"
       >
         {{ i + pagerAddAmount }}
@@ -22,7 +22,7 @@
     <span
       v-if="+totalPages > 1"
       class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full"
-      :class="+currentPage >= +totalPages ? 'cursor-not-allowed bg-c-gray-200' : 'bg-c-brown-600'"
+      :class="+currentPage >= +totalPages ? 'cursor-not-allowed bg-c-gray-200' : 'bg-c-brown-200'"
     >
       <Icon icon="ic:round-keyboard-arrow-right" class="text-2xl text-white" @click="setPageNext" />
     </span>

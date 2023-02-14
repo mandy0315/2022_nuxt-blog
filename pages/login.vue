@@ -1,8 +1,8 @@
 <template>
   <div class="mx-auto max-w-[320px] pt-4">
     <div class="mb-4">
-      <h1 class="pb-1 text-2xl font-bold text-c-brown-600">登入會員</h1>
-      <p class="text-sm text-c-gray-800">沒有註冊頁喔～ 只有一個帳號可使用！</p>
+      <h1 class="pb-1 text-2xl font-bold text-c-brown-200">登入會員</h1>
+      <p class="text-sm text-c-black-200">沒有註冊頁喔～ 只有一個帳號可使用！</p>
     </div>
     <div class="mb-2">
       <form-fill-input v-model:value="accountFill" title="帳號" placeholder="請輸入信箱" inputType="email" />
@@ -25,10 +25,10 @@
           class="absolute top-1 right-2 cursor-pointer p-1 text-xl"
         >
           <template v-if="!isShowPasswordValue">
-            <Icon icon="mdi:eye-outline" class="text-c-gray-600" />
+            <Icon icon="mdi:eye-outline" class="text-c-black-100" />
           </template>
           <template v-else>
-            <Icon icon="mdi:eye-off-outline" class="text-c-gray-600" />
+            <Icon icon="mdi:eye-off-outline" class="text-c-black-100" />
           </template>
         </span>
       </form-fill-input>

@@ -9,7 +9,7 @@
         <li
           v-for="item in postsStateList"
           :key="item.state"
-          class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-gray-800 hover:opacity-100"
+          class="mr-1 inline-block rounded-t-lg bg-white py-1 px-4 text-lg text-c-black-200 hover:opacity-100"
           :class="currentState === item.state ? 'opacity-100' : 'opacity-50'"
         >
           <nuxt-link :to="`/dashboard/post/manage-${item.state}`">{{ item.name }}</nuxt-link>
@@ -20,7 +20,7 @@
     </div>
     <section class="w-full rounded-b-md rounded-tr-md bg-white p-6">
       <table class="w-full">
-        <thead class="bg-c-gray-400 text-c-gray-800">
+        <thead class="bg-c-gray-200 text-c-black-200">
           <tr>
             <th scope="row" class="w-5/6 py-2">文章資訊</th>
             <th scope="row" class="w-1/6 py-2">管理</th>
@@ -28,8 +28,8 @@
         </thead>
         <tbody>
           <template v-if="currentPostList.length > 0">
-            <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-gray-400">
-              <td scope="col" class="p-4 text-c-gray-600">
+            <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-gray-200">
+              <td scope="col" class="p-4 text-c-black-100">
                 <post-list v-bind="item" />
               </td>
               <td class="p-4">

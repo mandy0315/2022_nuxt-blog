@@ -1,18 +1,18 @@
 <template>
   <div>
     <p class="pb-1 pr-4 text-lg">
-      {{ title }}<span class="pl-2 text-sm text-c-brown-600">圖片限一張，檔案大小限200KB，支援 jpg、png、gif 格式</span>
+      {{ title }}<span class="pl-2 text-sm text-c-brown-200">圖片限一張，檔案大小限200KB，支援 jpg、png、gif 格式</span>
     </p>
     <div class="c-form flex h-[35px] rounded p-0">
       <label class="group flex w-full items-center">
         <span class="mx-2 cursor-pointer">
           <Icon
             icon="ri:image-add-fill"
-            class="text- text-xl group-hover:text-c-brown-600"
-            :class="imageList.length === 1 ? 'text-c-brown-600' : 'text-c-gray-600'"
+            class="text- text-xl group-hover:text-c-brown-200"
+            :class="imageList.length === 1 ? 'text-c-brown-200' : 'text-c-black-100'"
           />
         </span>
-        <div class="block group-hover:text-c-brown-600">
+        <div class="block group-hover:text-c-brown-200">
           <div v-if="imageList.length > 0">
             <the-tag
               class="cursor-pointer"
@@ -34,7 +34,7 @@
         />
       </label>
     </div>
-    <p v-if="errorMsg" class="pt-2 pl-2 text-sm text-c-red-600">{{ errorMsg }}</p>
+    <p v-if="errorMsg" class="pt-2 pl-2 text-sm text-c-red-100">{{ errorMsg }}</p>
   </div>
 </template>
 

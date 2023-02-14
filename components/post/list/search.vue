@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div
-      class="relative grow rounded-l border-t border-b border-l border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
+      class="relative grow rounded-l border-t border-b border-l border-solid border-c-gray-200 py-1 pl-2 text-c-gray-200"
     >
       <input
         v-model.trim="currentSearch"
@@ -17,7 +17,7 @@
       />
       <span
         v-if="currentSearch"
-        class="absolute top-2 right-2 h-full cursor-pointer text-c-brown-600"
+        class="absolute top-2 right-2 h-full cursor-pointer text-c-brown-200"
         @click="
           setCurrentSearch({
             currentSearch: ''

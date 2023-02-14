@@ -1,10 +1,10 @@
 <template>
   <header>
-    <div class="w-full bg-c-brown-800 text-white shadow">
-      <div class="c-container flex items-center text-sm text-white">
+    <div class="w-full bg-white text-c-black-200 shadow">
+      <div class="c-container flex items-center text-sm">
         <nuxt-link to="/" class="flex items-center">
           <div class="mr-2 inline-block h-10 w-10 align-middle">
-            <img class="border-soild border-2 border-c-brown-800" src="/static/images/logo.svg" alt="logo" />
+            <img class="border-soild border-2 border-c-brown-200" src="/static/images/logo.svg" alt="logo" />
           </div>
           <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>

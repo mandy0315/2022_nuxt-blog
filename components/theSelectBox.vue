@@ -1,7 +1,7 @@
 <template>
   <div
     ref="container_el"
-    class="relative z-10 cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-400"
+    class="relative z-10 cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-200"
     @click="toggleList"
   >
     <slot name="title"></slot>
@@ -15,7 +15,7 @@
         v-for="i in selectList"
         :key="i"
         @click="selectedValue = i"
-        class="hover:c-gray-100 cursor-pointer px-3 py-1 text-left text-c-gray-600"
+        class="hover:c-gray-100 cursor-pointer px-3 py-1 text-left text-c-black-100"
         :class="{ 'bg-c-gray-100': selectedValue === i }"
       >
         {{ i }}

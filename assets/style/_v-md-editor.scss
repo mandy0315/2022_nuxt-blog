@@ -1,52 +1,57 @@
-.v-md-editor{
-  @apply border border-c-gray-400 border-solid shadow-none #{!important};
+.v-md-editor {
+  @apply border border-solid border-c-gray-200 shadow-none #{!important};
 }
 
 .block-embed {
-  iframe{
-    @apply w-full h-60;
+  iframe {
+    @apply h-60 w-full;
   }
 }
 
 // 自訂 toolbar 按鈕
-.v-md-icon-iframe{
-  &::before{
+.v-md-icon-iframe {
+  &::before {
     background: url('/static/icons/iframe.svg') no-repeat bottom;
-    @apply inline-block relative top-[1px] w-4 h-4 content-[''];
+    @apply relative top-[1px] inline-block h-4 w-4 content-[''];
   }
 }
-.v-md-icon-images{
-  &::before{
+.v-md-icon-images {
+  &::before {
     background: url('/static/icons/images.svg') no-repeat bottom;
-    @apply inline-block relative top-[1px] w-4 h-4 content-[''];
+    @apply relative top-[1px] inline-block h-4 w-4 content-[''];
   }
 }
 
 .v-md-editor-preview {
   // 標題文字樣式
   .github-markdown-body {
-    h2,h3,h4,h5,h6,a{
-      @apply font-normal text-c-gray-800 block;
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    a {
+      @apply block font-normal text-c-black-200;
     }
-    p{
-      @apply text-c-gray-600 font-normal;
+    p {
+      @apply font-normal text-c-black-100;
     }
     // 錨點
-    .header-anchor{
-      &::after{
-        @apply content-['#'] ml-2 inline-block text-xl opacity-0 text-c-brown-600;
+    .header-anchor {
+      &::after {
+        @apply ml-2 inline-block text-xl text-c-brown-200 opacity-0 content-['#'];
       }
-      &:hover{
+      &:hover {
         @apply no-underline;
-        &::after{
+        &::after {
           @apply opacity-100;
         }
       }
     }
   }
   // 預覽模式
-  &.preview-custom{
-    .github-markdown-body{
+  &.preview-custom {
+    .github-markdown-body {
       @apply p-0;
     }
   }
