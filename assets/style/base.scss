@@ -3,8 +3,12 @@
 
 body,
 html {
-  @apply relative w-full  scroll-smooth text-c-black-200;
+  @apply relative w-full h-full scroll-smooth text-c-black-200;
   font-family: 'Noto Sans TC', sans-serif, '微軟正黑體';
+}
+
+#__nuxt,#__nuxt > div{
+  @apply h-full;
 }
 
 input,

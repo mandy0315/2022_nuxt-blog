@@ -9,13 +9,17 @@ const defaultMemberInfo = {
 export default defineStore('mainStore', {
   state: () => ({
     isDashboardPages: false, // middleware - main.global 判定目前 path
-    els: {},
+    headerHeigth: 0,
     memberInfo: { ...defaultMemberInfo }
   }),
   getters: {
     isLogin: state => !!state.memberInfo.account
   },
   actions: {
+    updateHeaderHeigth(h) {
+      const $store = this;
+      $store.headerHeigth = h;
+    },
     async checkMemberStatus() {
       const $store = this;
       const accessToken = useCookie('access_token');

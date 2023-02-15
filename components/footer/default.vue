@@ -1,5 +1,5 @@
 <template>
-  <footer class="py-5 text-center text-c-gray-200">
+  <footer class="py-2 text-center text-c-gray-200">
     <span
       >© 2022-2023
       <nuxt-link to="/" class="underline hover:text-c-brown-200">{{ config.public.WEBSITE_TITLE }}</nuxt-link

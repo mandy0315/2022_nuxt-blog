@@ -1,5 +1,5 @@
 <template>
-  <div ref="postContent_el" class="c-container">
+  <div ref="postContent_el" class="c-container py-10 pb-10">
     <!-- title -->
     <div class="pb-10">
       <h1 :id="`#${title}`" class="c-title pb-3">{{ title }}</h1>

@@ -1,40 +1,38 @@
 <template>
-  <header ref="header_el" class="relative">
-    <!-- header-bottom -->
-    <div class="h-10">
-      <div
-        ref="headerBottom_el"
-        class="w-full bg-white text-c-black-200"
-        :class="{ 'an-slide-down fixed top-0 z-10 shadow': isShow }"
-      >
-        <div class="flex items-center px-6 py-1">
-          <nuxt-link to="/" class="mr-10 w-48">
-            <img src="/static/images/logo.svg" class="w-full" alt="Mandy's Note" />
-          </nuxt-link>
-          <nav class="font-bold">
-            <nuxt-link
-              v-for="item in menuList"
-              :to="item.link"
-              :key="item.link"
-              class="relative mx-3 text-base hover:text-c-brown-200"
-              :class="{
-                'text-c-brown-200 after:absolute after:left-0 after:-bottom-6 after:inline-block after:h-1 after:w-full after:bg-c-brown-200 after:content-[attr(after)]':
-                  currentPath === item.link
-              }"
-            >
-              {{ item.name }}
-            </nuxt-link>
-          </nav>
+  <header ref="headerRef">
+    <!-- web -->
+    <div
+      class="flex w-full items-center bg-c-bg-light py-2 px-4 text-c-black-200"
+      :class="{ 'an-slide-down fixed top-0 z-10 shadow': isFixHeader }"
+    >
+      <nuxt-link to="/" class="mr-10 w-40 overflow-hidden">
+        <img src="/static/images/logo.svg" :alt="config.public.WEBSITE_TITLE" />
+      </nuxt-link>
+      <nav class="font-bold">
+        <nuxt-link
+          v-for="item in menuList"
+          :to="item.link"
+          :key="item.link"
+          class="relative mx-3 text-base hover:text-c-brown-200"
+          :class="{
+            'text-c-brown-200 after:absolute after:left-0 after:-bottom-4 after:inline-block after:h-1 after:w-full after:bg-c-brown-200 after:content-[attr(after)]':
+              currentPath === item.link
+          }"
+        >
+          {{ item.name }}
+        </nuxt-link>
+      </nav>
 
-          <nuxt-link class="ml-auto" to="/dashboard">後台</nuxt-link>
-        </div>
-      </div>
+      <nav class="ml-auto">
+        <nuxt-link to="/dashboard">後台</nuxt-link>
+      </nav>
     </div>
   </header>
 </template>
 
 <script setup>
 import { useMainStore } from '@/stores/index';
+
 const menuList = [
   {
     link: '/',
@@ -47,27 +45,17 @@ const menuList = [
 ];
 
 const $mainStore = useMainStore();
-
 const config = useRuntimeConfig();
-
-// 取得目前網址的路徑
 const $route = useRoute();
-const currentPath = ref('');
-watchEffect(() => (currentPath.value = $route.path));
 
-const updateEls = () => {
-  $mainStore.els.header_el = header_el.value;
-  $mainStore.els.headerBottom_el = headerBottom_el.value;
-};
+const currentPath = computed(() => $route.path);
+const headerRef = ref(null);
 
-// 滾動後 fixed headerBottom
-const header_el = ref(null);
-const headerBottom_el = ref(null);
-const isShow = ref(false);
-const handleScrollShow = () => (isShow.value = window.scrollY > header_el.value.offsetHeight + 10);
+const isFixHeader = ref(false);
+const handleScrollShow = () => (isFixHeader.value = window.scrollY > headerRef.value.offsetHeight + 10);
 
 onMounted(() => {
-  updateEls();
+  $mainStore.updateHeaderHeigth(headerRef.value.offsetHeight);
   window.addEventListener('scroll', handleScrollShow);
 });
 onUnmounted(() => window.removeEventListener('scroll', handleScrollShow));

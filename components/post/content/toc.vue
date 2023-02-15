@@ -35,7 +35,7 @@ const mdPreview_el = useState('mdPreview_el');
 
 const currentSection = ref('');
 
-const headerBottomHeight = computed(() => $mainStore.els.headerBottom_el?.offsetHeight || 0);
+const headerHeight = computed(() => $mainStore.headerHeigth);
 
 // 目錄展開縮小
 const hiddenToc = ref(false);
@@ -67,10 +67,10 @@ const getTocList = () => {
   return tocList;
 };
 
-// css 設定 scroll-padding-top
+// 設定 scroll-padding-top
 const setScrollPaddingStyle = () => {
   document.querySelectorAll('html,body').forEach(el => {
-    el.style.cssText = `scroll-padding-top: ${headerBottomHeight.value + 10}px;`;
+    el.style.cssText = `scroll-padding-top: ${headerHeight.value + 10}px;`;
   });
 };
 
@@ -86,7 +86,7 @@ const URLHashScrollToSection = () => {
       target &&
         scrollToSection({
           toSection: target,
-          marginTop: headerBottomHeight.value + 10
+          marginTop: headerHeight.value + 10
         });
     }, 500);
   }
@@ -96,12 +96,12 @@ const URLHashScrollToSection = () => {
 const isScrollFixed = ref(false);
 const setTocFixed = () => {
   const topToMdPreviewHeight = mdPreview_el.value.$el.offsetTop;
-  isScrollFixed.value = window.scrollY > topToMdPreviewHeight - headerBottomHeight.value;
+  isScrollFixed.value = window.scrollY > topToMdPreviewHeight - headerHeight.value;
 };
 const setCurrentSection = () => {
   for (const anchor of tocList.value) {
     const hTag_el = mdPreview_el.value.$el.querySelector(`#${anchor.id}`);
-    if (hTag_el.getBoundingClientRect().y <= headerBottomHeight.value + 20) {
+    if (hTag_el.getBoundingClientRect().y <= headerHeight.value + 20) {
       currentSection.value = anchor.title;
     }
   }

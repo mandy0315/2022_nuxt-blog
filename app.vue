@@ -2,7 +2,6 @@
   <nuxt-layout>
     <nuxt-page />
   </nuxt-layout>
-  <modals-container />
 </template>
 
 <script setup>
