@@ -4,24 +4,21 @@
     <div class="h-10">
       <div
         ref="headerBottom_el"
-        class="w-full bg-white text-c-black-200 shadow"
-        :class="{ 'an-slide-down fixed top-0 z-10': isShow }"
+        class="w-full bg-white text-c-black-200"
+        :class="{ 'an-slide-down fixed top-0 z-10 shadow': isShow }"
       >
-        <div class="c-container flex items-center">
-          <nuxt-link to="/" class="flex items-center">
-            <div class="mr-2 inline-block h-10 w-10 align-middle">
-              <img class="border-soild border-2 border-c-brown-200" src="/static/images/logo.svg" alt="logo" />
-            </div>
-            <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
+        <div class="flex items-center px-6 py-1">
+          <nuxt-link to="/" class="mr-10 w-48">
+            <img src="/static/images/logo.svg" class="w-full" alt="Mandy's Note" />
           </nuxt-link>
-          <nav class="pl-2 font-bold">
+          <nav class="font-bold">
             <nuxt-link
               v-for="item in menuList"
               :to="item.link"
               :key="item.link"
-              class="relative mx-2 text-base hover:text-c-brown-200"
+              class="relative mx-3 text-base hover:text-c-brown-200"
               :class="{
-                'text-c-brown-200 after:absolute after:left-0 after:-bottom-3 after:inline-block after:h-1 after:w-full after:bg-c-brown-200 after:content-[attr(after)]':
+                'text-c-brown-200 after:absolute after:left-0 after:-bottom-6 after:inline-block after:h-1 after:w-full after:bg-c-brown-200 after:content-[attr(after)]':
                   currentPath === item.link
               }"
             >
