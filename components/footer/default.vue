@@ -1,12 +1,20 @@
 <template>
-  <footer class="border-soild border-t border-c-gray-200">
-    <div class="c-container flex justify-between py-5">
-      <p>Copyright © 2022-2023 {{ config.public.WEBSITE_TITLE }}</p>
-      <div>
-        <a href="#" class="mx-1"><Icon icon="mingcute:github-fill" class="inline-block text-lg" /></a>
-        <a href="#" class="mx-1"><Icon icon="ri:facebook-fill" class="inline-block text-lg" /></a>
-      </div>
-    </div>
+  <footer class="py-5 text-center text-c-gray-200">
+    <span
+      >© 2022-2023
+      <nuxt-link to="/" class="underline hover:text-c-brown-200">{{ config.public.WEBSITE_TITLE }}</nuxt-link
+      >. All rights reserved</span
+    >
+    <span>
+      | File from
+      <a
+        class="underline hover:text-c-brown-200"
+        href="https://github.com/mandy0315/2022_nuxt-blog"
+        target="_blank"
+        rel="noopener noreferrer"
+        >2022_nuxt-blog</a
+      ></span
+    >
   </footer>
 </template>
 
