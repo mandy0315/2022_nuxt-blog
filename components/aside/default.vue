@@ -5,8 +5,8 @@
     </div>
     <div>
       <p class="text-lg">最新筆記 <span class="text-sm">( 顯示最新五筆 )</span></p>
-      <ul v-if="postListByAside.length > 0">
-        <li v-for="post in postListByAside" :key="post.id">
+      <ul v-if="postList.length > 0">
+        <li v-for="post in postList" :key="post.id">
           <nuxt-link :to="`/post/${post.id}`">
             {{ post.title }}
           </nuxt-link>
@@ -15,8 +15,8 @@
     </div>
     <div>
       <p class="text-lg">標籤</p>
-      <ul v-if="tagListByAside.length > 0">
-        <li v-for="tag in tagListByAside" :key="tag.name" class="inline-block">
+      <ul v-if="tagList.length > 0">
+        <li v-for="tag in tagList" :key="tag.name" class="inline-block">
           <nuxt-link :to="`/tag/${tag.name}`">
             <theTag :name="tag.name" :number="tag.count" />
           </nuxt-link>
@@ -28,40 +28,14 @@
 </template>
 
 <script setup>
-import { showFailToast } from 'vant';
-
-const tagListByAside = useState('tagListByAside', () => []);
-const postListByAside = useState('postListByAside', () => []);
-
-const { dateFormat } = useDateTime();
-
-const getTagList = async () => {
-  const { data, error } = await useFetch('/api/firebase/tag/list', {
-    method: 'get',
-    initialCache: false
-  });
-  if (data.value?.status === 'success') {
-    tagListByAside.value = data.value?.data?.list;
-  } else {
-    console.log(error.value?.data);
-    showFailToast(error.value?.data?.message);
-  }
-};
-const getPostsList = async () => {
-  const { data, error } = await useFetch('/api/firebase/post/newPostlist', {
-    method: 'get',
-    initialCache: false
-  });
-  if (data.value?.status === 'success') {
-    postListByAside.value = data.value?.data?.list;
-  } else {
-    console.log(error.value?.data);
-    showFailToast(error.value?.data?.message);
-  }
-};
+import { useAsideStore } from '@/stores/index';
+const $asideStore = useAsideStore();
+const postList = computed(() => $asideStore.postList);
+const tagList = computed(() => $asideStore.tagList);
 
 (async () => {
-  await getTagList();
-  await getPostsList();
+  if (postList.value.length === 0) {
+    $asideStore.updateAllList();
+  }
 })();
 </script>

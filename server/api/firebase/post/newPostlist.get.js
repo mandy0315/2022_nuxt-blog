@@ -17,7 +17,6 @@ const getPostListFromFirebase = async () => {
 export default defineEventHandler(async event => {
   try {
     const postList = await getPostListFromFirebase();
-
     return {
       status: 'success',
       data: {
