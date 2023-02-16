@@ -43,11 +43,9 @@ const currentPage = computed({
 watch(
   () => $route.query,
   () => {
-    $postsListStore.getPostsList($route.query);
+    $postsListStore.updatePostsList('index', $route.query);
   }
 );
 
-(async () => {
-  await $postsListStore.getPostsList($route.query);
-})();
+$postsListStore.updatePostsList('index', $route.query);
 </script>

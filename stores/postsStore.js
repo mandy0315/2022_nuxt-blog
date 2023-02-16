@@ -190,16 +190,24 @@ const postsListStore = defineStore('postsListStore', {
       }
       return params;
     },
-    async getPostsList(queryStr) {
+    async updatePostsList(page, queryStr) {
       const $store = this;
+      const $route = useRoute();
       const $mainStore = mainStore();
 
       $store.resetParams();
 
-      const fetchURL = $mainStore.isDashboardPages
-        ? `/api/firebase/post/${$mainStore.memberInfo.id}/list`
-        : '/api/firebase/post/list';
-      const { data, error } = await useFetch(fetchURL, {
+      if (page === 'manage') {
+        $route.query.publishState = $route.params.state === 'public' ? 'On' : 'Off';
+        console.log($route.query.publishState);
+      }
+
+      const fetchURLs = {
+        index: '/api/firebase/post/list',
+        manage: `/api/firebase/post/${$mainStore.memberInfo.id}/list`
+      };
+
+      const { data, error } = await useFetch(fetchURLs[page], {
         method: 'get',
         params: $store.getParams(queryStr),
         initialCache: false

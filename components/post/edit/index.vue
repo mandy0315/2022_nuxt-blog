@@ -83,24 +83,25 @@ import { usePostsStore } from '@/stores/index';
 const $route = useRoute();
 const $postsStore = usePostsStore();
 
-const { toolbarConfig, toolbarCustom } = editorToolbar(); // 內容編輯工具列
+const { toolbarConfig, toolbarCustom } = useEditorTool();
 const { isOpen, toggleList, setContainer } = useToggle();
 
 const editId = computed(() => $route.params.id || '');
 
-// 判斷是文章編輯還是文章編輯
-if (editId.value) {
-  const postsCase = await $postsStore.getPostsCase(editId.value);
-
-  if (postsCase.status !== 'success') {
-    showFailToast(postsCase.message);
-    await navigateTo('/dashboard/post/manage-public');
-  }
-} else {
+// init
+(async () => {
+  // 判斷是文章編輯還是文章編輯
   $postsStore.$reset();
-}
+  if (editId.value) {
+    const postsCase = await $postsStore.getPostsCase(editId.value);
 
-// 驗證
+    if (postsCase.status !== 'success') {
+      showFailToast(postsCase.message);
+      return navigateTo('/dashboard/post/manage-public');
+    }
+  }
+})();
+
 const { values, errors, checkError, checkAllError } = useFormVerify({
   initValues: {
     title: '',
@@ -112,7 +113,6 @@ const { values, errors, checkError, checkAllError } = useFormVerify({
   }
 });
 
-// 標題
 const titleFill = computed({
   get: () => $postsStore.conditions.title,
   set: val => {
@@ -121,14 +121,12 @@ const titleFill = computed({
     $postsStore.updateCondition('title', val);
   }
 });
-// 分類
 const tagsChoosed = computed({
   get: () => $postsStore.conditions.tags,
   set: val => {
     $postsStore.updateCondition('tags', val);
   }
 });
-// 內容
 const contentFill = computed({
   get: () => $postsStore.conditions.content,
   set: val => {
@@ -138,8 +136,8 @@ const contentFill = computed({
   }
 });
 onMounted(() => {
-  values.title = $postsStore.conditions.title;
-  values.content = $postsStore.conditions.content;
+  values.title = titleFill.value;
+  values.content = contentFill.value;
 });
 
 // 按鈕選擇
@@ -147,7 +145,6 @@ const container_el = ref(null);
 onMounted(() => {
   setContainer(container_el.value);
 });
-
 const submitList = [
   {
     name: '儲存草稿',

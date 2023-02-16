@@ -50,6 +50,9 @@
                 </button>
               </td>
             </tr>
+            <div v-if="+totalPages" class="mt-6">
+              <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
+            </div>
           </template>
           <template v-else-if="currentPostList.length === 0">
             <tr>
@@ -58,9 +61,6 @@
           </template>
         </tbody>
       </table>
-      <div v-if="+totalPages" class="mt-6">
-        <the-pagination v-model:currentPage="currentPage" :totalPages="+totalPages" />
-      </div>
     </section>
   </div>
 </template>
@@ -154,18 +154,12 @@ const openPreviewPost = async id => {
   }
 };
 
-const setPostList = () => {
-  $route.query.publishState = currentState.value === 'public' ? 'On' : 'Off';
-  $postsListStore.getPostsList($route.query);
-};
-
 watch(
   () => $route.query,
-  () => {
-    setPostList();
+  val => {
+    $postsListStore.updatePostsList('manage', val);
   }
 );
 
-// $postsStore.$reset();
-setPostList();
+$postsListStore.updatePostsList('manage', $route.query);
 </script>

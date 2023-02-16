@@ -12,14 +12,16 @@ definePageMeta({
   layout: 'post'
 });
 
-const { dateFormat } = useDateTime();
 const $postsStore = usePostsStore();
 const caseConditions = computed(() => $postsStore.conditions);
 
 const { params } = useRoute();
-const postsCase = await $postsStore.getPostsCase(params.id);
-if (postsCase.status !== 'success') {
-  showFailToast(postsCase.message);
-  await navigateTo('/');
-}
+
+(async () => {
+  const postsCase = await $postsStore.getPostsCase(params.id);
+  if (postsCase.status !== 'success') {
+    showFailToast(postsCase.message);
+    await navigateTo('/');
+  }
+})();
 </script>

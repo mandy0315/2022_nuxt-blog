@@ -44,7 +44,7 @@ const currYearByArchive = useState('currYearByArchive', () => yearsByArchive.val
 
 const getYearOfParams = queryStr => (queryStr?.year ? { year: queryStr?.year } : {});
 
-const getArchiveList = async queryStr => {
+const updateArchiveList = async queryStr => {
   const { data } = await useFetch('/api/firebase/archive/list', {
     method: 'get',
     params: getYearOfParams(queryStr),
@@ -69,9 +69,9 @@ watch(currYearByArchive, val => {
 watch(
   () => $route.query,
   () => {
-    getArchiveList($route.query);
+    updateArchiveList($route.query);
   }
 );
 
-getArchiveList($route.query);
+updateArchiveList($route.query);
 </script>
