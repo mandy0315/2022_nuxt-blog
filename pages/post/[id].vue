@@ -6,7 +6,6 @@
 
 <script setup>
 import { usePostsStore } from '@/stores/index';
-import { showFailToast } from 'vant';
 
 definePageMeta({
   layout: 'post'

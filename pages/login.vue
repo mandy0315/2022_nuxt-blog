@@ -44,7 +44,6 @@
 <script setup>
 import { useMainStore } from '@/stores/index';
 import { signInWithEmailAndPassword, inMemoryPersistence, setPersistence } from 'firebase/auth';
-import { showFailToast } from 'vant';
 
 useHead({ title: '會員登入' });
 definePageMeta({

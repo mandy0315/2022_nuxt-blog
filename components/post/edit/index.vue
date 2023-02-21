@@ -77,7 +77,6 @@
 </template>
 
 <script setup>
-import { showFailToast } from 'vant';
 import { usePostsStore } from '@/stores/index';
 
 const $route = useRoute();

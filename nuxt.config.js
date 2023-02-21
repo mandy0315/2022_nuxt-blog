@@ -27,7 +27,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vant/nuxt'],
   css: ['@/assets/style/base.scss'],
   runtimeConfig: config, // 新增環境變數
   imports: {

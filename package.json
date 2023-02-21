@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.15",
+    "@vant/nuxt": "^1.0.0",
     "dayjs": "^1.11.6",
     "firebase": "^9.14.0",
     "firebase-admin": "^11.4.1",

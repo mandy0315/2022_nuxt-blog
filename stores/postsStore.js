@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import mainStore from './mainStore';
 import useDateTime from '@/utils/useDateTime';
-import { showFailToast } from 'vant';
 
 const postsStore = defineStore('postsStore', {
   state: () => ({

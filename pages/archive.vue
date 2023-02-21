@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-import { showFailToast } from 'vant';
 useHead({
   title: '檔案'
 });

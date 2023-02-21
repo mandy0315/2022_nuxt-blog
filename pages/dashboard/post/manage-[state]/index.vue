@@ -70,7 +70,6 @@ import { $vfm } from 'vue-final-modal';
 import { usePostsStore, usePostsListStore } from '@/stores/index';
 import CustomModal from '@/components/customModal.vue';
 import PostContent from '@/components/post/content/index.vue';
-import { showFailToast, showSuccessToast, showConfirmDialog, closeDialog } from 'vant';
 
 useHead({ title: '文章管理' });
 definePageMeta({
