@@ -1,5 +1,17 @@
+<script setup>
+import { useAsideStore } from '@/stores/index';
+const $asideStore = useAsideStore();
+const postList = computed(() => $asideStore.postList);
+const tagList = computed(() => $asideStore.tagList);
+
+(() => {
+  if (postList.value.length === 0) {
+    $asideStore.updateAllList();
+  }
+})();
+</script>
 <template>
-  <div>
+  <aside>
     <div>
       <p class="text-lg">關於我</p>
     </div>
@@ -26,18 +38,5 @@
         <div v-else>目前沒有標籤喔～</div>
       </div>
     </client-only>
-  </div>
+  </aside>
 </template>
-
-<script setup>
-import { useAsideStore } from '@/stores/index';
-const $asideStore = useAsideStore();
-const postList = computed(() => $asideStore.postList);
-const tagList = computed(() => $asideStore.tagList);
-
-(() => {
-  if (postList.value.length === 0) {
-    $asideStore.updateAllList();
-  }
-})();
-</script>

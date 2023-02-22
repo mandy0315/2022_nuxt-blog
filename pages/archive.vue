@@ -1,39 +1,6 @@
-<template>
-  <div>
-    <nuxt-layout name="default">
-      <template #title>
-        <h1 class="my-10 text-center text-4xl font-bold">筆記列表-年份</h1>
-      </template>
-
-      <div v-if="postListByArchive.length > 0" class="col-span-9">
-        <div class="flex justify-between border-b">
-          <h2 class="text-3xl font-bold">{{ postListByArchive[0].year }}年的筆記</h2>
-          <the-select-box class="mb-1" v-model:value="currYearByArchive" :selectList="yearsByArchive">
-            <template #title>
-              <Icon icon="ic:outline-format-list-bulleted" class="inline-block text-lg" />
-            </template>
-          </the-select-box>
-        </div>
-        <ul v-if="postListByArchive[0].list.length > 0">
-          <li v-for="i in postListByArchive[0].list" :key="i.id">
-            <nuxt-link :to="`/post/${i.id}`">
-              <span>{{ i.update_at_date }}</span>
-              <span>{{ i.title }}</span>
-            </nuxt-link>
-          </li>
-        </ul>
-        <template v-else><post-list-no-case /></template>
-      </div>
-    </nuxt-layout>
-  </div>
-</template>
-
 <script setup>
 useHead({
   title: '檔案'
-});
-definePageMeta({
-  layout: false
 });
 const $route = useRoute();
 
@@ -74,3 +41,28 @@ watch(
 
 updateArchiveList($route.query);
 </script>
+<template>
+  <h1 class="my-10 text-center text-4xl font-bold">筆記列表-年份</h1>
+
+  <NuxtLayout name="aside">
+    <div v-if="postListByArchive.length > 0">
+      <div class="flex justify-between border-b">
+        <h2 class="text-3xl font-bold">{{ postListByArchive[0].year }}年的筆記</h2>
+        <the-select-box class="mb-1" v-model:value="currYearByArchive" :selectList="yearsByArchive">
+          <template #title>
+            <Icon icon="ic:outline-format-list-bulleted" class="inline-block text-lg" />
+          </template>
+        </the-select-box>
+      </div>
+      <ul v-if="postListByArchive[0].list.length > 0">
+        <li v-for="i in postListByArchive[0].list" :key="i.id">
+          <nuxt-link :to="`/post/${i.id}`">
+            <span>{{ i.update_at_date }}</span>
+            <span>{{ i.title }}</span>
+          </nuxt-link>
+        </li>
+      </ul>
+      <template v-else><post-list-no-case /></template>
+    </div>
+  </NuxtLayout>
+</template>

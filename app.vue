@@ -1,9 +1,3 @@
-<template>
-  <nuxt-layout>
-    <nuxt-page />
-  </nuxt-layout>
-</template>
-
 <script setup>
 const config = useRuntimeConfig();
 
@@ -13,3 +7,8 @@ useHead({
   }
 });
 </script>
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>

@@ -1,15 +1,5 @@
-<template>
-  <div>
-    <post-content v-bind="caseConditions" :hasTagLinks="true" :hasToc="true" :hasComment="true" />
-  </div>
-</template>
-
 <script setup>
 import { usePostsStore } from '@/stores/index';
-
-definePageMeta({
-  layout: 'post'
-});
 
 const $postsStore = usePostsStore();
 const caseConditions = computed(() => $postsStore.conditions);
@@ -24,3 +14,6 @@ const { params } = useRoute();
   }
 })();
 </script>
+<template>
+  <post-content v-bind="caseConditions" :hasTagLinks="true" :hasToc="true" :hasComment="true" />
+</template>

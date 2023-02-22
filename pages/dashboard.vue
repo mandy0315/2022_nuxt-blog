@@ -1,9 +1,3 @@
-<template>
-  <nuxt-layout :name="false">
-    <nuxt-page />
-  </nuxt-layout>
-</template>
-
 <script setup>
 import { useMainStore } from '@/stores/index';
 
@@ -21,3 +15,6 @@ definePageMeta({
   ]
 });
 </script>
+<template>
+  <NuxtPage />
+</template>
