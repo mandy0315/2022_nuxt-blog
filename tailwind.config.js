@@ -2,6 +2,7 @@
 const plugin = require('tailwindcss/plugin');
 
 const customColors = {
+  'c-black-300': '#333333',
   'c-black-200': '#5E5D5D',
   'c-black-100': '#8B8B8B',
   'c-gray-200': '#BBBBBB',
@@ -15,6 +16,10 @@ const customBackgroundColors = {
   'c-bg-light': '#FFFFFF',
   'c-bg-dark': '#483F3F',
   'c-bg-cream': '#F6F4F2'
+};
+const customBorderColors = {
+  'c-line-gray': '#D4D4D4',
+  'c-line-brown': '#BC9C73'
 };
 module.exports = {
   content: [
@@ -37,7 +42,7 @@ module.exports = {
         ...customColors
       },
       borderColor: {
-        ...customColors
+        ...customBorderColors
       }
     }
   },

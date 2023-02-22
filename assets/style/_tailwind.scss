@@ -2,13 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-/* components 新增元件 */
+@layer base{
+  html {
+    /* max 639px */
+    @apply text-[17px];
+    /* min 640px */
+    @screen sm {
+      @apply text-[24px];
+    }
+    /* min 768px */
+    @screen md { 
+      @apply text-[25.5px];
+    }
+    /* min 1024px */
+    @screen lg {
+      @apply text-[14.5px];
+    }
+    /* min 1280px */
+    @screen xl {
+      @apply text-[16px];
+    }
+  }
+}
+
 @layer components {
   .c-container {
     @apply mx-auto w-full max-w-[1200px] px-4;
   }
   .c-form {
-    @apply border border-solid border-c-gray-200 px-2 py-1;
+    @apply border-c-line-gray border border-solid px-2 py-1;
   }
   .c-text-button {
     @apply text-c-brown-200 underline;
@@ -22,7 +44,7 @@
   .c-border-button {
     @apply inline-block rounded-sm border py-1 px-5 font-bold;
     &-brown {
-      @apply border-c-brown-200 bg-white text-c-brown-200 hover:bg-c-brown-200 hover:text-white;
+      @apply border-c-line-brown bg-white text-c-brown-200 hover:bg-c-brown-200 hover:text-white;
     }
     &-red {
       @apply rounded-sm border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white;
