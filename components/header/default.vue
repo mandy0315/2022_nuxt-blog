@@ -23,7 +23,8 @@
         </nuxt-link>
       </nav>
 
-      <nav class="ml-auto">
+      <nav class="ju ml-auto flex items-center">
+        <theColorMode v-model:isDarkMode="isDarkMode" class="mr-4" />
         <nuxt-link to="/dashboard">後台</nuxt-link>
       </nav>
     </div>
@@ -59,6 +60,13 @@ onMounted(() => {
   window.addEventListener('scroll', handleScrollShow);
 });
 onUnmounted(() => window.removeEventListener('scroll', handleScrollShow));
+
+const isDarkMode = computed({
+  get: () => $mainStore.isDarkMode,
+  set: val => {
+    $mainStore.isDarkMode = val;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
