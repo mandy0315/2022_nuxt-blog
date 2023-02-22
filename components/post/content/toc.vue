@@ -31,7 +31,7 @@ import { useMainStore } from '@/stores/index';
 const $mainStore = useMainStore();
 const $route = useRoute();
 const { scrollToSection } = useScrollTo();
-const mdPreview_el = useState('mdPreview_el');
+const postContentRef = useState('postContentRef');
 
 const currentSection = ref('');
 
@@ -51,7 +51,7 @@ const tocList = ref([]);
 const getTocList = () => {
   let tocList = [];
 
-  const anchors = mdPreview_el.value.$el.querySelectorAll('h2,h3,h4,h5,h6');
+  const anchors = postContentRef.value.$el.querySelectorAll('h2,h3,h4,h5,h6');
   let anchorsToArr = [...anchors].filter(anchor => !!anchor.innerText.trim());
   if (anchorsToArr.length === 0) {
     return false;
@@ -70,7 +70,7 @@ const getTocList = () => {
 // 設定 scroll-padding-top
 const setScrollPaddingStyle = () => {
   document.querySelectorAll('html,body').forEach(el => {
-    el.style.cssText = `scroll-padding-top: ${headerHeight.value + 10}px;`;
+    el.style.cssText = `scroll-padding-top: ${headerHeight.value + 20}px;`;
   });
 };
 
@@ -86,7 +86,7 @@ const URLHashScrollToSection = () => {
       target &&
         scrollToSection({
           toSection: target,
-          marginTop: headerHeight.value + 10
+          marginTop: headerHeight.value + 20
         });
     }, 500);
   }
@@ -95,12 +95,12 @@ const URLHashScrollToSection = () => {
 // 監聽滾動事件
 const isScrollFixed = ref(false);
 const setTocFixed = () => {
-  const topToMdPreviewHeight = mdPreview_el.value.$el.offsetTop;
+  const topToMdPreviewHeight = postContentRef.value.$el.offsetTop;
   isScrollFixed.value = window.scrollY > topToMdPreviewHeight - headerHeight.value;
 };
 const setCurrentSection = () => {
   for (const anchor of tocList.value) {
-    const hTag_el = mdPreview_el.value.$el.querySelector(`#${anchor.id}`);
+    const hTag_el = postContentRef.value.$el.querySelector(`#${anchor.id}`);
     if (hTag_el.getBoundingClientRect().y <= headerHeight.value + 20) {
       currentSection.value = anchor.title;
     }

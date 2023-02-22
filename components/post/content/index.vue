@@ -1,5 +1,5 @@
 <template>
-  <div ref="postContent_el" class="c-container py-10 pb-10">
+  <div ref="postContent_el">
     <!-- title -->
     <div class="pb-10">
       <h1 :id="`#${title}`" class="c-title pb-3">{{ title }}</h1>
@@ -21,17 +21,10 @@
       </div>
     </div>
 
-    <!-- content -->
     <div class="flex">
-      <div class="w-full grow">
-        <v-md-preview ref="mdPreview_el" class="preview-custom" :text="content" />
-        <!-- comment -->
-        <template v-if="hasComment">
-          <client-only>
-            <post-content-comment :postTitle="title" />
-          </client-only>
-        </template>
-      </div>
+      <!-- content -->
+      <v-md-preview ref="postContentRef" class="preview-custom w-full grow" :text="content" />
+      <!-- toc -->
       <post-content-toc v-if="hasToc" />
     </div>
   </div>
@@ -62,13 +55,9 @@ const props = defineProps({
   hasToc: {
     type: Boolean,
     default: false
-  },
-  hasComment: {
-    type: Boolean,
-    default: false
   }
 });
 
 const { dateFormat } = useDateTime();
-const mdPreview_el = useState('mdPreview_el', () => ref(null));
+const postContentRef = useState('postContentRef', () => ref(null));
 </script>
