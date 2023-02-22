@@ -1,6 +1,6 @@
 <template>
   <span
-    class="relative m-1 inline-flex items-center rounded border border-solid border-c-brown-200 py-0.5 px-3"
+    class="relative m-1 inline-flex items-center rounded border border-solid border-c-line-brown py-0.5 px-3"
     :class="tagStyle"
     @click="hasCloseIcon ? emit('handleDeleteTag', name) : ''"
   >

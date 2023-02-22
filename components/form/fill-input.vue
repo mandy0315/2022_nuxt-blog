@@ -10,7 +10,7 @@
       <input
         v-model.lazy="text"
         :type="inputType"
-        class="c-form w-full rounded focus:border-c-brown-200"
+        class="c-form w-full rounded focus:border-c-line-brown"
         :placeholder="placeholder"
       />
       <slot></slot>

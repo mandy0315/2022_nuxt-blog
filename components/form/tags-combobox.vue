@@ -36,7 +36,7 @@
 
     <ul
       v-if="isOpen"
-      class="absolute z-10 w-full rounded-b-lg border-l border-r border-b border-solid border-c-gray-200 bg-white shadow-md"
+      class="absolute z-10 w-full rounded-b-lg border-l border-r border-b border-solid border-c-line-gray bg-white shadow-md"
     >
       <li v-for="category in searchTags" :key="category" @click="addTag(category)" class="px-4 py-2 hover:bg-gray-200">
         {{ category }}

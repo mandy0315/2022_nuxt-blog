@@ -57,7 +57,7 @@
 
               <ul
                 v-if="isOpen"
-                class="absolute left-0 bottom-[36px] w-full rounded border border-c-gray-200 bg-white py-2 shadow-lg"
+                class="absolute left-0 bottom-[36px] w-full rounded border border-c-line-gray bg-white py-2 shadow-lg"
               >
                 <li
                   v-for="item in submitList"

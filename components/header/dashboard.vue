@@ -4,7 +4,7 @@
       <div class="c-container flex items-center text-sm">
         <nuxt-link to="/" class="flex items-center">
           <div class="mr-2 inline-block h-10 w-10 align-middle">
-            <img class="border-soild border-2 border-c-brown-200" src="/static/images/logo.svg" alt="logo" />
+            <img class="border-soild border-2 border-c-line-brown" src="/static/images/logo.svg" alt="logo" />
           </div>
           <span class="text-base">{{ config.public.WEBSITE_TITLE }}</span>
         </nuxt-link>

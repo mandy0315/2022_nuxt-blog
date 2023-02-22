@@ -28,7 +28,7 @@
         </thead>
         <tbody>
           <template v-if="currentPostList.length > 0">
-            <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-gray-200">
+            <tr v-for="item in currentPostList" :key="item.id" class="border-b border-solid border-c-line-gray">
               <td scope="col" class="p-4 text-c-black-100">
                 <post-list v-bind="item" />
               </td>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <div
-      class="relative grow rounded-l border-t border-b border-l border-solid border-c-gray-200 py-1 pl-2 text-c-gray-200"
+      class="relative grow rounded-l border-t border-b border-l border-solid border-c-line-gray py-1 pl-2 text-c-gray-200"
     >
       <input
         v-model.trim="currentSearch"

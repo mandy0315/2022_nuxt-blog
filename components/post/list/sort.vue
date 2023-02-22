@@ -2,7 +2,7 @@
   <div class="relative z-10 w-48">
     <div
       ref="container_el"
-      class="relative cursor-pointer rounded border border-solid border-c-gray-200 py-1 pl-2 text-c-gray-200"
+      class="relative cursor-pointer rounded border border-solid border-c-line-gray py-1 pl-2 text-c-gray-200"
       @click="toggleList"
     >
       <Icon icon="fluent:arrow-sort-20-filled" class="item mr-1 inline-block" />
@@ -13,7 +13,7 @@
       </i>
     </div>
 
-    <ul v-if="isOpen" class="absolute mt-1 w-full rounded border border-c-gray-200 bg-white py-2 shadow-lg">
+    <ul v-if="isOpen" class="absolute mt-1 w-full rounded border border-c-line-gray bg-white py-2 shadow-lg">
       <li
         v-for="key in sortListByKeys"
         :key="key"

@@ -9,7 +9,7 @@
         <post-list-sort class="ml-auto" />
         <template v-if="currentPostList.length > 0">
           <ul class="w-full pb-6">
-            <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-gray-200 py-5">
+            <li v-for="item in currentPostList" :key="item.id" class="block border-b border-c-line-gray py-5">
               <post-list v-bind="item" :hasLinks="true" />
             </li>
           </ul>
