@@ -48,9 +48,10 @@ updateArchiveList($route.query);
     <div v-if="postListByArchive.length > 0">
       <div class="flex justify-between border-b">
         <h2 class="text-3xl font-bold">{{ postListByArchive[0].year }}年的筆記</h2>
-        <the-select-box
+        <theSelectBox
           class="mb-1"
           icon="ic:outline-format-list-bulleted"
+          selectTitle="年份"
           v-model:value="currYearByArchive"
           :selectList="yearsByArchive"
         />

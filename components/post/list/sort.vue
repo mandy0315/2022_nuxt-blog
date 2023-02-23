@@ -1,56 +1,29 @@
 <template>
-  <div class="relative z-10 w-48">
-    <div
-      ref="container_el"
-      class="relative cursor-pointer rounded border border-solid border-c-line-gray py-1 pl-2 text-c-gray-200"
-      @click="toggleList"
-    >
-      <Icon icon="fluent:arrow-sort-20-filled" class="item mr-1 inline-block" />
-      <span class="inline-block align-middle font-bold text-c-black-200">{{ sortListMap.get(currSort) }}</span>
-      <i class="pointer-events-none absolute right-0 top-1">
-        <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-up" class="inline-block text-xl" />
-        <Icon v-else icon="material-symbols:keyboard-arrow-down" class="inline-block text-xl" />
-      </i>
-    </div>
-
-    <ul v-if="isOpen" class="absolute mt-1 w-full rounded border border-c-line-gray bg-white py-2 shadow-lg">
-      <li
-        v-for="key in sortListByKeys"
-        :key="key"
-        class="cursor-pointer px-3 py-1 text-left text-lg text-c-black-100"
-        :class="{ 'bg-c-gray-100': currSort === key }"
-        @click="currSort = key"
-      >
-        {{ sortListMap.get(key) }}
-      </li>
-    </ul>
-  </div>
+  <theSelectBox
+    icon="fluent:arrow-sort-20-filled"
+    selectTitle="排序"
+    :selectList="[...sortListMap.values()]"
+    v-model:value="currSelectedSort"
+  />
 </template>
 <script setup>
 import { usePostsListStore } from '@/stores/index';
 
-const { toggleList, isOpen, setContainer } = useToggle();
 const $postsListStore = usePostsListStore();
 
-const container_el = ref(null);
-onMounted(() => {
-  setContainer(container_el.value);
-});
-
 const sortListMap = new Map([
-  [0, '新 → 舊'],
-  [1, '舊 → 新']
+  [0, '新筆記 → 舊筆記'],
+  [1, '舊筆記 → 新筆記']
 ]);
-const sortListByKeys = computed(() => {
-  const keys = [];
-  for (let val of sortListMap.keys()) {
-    keys.push(val);
+const currSelectedSort = computed({
+  get: () => sortListMap.get(+$postsListStore.params.sort),
+  set: value => {
+    for (let [key, val] of sortListMap.entries()) {
+      if (val === value) {
+        $postsListStore.setCurrentSort(key);
+        break;
+      }
+    }
   }
-  return keys;
-});
-
-const currSort = computed({
-  get: () => +$postsListStore.params.sort,
-  set: val => $postsListStore.setCurrentSort(val)
 });
 </script>

@@ -113,7 +113,7 @@ const postsStore = defineStore('postsStore', {
 const defaultParams = {
   publishState: 'On', // On: 發布 ; Off: 沒發佈-草稿
   search: '',
-  sort: null, // 文章時間 0:desc ; 1:asc
+  sort: 0, // 文章時間 0:desc ; 1:asc
   page: 1
 };
 const postsListStore = defineStore('postsListStore', {

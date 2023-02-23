@@ -1,28 +1,34 @@
 <template>
-  <div class="relative">
+  <div class="relative h-[2.25rem] w-[2.8rem]">
     <div
       ref="container_el"
-      class="absolute top-0 right-0 z-10 cursor-pointer rounded-md border border-solid border-c-line-gray bg-white text-c-black-100 transition-all duration-300 ease-in-out"
-      :class="isOpen ? 'min-h-[70px] min-w-[120px] border-none shadow-select-box' : 'min-h-[35px] min-w-[45px] '"
+      class="absolute top-0 right-0 z-10 origin-top-right cursor-pointer border border-solid border-c-line-gray bg-white text-c-black-100 transition-all duration-300 ease-in-out"
+      :class="isOpen ? 'min-h-[4.3rem] min-w-[7.5rem] border-none shadow-select-box' : 'min-h-[2.25rem] min-w-[2.8rem]'"
       @click="toggleList"
     >
       <div class="relative p-2">
         <p
-          class="absolute top-2 left-2 font-bold text-c-black-200 transition-all duration-75 ease-in-out"
-          :class="isOpen ? 'opacity-100 delay-100' : 'opacity-0'"
+          class="absolute top-2 left-2 font-bold text-c-black-200"
+          :class="isOpen ? 'opacity-100 transition-opacity delay-300 duration-100 ease-in-out' : 'opacity-0'"
         >
-          年份
+          {{ selectTitle }}
         </p>
         <i class="flex items-center justify-end">
-          <Icon :icon="icon" class="text-[20px]" />
-          <i class="pointer-events-none align-middle text-[16px]">
+          <Icon :icon="icon" class="text-xl" />
+          <i class="pointer-events-none align-middle text-base">
             <Icon v-if="isOpen" icon="material-symbols:keyboard-arrow-up" />
             <Icon v-else icon="material-symbols:keyboard-arrow-down" />
           </i>
         </i>
       </div>
 
-      <ul :class="isOpen ? 'h-full w-full opacity-100' : '-m-1 h-0 w-0 opacity-0'">
+      <ul
+        :class="
+          isOpen
+            ? 'h-full w-full opacity-100 transition-opacity delay-500 duration-100 ease-in-out'
+            : '-m-1 h-0 w-0 opacity-0 '
+        "
+      >
         <li
           v-for="i in selectList"
           :key="i"
@@ -39,6 +45,10 @@
 <script setup>
 const { toggleList, isOpen, setContainer } = useToggle();
 const props = defineProps({
+  selectTitle: {
+    type: String,
+    default: ''
+  },
   selectList: {
     type: Array,
     required: true
