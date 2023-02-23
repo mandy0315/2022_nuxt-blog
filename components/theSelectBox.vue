@@ -1,8 +1,8 @@
 <template>
-  <div class="relative h-[2.25rem] w-[2.8rem]">
+  <div class="relative min-h-[2.25rem] min-w-[2.8rem]">
     <div
       ref="container_el"
-      class="absolute top-0 right-0 z-10 origin-top-right cursor-pointer border border-solid border-c-line-gray bg-white text-c-black-100 transition-all duration-300 ease-in-out"
+      class="absolute top-0 right-0 z-10 origin-top-right cursor-pointer rounded-md border border-solid border-c-line-gray bg-white text-c-black-100 transition-all duration-300 ease-in-out"
       :class="isOpen ? 'min-h-[4.3rem] min-w-[7.5rem] border-none shadow-select-box' : 'min-h-[2.25rem] min-w-[2.8rem]'"
       @click="toggleList"
     >
