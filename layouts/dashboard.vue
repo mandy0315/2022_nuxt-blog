@@ -1,12 +1,13 @@
-<template>
-  <header-dashboard />
-  <main class="min-h-[680px] py-10">
-    <slot></slot>
-    <modals-container />
-  </main>
-  <footer-default />
-</template>
-
 <script setup></script>
-
-<style lang="scss" scoped></style>
+<template>
+  <div
+    class="absolute top-0 left-0 h-full w-full overflow-y-auto bg-c-bg-cream text-c-black-200 dark:bg-c-bg-dark dark:text-c-gray-200"
+  >
+    <header-dashboard />
+    <main class="min-h-[80vh] w-full">
+      <slot></slot>
+      <modals-container />
+    </main>
+    <footer-default />
+  </div>
+</template>

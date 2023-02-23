@@ -2,7 +2,7 @@
   <header ref="headerRef">
     <!-- web -->
     <div
-      class="flex w-full items-center bg-c-bg-light py-2 px-4 text-c-black-200"
+      class="flex w-full items-center bg-c-bg-light py-2 px-4 dark:bg-c-bg-dark"
       :class="{ 'an-slide-down fixed top-0 z-10 shadow': isFixHeader }"
     >
       <nuxt-link to="/" class="mr-10 w-40 overflow-hidden">
@@ -15,7 +15,7 @@
           :key="item.link"
           class="relative mx-3 text-base hover:text-c-brown-200"
           :class="{
-            'text-c-brown-200 after:absolute after:left-0 after:-bottom-4 after:inline-block after:h-1 after:w-full after:bg-c-brown-200 after:content-[attr(after)]':
+            'text-c-brown-200 after:absolute after:left-0 after:-bottom-4 after:inline-block after:h-1 after:w-full after:bg-c-brown-200 after:content-[attr(after)] ':
               currentPath === item.link
           }"
         >
@@ -24,7 +24,7 @@
       </nav>
 
       <nav class="ju ml-auto flex items-center">
-        <theColorMode v-model:isDarkMode="isDarkMode" class="mr-4" />
+        <theColorMode class="mr-4" />
         <nuxt-link to="/dashboard">後台</nuxt-link>
       </nav>
     </div>
@@ -41,7 +41,7 @@ const menuList = [
   },
   {
     link: '/archive',
-    name: '筆記列表'
+    name: '所有筆記'
   }
 ];
 
@@ -60,13 +60,6 @@ onMounted(() => {
   window.addEventListener('scroll', handleScrollShow);
 });
 onUnmounted(() => window.removeEventListener('scroll', handleScrollShow));
-
-const isDarkMode = computed({
-  get: () => $mainStore.isDarkMode,
-  set: val => {
-    $mainStore.isDarkMode = val;
-  }
-});
 </script>
 
 <style lang="scss" scoped>

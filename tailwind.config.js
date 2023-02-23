@@ -30,7 +30,7 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     './app.{js,ts,vue}'
   ],
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'class', // colorMode
   theme: {
     extend: {
       // 留下預設
