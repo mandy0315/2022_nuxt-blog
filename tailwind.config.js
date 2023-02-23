@@ -43,6 +43,9 @@ module.exports = {
       },
       borderColor: {
         ...customBorderColors
+      },
+      boxShadow: {
+        'select-box': '2px 2px 10px rgba(180, 180, 180, 0.5)'
       }
     }
   },
