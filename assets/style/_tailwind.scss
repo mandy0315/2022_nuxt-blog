@@ -44,7 +44,7 @@
   .c-round-btn {
     @apply cursor-pointer inline-block text-sm rounded-full py-0.5 px-4 ;
     &-default{
-      @apply text-c-black-200 bg-c-gray-100 hover:bg-c-brown-200 hover:text-white;
+      @apply text-c-black-200 bg-c-gray-100 hover:bg-c-brown-200 hover:text-white dark:bg-c-black-200 dark:text-c-gray-200 dark:hover:bg-c-brown-200 dark:hover:text-white;
     }
     &-error{
       @apply text-c-red-100 bg-c-pink-100 hover:text-c-pink-100 hover:bg-c-red-100;

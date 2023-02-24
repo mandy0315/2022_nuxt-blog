@@ -2,13 +2,17 @@
   <div class="relative min-h-[2.25rem] min-w-[2.8rem]">
     <div
       ref="container_el"
-      class="absolute top-0 right-0 z-10 origin-top-right cursor-pointer rounded-md border border-solid border-c-line-gray bg-white text-c-black-100 transition-all duration-300 ease-in-out"
-      :class="isOpen ? 'min-h-[4.3rem] min-w-[7.5rem] border-none shadow-select-box' : 'min-h-[2.25rem] min-w-[2.8rem]'"
+      class="absolute top-0 right-0 z-10 origin-top-right cursor-pointer rounded-md border border-solid border-c-line-gray bg-white text-c-black-100 transition-all duration-300 ease-in-out dark:bg-c-black-200"
+      :class="
+        isOpen
+          ? 'min-h-[4.3rem] min-w-[7.5rem] border-none shadow-select-box dark:shadow-none'
+          : 'min-h-[2.25rem] min-w-[2.8rem]'
+      "
       @click="toggleList"
     >
-      <div class="relative p-2">
+      <div class="relative p-2 text-c-black-200 dark:text-c-gray-100">
         <p
-          class="absolute top-2 left-2 font-bold text-c-black-200"
+          class="absolute top-2 left-2 font-bold"
           :class="isOpen ? 'opacity-100 transition-opacity delay-300 duration-100 ease-in-out' : 'opacity-0'"
         >
           {{ selectTitle }}
@@ -33,8 +37,12 @@
           v-for="i in selectList"
           :key="i"
           @click="selectedValue = i"
-          class="m-1 rounded-md p-1 text-center hover:bg-c-gray-100/80"
-          :class="selectedValue === i ? 'bg-c-gray-100/80 font-bold text-c-black-200' : 'text-c-gray-200'"
+          class="m-1 rounded-md p-1 text-center hover:bg-c-gray-100/80 dark:hover:bg-c-black-300"
+          :class="
+            selectedValue === i
+              ? 'bg-c-gray-100/80 font-bold text-c-black-200 dark:bg-c-black-300 dark:text-c-gray-100'
+              : 'text-c-gray-200'
+          "
         >
           {{ i }}
         </li>
