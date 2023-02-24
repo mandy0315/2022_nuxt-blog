@@ -1,5 +1,5 @@
 <template>
-  <theSelectBox
+  <theDropdown
     icon="fluent:arrow-sort-20-filled"
     selectTitle="排序"
     :selectList="[...sortListMap.values()]"
