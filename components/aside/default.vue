@@ -1,6 +1,8 @@
 <script setup>
 import { useAsideStore } from '@/stores/index';
 const $asideStore = useAsideStore();
+const { firstWordToUpperCase } = useFormat();
+
 const postList = computed(() => $asideStore.postList);
 const tagList = computed(() => $asideStore.tagList);
 
@@ -27,12 +29,12 @@ const tagList = computed(() => $asideStore.tagList);
         </ul>
       </div>
       <div>
-        <p class="text-lg">標籤</p>
+        <p>標籤</p>
         <ul v-if="tagList.length > 0">
           <li v-for="tag in tagList" :key="tag.name" class="inline-block">
-            <nuxt-link :to="`/tag/${tag.name}`">
-              <theTag :name="tag.name" :number="tag.count" />
-            </nuxt-link>
+            <nuxt-link :to="`/tag/${tag.name}`" class="c-round-btn c-round-btn-default">{{
+              firstWordToUpperCase(tag.name)
+            }}</nuxt-link>
           </li>
         </ul>
         <div v-else>目前沒有標籤喔～</div>

@@ -22,8 +22,10 @@
           v-if="tags.length > 0"
           class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-200 before:align-middle before:content-['']"
         >
-          <span v-for="item in tags" :key="item">
-            <the-tag :name="item" :hasLinks="hasLinks" class="inline-block" />
+          <span v-for="i in tags" :key="i">
+            <nuxt-link :to="`/tag/${i}`" class="c-round-btn c-round-btn-default">{{
+              firstWordToUpperCase(i)
+            }}</nuxt-link>
           </span>
         </div>
       </div>
@@ -62,6 +64,7 @@ const props = defineProps({
   }
 });
 const { dateFormat } = useDateTime();
+const { firstWordToUpperCase } = useFormat();
 
 const { $convertTohtml } = useNuxtApp();
 

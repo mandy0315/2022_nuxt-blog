@@ -6,14 +6,13 @@
     <div ref="combobox_el" class="c-form flex" :class="isOpen ? 'rounded-t border-b-0' : 'rounded'">
       <div class="flex flex-1 flex-wrap">
         <template v-if="selectedTags.length > 0">
-          <div v-for="item in selectedTags" :key="item">
-            <the-tag
-              class="cursor-pointer"
-              :name="item"
-              :hasLinks="false"
-              :hasCloseIcon="true"
-              @handleDeleteTag="deleteTag"
-            />
+          <div v-for="tag in selectedTags" :key="tag">
+            <button @click.prevent="deleteTag" class="c-round-btn c-round-btn-default relative mr-2 pr-7">
+              {{ firstWordToUpperCase(tag) }}
+              <i class="absolute right-1.5 -top-0.5 text-base">
+                <Icon icon="ion:close-circle-sharp" class="inline-block" />
+              </i>
+            </button>
           </div>
         </template>
 
@@ -51,6 +50,7 @@ import { computed } from '@vue/reactivity';
 const combobox_el = ref(null);
 const fillTag = ref('');
 const { isOpen, setContainer, openList } = useToggle();
+const { firstWordToUpperCase } = useFormat();
 
 const emit = defineEmits(['update:tags']);
 const props = defineProps({

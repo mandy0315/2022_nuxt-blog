@@ -32,22 +32,22 @@
   .c-form {
     @apply border-c-line-gray border border-solid px-2 py-1;
   }
-  .c-text-button {
-    @apply text-c-brown-200 underline;
-  }
-  .c-rounded-button {
-    @apply inline-block rounded-3xl py-1 px-5 font-bold;
+  .c-btn {
+    @apply cursor-pointer inline-block text-lg rounded-lg py-1 px-4;
     &-brown {
-      @apply bg-c-brown-200 text-white hover:bg-c-brown-200/80;
+      @apply bg-c-brown-200 text-white hover:bg-c-brown-200/60;
+    }
+    &-light-brown{
+      @apply bg-c-brown-100 text-c-brown-200 hover:bg-c-brown-100/60 dark:hover:text-white;
     }
   }
-  .c-border-button {
-    @apply inline-block rounded-sm border py-1 px-5 font-bold;
-    &-brown {
-      @apply border-c-line-brown bg-white text-c-brown-200 hover:bg-c-brown-200 hover:text-white;
+  .c-round-btn {
+    @apply cursor-pointer inline-block text-sm rounded-full py-0.5 px-4 ;
+    &-default{
+      @apply text-c-black-200 bg-c-gray-100 hover:bg-c-brown-200 hover:text-white;
     }
-    &-red {
-      @apply rounded-sm border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white;
+    &-error{
+      @apply text-c-red-100 bg-c-pink-100 hover:text-c-pink-100 hover:bg-c-red-100;
     }
   }
   .c-title {

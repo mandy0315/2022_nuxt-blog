@@ -6,9 +6,7 @@
         <p class="text-sm text-c-black-200">請到信箱收信，點開連結後即可重設你的密碼。</p>
         <p class="text-xs text-c-brown-200">(注意：信件可能會在垃圾信件中)</p>
       </div>
-      <nuxt-link to="/login" class="c-rounded-button c-rounded-button-brown w-full rounded text-center"
-        >回到登入頁</nuxt-link
-      >
+      <nuxt-link to="/login" class="c-btn c-btn-brown w-full rounded text-center">回到登入頁</nuxt-link>
     </template>
     <template v-else>
       <div class="mb-4">
@@ -22,9 +20,7 @@
         <p v-if="isSendEmailFailed" class="pt-1 text-sm text-red-600">請檢查信箱是否有錯誤</p>
       </div>
 
-      <button @click="sendEmail" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">
-        寄出信件
-      </button>
+      <button @click="sendEmail" class="c-btn c-btn-brown w-[50%] rounded text-center">寄出信件</button>
     </template>
   </div>
 </template>

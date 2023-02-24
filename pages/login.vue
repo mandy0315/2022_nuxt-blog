@@ -128,7 +128,7 @@ const handleUserLogin = async () => {
         :inputType="`${!isShowPasswordValue ? 'password' : 'text'}`"
       >
         <template #title-right>
-          <nuxt-link to="/password-reset" class="c-text-button text-sm">忘記密碼</nuxt-link>
+          <nuxt-link to="/password-reset" class="text-sm text-c-brown-200 underline">忘記密碼</nuxt-link>
         </template>
 
         <span
@@ -148,6 +148,6 @@ const handleUserLogin = async () => {
       <p v-else-if="isPasswordByFailed" class="pt-1 text-sm text-red-600">請檢查密碼是否有錯誤</p>
     </div>
 
-    <div @click="handleUserLogin" class="c-rounded-button c-rounded-button-brown w-[50%] rounded text-center">登入</div>
+    <div @click="handleUserLogin" class="c-btn c-btn-brown w-[50%] rounded text-center">登入</div>
   </div>
 </template>

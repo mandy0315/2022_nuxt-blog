@@ -2,7 +2,7 @@
   <div class="c-container">
     <div class="flex items-center justify-between">
       <h1 class="c-title">文章管理</h1>
-      <nuxt-link to="/dashboard/post/edit" class="c-rounded-button c-rounded-button-brown">+ 新增文章</nuxt-link>
+      <nuxt-link to="/dashboard/post/edit" class="c-btn c-btn-brown">+ 新增文章</nuxt-link>
     </div>
     <div class="flex items-end">
       <ul class="mt-6 inline-block">
@@ -35,17 +35,14 @@
               <td class="p-4">
                 <nuxt-link
                   :to="`/dashboard/post/edit/${item.id}`"
-                  class="c-border-button c-border-button-brown my-1 w-full text-center"
+                  class="c-round-btn c-round-btn-default my-1 w-full text-center"
                 >
                   編輯
                 </nuxt-link>
-                <button
-                  @click.prevent="openPreviewPost(item.id)"
-                  class="c-border-button c-border-button-brown my-1 w-full"
-                >
+                <button @click.prevent="openPreviewPost(item.id)" class="c-round-btn c-round-btn-default my-1 w-full">
                   預覽
                 </button>
-                <button @click.prevent="deletePost(item.id)" class="c-border-button c-border-button-red my-1 w-full">
+                <button @click.prevent="deletePost(item.id)" class="c-round-btn c-round-btn-error my-1 w-full">
                   刪除
                 </button>
               </td>

@@ -10,14 +10,20 @@
             {{ dateFormat(update_time) }}
           </span>
         </div>
-        <div
-          v-if="tags.length > 0"
-          class="pl-3 before:mr-2 before:inline-block before:h-5 before:w-[1px] before:bg-c-gray-200 before:align-middle before:content-['']"
-        >
-          <span v-for="item in tags" :key="item">
-            <the-tag :name="item" :hasLinks="hasTagLinks" class="inline-block" />
-          </span>
-        </div>
+        <template v-if="tags.length > 0">
+          <ul v-for="tag in tags" :key="tag">
+            <li>
+              <nuxt-link v-if="hasTagLinks" :to="`/tag/${tag}`" class="c-round-btn c-round-btn-default">{{
+                firstWordToUpperCase(tag)
+              }}</nuxt-link>
+              <span
+                v-else
+                class="c-round-btn c-round-btn-default cursor-default hover:bg-c-gray-100 hover:text-c-black-200"
+                >{{ firstWordToUpperCase(tag) }}</span
+              >
+            </li>
+          </ul>
+        </template>
       </div>
     </div>
 
@@ -59,5 +65,7 @@ const props = defineProps({
 });
 
 const { dateFormat } = useDateTime();
+const { firstWordToUpperCase } = useFormat();
+
 const postContentRef = useState('postContentRef', () => ref(null));
 </script>

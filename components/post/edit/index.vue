@@ -2,9 +2,7 @@
   <div>
     <template v-if="isSendFinish">
       <h1 class="mb-6 py-8 text-center text-2xl font-bold text-c-brown-200">送出成功！</h1>
-      <nuxt-link
-        to="/dashboard"
-        class="c-rounded-button c-rounded-button-brown mx-auto block w-2/12 rounded text-center"
+      <nuxt-link to="/dashboard" class="c-btn c-btn-brown mx-auto block w-2/12 rounded text-center"
         >回到文章管理</nuxt-link
       >
     </template>
@@ -39,14 +37,11 @@
         <!-- button -->
         <div class="col-span-2 ml-auto">
           <div class="relative flex w-36">
-            <button
-              @click.prevent="sendForm"
-              class="c-rounded-button c-rounded-button-brown grow rounded-r-none rounded-l"
-            >
+            <button @click.prevent="sendForm" class="c-btn c-btn-brown grow rounded-r-none rounded-l">
               {{ currSubmitName }}
             </button>
             <div
-              class="c-rounded-button c-rounded-button-brown cursor-pointer rounded-l-none rounded-r border-l border-solid border-white px-2"
+              class="c-btn c-btn-brown cursor-pointer rounded-l-none rounded-r border-l border-solid border-white px-2"
               ref="container_el"
               @click="toggleList"
             >

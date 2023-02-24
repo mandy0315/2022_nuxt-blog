@@ -33,7 +33,7 @@
           currentSearch
         })
       "
-      class="c-rounded-button c-rounded-button-brown w-18 rounded-r rounded-l-none"
+      class="c-btn c-btn-brown w-18 rounded-r rounded-l-none"
     >
       搜尋
     </button>
